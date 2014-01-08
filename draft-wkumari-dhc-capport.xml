@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
+]>
+<!-- WK: Set category, IPR, docName -->
+<rfc category="info" docName="draft-wkumari-dhc-capport-00" ipr="trust200902">
+  <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+  <?rfc toc="yes" ?>
+
+  <?rfc symrefs="yes" ?>
+
+  <?rfc sortrefs="yes"?>
+
+  <?rfc iprnotified="no" ?>
+
+  <?rfc strict="yes"?>
+
+  <?rfc compact="yes" ?>
+
+  <front>
+    <!-- WK: Set long title. -->
+
+    <title abbrev="DHCP Captive-Portal">Captive-Portal identification in
+    DHCP</title>
+
+    <author fullname="Warren Kumari" initials="W." surname="Kumari">
+      <organization>Google</organization>
+
+      <address>
+        <postal>
+          <street>1600 Amphitheatre Parkway</street>
+
+          <city>Mountain View, CA</city>
+
+          <code>94043</code>
+
+          <country>US</country>
+        </postal>
+
+        <email>warren@kumari.net</email>
+      </address>
+    </author>
+
+    <date day="08" month="January" year="2014" />
+
+    <area>template</area>
+
+    <workgroup>template</workgroup>
+
+    <abstract>
+      <t>This document describes a DHCP option to inform clients that they are
+      behind some sort of captive portal device, and that they will need to
+      authenticate to get Interent Access.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>In many environments (coffeeshops and hotels being the standard
+      examples) users need to connect to a captive portal device to agree to
+      an acceptiable use policy or provide billing information before they can
+      access the Internet.</t>
+
+      <t>In order to present the user with the captive portal web page, many
+      devices perform DNS and / or HTTP and / or IP hijacks. As well as being
+      kludgy hacks, these techniques looks very similar to attacks that things
+      like DNSSEC protect against.</t>
+
+      <t>This document describes a DHCP option (Captive-Portal) that informs
+      DHCP clients that they are behind a captive portal device, and how to
+      contact it. </t>
+
+      <t>This document neither condones nor condems captive portals; instead
+      it recognises that they are here to stay, and attempts to improve the
+      user's experience. </t>
+
+      <section title="Requirements notation">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <xref
+        target="RFC2119"></xref>.</t>
+      </section>
+    </section>
+
+    <section title="Background">
+      <t>Many places provide public Internet access, but require that the user
+      first accepts some sort of Acceptiuable Use Policy (AUP) and / or
+      provides billing information (such as thier last name and / or room
+      number in a hotel, credit card information, etc) though a web
+      interface.</t>
+
+      <t>In order to meet this requirement many places implement a captive
+      portal (CP) - a system that intercepts user requests and forces them to
+      an interstitial login page.</t>
+
+      <t>Captive portals inplement this interception in a namuber of ways,
+      including:</t>
+
+      <t><list style="symbols">
+          <t>DNS Redirection</t>
+
+          <t>IP Redirection</t>
+
+          <t>HTTP Redirection</t>
+        </list></t>
+
+      <section title="DNS Redirection">
+        <t>The captive portal either intercepts all DNS traffic or is
+        advertised (for example using DHCP) as the recursive server for the
+        network. Until the user has authenticated to the captive portal, the
+        CP responds to all DNS requests listing the address of its web portal.
+        Once the user has authenticated the CP returns the "correct"
+        addresses.</t>
+
+        <t>This technique has many shortcomings, including the fact that it
+        fails if the client is performing DNSSEC validation, if the client
+        already has the DNS information cached, etc.</t>
+      </section>
+
+      <section title="HTTP Redirection">
+        <t>The captive portal acts like a transparent HTTP proxy, but when it
+        sees an HTTP request from an unauthenticated client it intercepts the
+        request and responds with an HTTP status code 302 to redirect the
+        client to the Captive Portal Login.</t>
+
+        <t>Among the issues with this techniqe are:</t>
+
+        <t><list style="symbols">
+            <t>Fails if the user is only using HTTPS</t>
+
+            <t>Exposes various private user information, such as HTTP Cookies,
+            etc.</t>
+
+            <t>Doesn't work if the client has a VPN and / or proxies thier web
+            traffic to an external web proxy.</t>
+          </list></t>
+      </section>
+
+      <section title="IP Hijacking">
+        <t>The captive portal intercepts connections to any IP address. It
+        spoofs the destination IP address and "pretends" to be whatever the
+        user tried to access. </t>
+
+        <t>This has most of the same issues as the HTTP solution, but may also
+        break other protocols, may expose more of the users private
+        information, etc.</t>
+      </section>
+    </section>
+
+    <section title="The Captive-Portal DHCP Option">
+      <t>The Cpative Portal DHCP Option (TBA1) informs the DHCP client that it
+      is behind a captive portal and provides the URI to access the
+      authentication page.</t>
+
+      <t>The format of the DHCPv4 Captive-Portal DHCP option is shown
+      below.<figure>
+          <artwork><![CDATA[  Code    Len          Data
+  +------+------+------+------+------+--   --+-----+
+  | code |  len |  URI                  ...        |
+  +------+------+------+------+------+--   --+-----+
+]]></artwork>
+        </figure></t>
+
+      <t><list style="symbols">
+          <t>Code: The Captive-Portal DHCP Option (TBA1)</t>
+
+          <t>Len: The length, in octets of the URI.</t>
+
+          <t>URI: The URI of the authentication page that the user chould
+          connet to.</t>
+        </list></t>
+
+      <t>The URI SHOULD be a URL with an IP-literal for the host portion (to
+      remove the need to allow DNS from unauthenticated clients).</t>
+
+      <t>[ED NOTE: I think that this is a good idea, but it does make me a
+      little uneasy. Recommending a DNS name means that the CP would need to
+      allow DNS from unauthenticated clients (as we don't want to force users
+      to use the CP's provided DNS) and some folk would use this to DNS Tunnel
+      out. This would make the CP admin block external recursives).</t>
+    </section>
+
+    <section title="Use of the Captive-Portal Option">
+      <t>[ED NOTE: This section is, and probably will remain, fairly handwavy.
+      This option provides notice to the OS / User applications that there is
+      a CP, but I think that the UI / etc is best designed / handled by the
+      Operating System vendors / Application developers. ]</t>
+
+      <t>The purpose of the Captive-Portal DHCP Option is to inform the
+      operating system and applications that they are behind a captive portal
+      type device, and will need to authenticate before getting network access
+      (and how to reach the authentication page). </t>
+
+      <t>The exact method that the interaction with the user occurs is device
+      / operating system / applicaiton dependent, the below is simply one
+      option.</t>
+
+      <t>When the device receives a DHCP response with the Captive-Portal
+      Option it SHOULD:</t>
+
+      <t><list style="numbers">
+          <t>Not initiate new IP connections until the CP has been
+          satisfied.</t>
+
+          <t>Present a dialog box to the user informaing that they are behind
+          a captive portal and ask if they wish to proceed.</t>
+
+          <t>If the user elects to proceed, the device should initiate a
+          connection to the captive portal login page using a web browser
+          configured to not send cookies, etc.</t>
+
+          <t>Once the user has authenticated (how does it know? HTTP
+          response?! Probe (ugh?)) normal IP connectiviy should resume.</t>
+
+          <t>The device should (using an OS dependent menthod) expose to the
+          user / user applications that they have connected though a captive
+          portal (for example by creating a file in /proc/net/ containing the
+          interface and captive portal URI). This should continue until the
+          network changes, or a new DHCP message without the CP is
+          received.</t>
+        </list></t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>This document contains no IANA considerations.Template: Fill this
+      in!</t>
+    </section>
+
+    <section anchor="security" title="Security Considerations">
+      <t>An attacker with the ability to inject DHCP messages could include
+      this option and so force users to contact him. As an attacker with this
+      capability could could simply list himself as the default gateway (and
+      so see all the victims traffic) we do not think this gives them
+      significantly more capabilities.</t>
+
+      <t>Devices and systems that automatically connect to open network could
+      potentially be tracked using the techinques described in this document
+      (forcing the user to continually authenticate, or exposing thier browser
+      fingerprint), but similar tracking could already be performed with the
+      standard captive portal mechanisms, so this doesn't seem to give the
+      attackers more capabilites.</t>
+
+      <t>By simplyfing the interaction with the captive portal systems, and
+      doing away with the need for interception, we think that users will be
+      less likely to disable useful securtiy safeguards like DNSSEC
+      validation, VPNs, etc.</t>
+
+      <t></t>
+    </section>
+
+    <section title="Acknowledgements">
+      <t>The author has discussed this idea with a number of folk, and asked
+      them to assist by becoming co-authors. Unfortunaly he has forgotten who
+      many of them were (Steve Sheng, Paul Ebersman?); if you were one of
+      them, I apologize.</t>
+
+      <t>Thanks to Vint Cerf for the initial idea / asking me to write
+      this.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <reference anchor="IANA.AS_Numbers"
+                 target="http://www.iana.org/assignments/as-numbers">
+        <front>
+          <title abbrev="Autonomous System (AS) Numbers">Autonomous System
+          (AS) Numbers</title>
+
+          <author>
+            <organization>IANA</organization>
+          </author>
+
+          <date />
+        </front>
+      </reference>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.I-D.draft-ietf-sidr-iana-objects-03.xml'?>
+    </references>
+
+    <section title="Changes / Author Notes.">
+      <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From -00 to -01.</t>
+
+      <t><list style="symbols">
+          <t>Nothing changed in the template!</t>
+        </list></t>
+    </section>
+  </back>
+</rfc>

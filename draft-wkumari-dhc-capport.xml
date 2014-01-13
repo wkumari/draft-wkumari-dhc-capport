@@ -42,38 +42,93 @@
       </address>
     </author>
 
-    <date day="08" month="January" year="2014" />
+    <author fullname="Olafur Gudmundsson" initials="O." surname="Gudmundsson">
+      <organization>Shinkuro Inc.</organization>
+
+      <address>
+        <postal>
+          <street>4922 Fairmont Av, Suite 250</street>
+
+          <city>Bethesda</city>
+
+          <region>MD</region>
+
+          <code>20814</code>
+
+          <country>USA</country>
+        </postal>
+
+        <email>ogud@ogud.com</email>
+      </address>
+    </author>
+
+    <author fullname="Paul Ebersman" initials="P." surname="Ebersman">
+      <organization>Infoblox</organization>
+
+      <address>
+        <email>ebersman-ietf@dragon.net</email>
+      </address>
+    </author>
+
+    <author fullname="Steve Sheng" initials="S." surname="Sheng">
+      <organization abbrev="ICANN">Internet Corporation for Assigned Names and
+      Numbers</organization>
+
+      <address>
+        <postal>
+          <street>12025 Waterfront Drive, Suite 300</street>
+
+          <country>United States of America</country>
+
+          <code>90094</code>
+
+          <city>Los Angeles</city>
+        </postal>
+
+        <phone>+1.310.301.5800</phone>
+
+        <email>steve.sheng@icann.org</email>
+      </address>
+    </author>
+
+    <date day="13" month="January" year="2014" />
 
     <area>template</area>
 
-    <workgroup>template</workgroup>
+    <workgroup>DHC</workgroup>
 
     <abstract>
+      <t>In many environments (such as hotels, coffee shops and other
+      establishments that offer Internet service to customers) it is common to
+      start new connections in a captive portal mode, i.e. highly restrict
+      what the customer can do until the customer has accepted terms of
+      service, provided payment information or authenticated.</t>
+
       <t>This document describes a DHCP option to inform clients that they are
       behind some sort of captive portal device, and that they will need to
-      authenticate to get Interent Access.</t>
+      authenticate to get Internet Access.</t>
     </abstract>
   </front>
 
   <middle>
     <section title="Introduction">
-      <t>In many environments (coffeeshops and hotels being the standard
+      <t>In many environments (coffee shops and hotels being the standard
       examples) users need to connect to a captive portal device to agree to
-      an acceptiable use policy or provide billing information before they can
+      an acceptable use policy or provide billing information before they can
       access the Internet.</t>
 
       <t>In order to present the user with the captive portal web page, many
       devices perform DNS and / or HTTP and / or IP hijacks. As well as being
       kludgy hacks, these techniques looks very similar to attacks that things
-      like DNSSEC protect against.</t>
+      like DNSSEC and TLS protect against.</t>
 
       <t>This document describes a DHCP option (Captive-Portal) that informs
       DHCP clients that they are behind a captive portal device, and how to
-      contact it. </t>
+      contact it.</t>
 
-      <t>This document neither condones nor condems captive portals; instead
+      <t>This document neither condones nor condemns captive portals; instead
       it recognises that they are here to stay, and attempts to improve the
-      user's experience. </t>
+      user's experience.</t>
 
       <section title="Requirements notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -85,16 +140,15 @@
 
     <section title="Background">
       <t>Many places provide public Internet access, but require that the user
-      first accepts some sort of Acceptiuable Use Policy (AUP) and / or
-      provides billing information (such as thier last name and / or room
-      number in a hotel, credit card information, etc) though a web
-      interface.</t>
+      first accepts some sort of Acceptable Use Policy (AUP) and / or provides
+      billing information (such as their last name and / or room number in a
+      hotel, credit card information, etc) though a web interface.</t>
 
       <t>In order to meet this requirement many places implement a captive
       portal (CP) - a system that intercepts user requests and forces them to
       an interstitial login page.</t>
 
-      <t>Captive portals inplement this interception in a namuber of ways,
+      <t>Captive portals implement this interception in a number of ways,
       including:</t>
 
       <t><list style="symbols">
@@ -103,7 +157,14 @@
           <t>IP Redirection</t>
 
           <t>HTTP Redirection</t>
-        </list></t>
+
+          <t>Restricted scope addresses</t>
+
+          <t>Traffic blocking (until the user is authenticated)</t>
+        </list>In order to ensure that the user is unable to access the
+      Internet, captive portals usually implement IP based filters, or place
+      the user in to a restricted VLAN or restricted IP range until after they
+      have been authorized.</t>
 
       <section title="DNS Redirection">
         <t>The captive portal either intercepts all DNS traffic or is
@@ -124,7 +185,7 @@
         request and responds with an HTTP status code 302 to redirect the
         client to the Captive Portal Login.</t>
 
-        <t>Among the issues with this techniqe are:</t>
+        <t>Among the issues with this technique are:</t>
 
         <t><list style="symbols">
             <t>Fails if the user is only using HTTPS</t>
@@ -132,7 +193,7 @@
             <t>Exposes various private user information, such as HTTP Cookies,
             etc.</t>
 
-            <t>Doesn't work if the client has a VPN and / or proxies thier web
+            <t>Doesn't work if the client has a VPN and / or proxies their web
             traffic to an external web proxy.</t>
           </list></t>
       </section>
@@ -140,16 +201,18 @@
       <section title="IP Hijacking">
         <t>The captive portal intercepts connections to any IP address. It
         spoofs the destination IP address and "pretends" to be whatever the
-        user tried to access. </t>
+        user tried to access.</t>
 
         <t>This has most of the same issues as the HTTP solution, but may also
         break other protocols, may expose more of the users private
         information, etc.</t>
+
+        <t></t>
       </section>
     </section>
 
     <section title="The Captive-Portal DHCP Option">
-      <t>The Cpative Portal DHCP Option (TBA1) informs the DHCP client that it
+      <t>The Captive Portal DHCP Option (TBA1) informs the DHCP client that it
       is behind a captive portal and provides the URI to access the
       authentication page.</t>
 
@@ -167,53 +230,60 @@
 
           <t>Len: The length, in octets of the URI.</t>
 
-          <t>URI: The URI of the authentication page that the user chould
-          connet to.</t>
+          <t>URI: The URI of the authentication page that the user should
+          connect to.</t>
         </list></t>
 
       <t>The URI SHOULD be a URL with an IP-literal for the host portion (to
       remove the need to allow DNS from unauthenticated clients).</t>
 
-      <t>[ED NOTE: I think that this is a good idea, but it does make me a
-      little uneasy. Recommending a DNS name means that the CP would need to
-      allow DNS from unauthenticated clients (as we don't want to force users
-      to use the CP's provided DNS) and some folk would use this to DNS Tunnel
-      out. This would make the CP admin block external recursives).</t>
+      <t>[ED NOTE: Using an address literal is less than awesome, but better
+      than the alternatives. Recommending a DNS name means that the CP would
+      need to allow DNS from unauthenticated clients (as we don't want to
+      force users to use the CP's provided DNS) and some folk would use this
+      to DNS Tunnel out. This would make the CP admin block external
+      recursives).]</t>
     </section>
 
     <section title="Use of the Captive-Portal Option">
-      <t>[ED NOTE: This section is, and probably will remain, fairly handwavy.
-      This option provides notice to the OS / User applications that there is
-      a CP, but I think that the UI / etc is best designed / handled by the
-      Operating System vendors / Application developers. ]</t>
+      <t>[ED NOTE: This section is, and probably will remain, fairly hand
+      wavy. This option provides notice to the OS / User applications that
+      there is a CP, but I think that the UI / etc is best designed / handled
+      by the Operating System vendors / Application developers. ]</t>
 
       <t>The purpose of the Captive-Portal DHCP Option is to inform the
       operating system and applications that they are behind a captive portal
       type device, and will need to authenticate before getting network access
-      (and how to reach the authentication page). </t>
+      (and how to reach the authentication page).</t>
 
       <t>The exact method that the interaction with the user occurs is device
-      / operating system / applicaiton dependent, the below is simply one
+      / operating system / application dependent, the below is simply one
       option.</t>
 
       <t>When the device receives a DHCP response with the Captive-Portal
       Option it SHOULD:</t>
 
       <t><list style="numbers">
-          <t>Not initiate new IP connections until the CP has been
-          satisfied.</t>
+          <t>Not initiate new IP connections until the CP has been satisfied.
+          [TODO(Someone): Existing connections should be placed on hold (need
+          better text). This will happen more often than some expect -- you
+          buy 1h of Internet at a cafe and stay there for 3h -- this will
+          "interrupt" you a few times).]</t>
 
-          <t>Present a dialog box to the user informaing that they are behind
-          a captive portal and ask if they wish to proceed.</t>
+          <t>Present a dialog box to the user informing that they are behind a
+          captive portal and ask if they wish to proceed.</t>
 
           <t>If the user elects to proceed, the device should initiate a
           connection to the captive portal login page using a web browser
-          configured to not send cookies, etc.</t>
+          configured with a separate cookie store. Some captive portals send
+          the user a cookie when they authenticate (so that the user can
+          re-authenticate more easily in the future - the browser should keep
+          these CP cookies separate from other cookies.</t>
 
           <t>Once the user has authenticated (how does it know? HTTP
-          response?! Probe (ugh?)) normal IP connectiviy should resume.</t>
+          response?! Probe (ugh?)) normal IP connectivity should resume.</t>
 
-          <t>The device should (using an OS dependent menthod) expose to the
+          <t>The device should (using an OS dependent method) expose to the
           user / user applications that they have connected though a captive
           portal (for example by creating a file in /proc/net/ containing the
           interface and captive portal URI). This should continue until the
@@ -223,37 +293,44 @@
     </section>
 
     <section title="IANA Considerations">
-      <t>This document contains no IANA considerations.Template: Fill this
-      in!</t>
+      <t>[ This section stolen from draft-ietf-dhc-access-network-identifier.
+      :-) ]</t>
+
+      <t>This document defines DHCPv4 Captive-Portal option which requires
+      assignment of DHCPv4 option code TBD1 assigned from "Bootp and DHCP
+      options" registry (http://www.iana.org/assignments/
+      bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
+      [RFC2939].</t>
     </section>
 
     <section anchor="security" title="Security Considerations">
       <t>An attacker with the ability to inject DHCP messages could include
       this option and so force users to contact him. As an attacker with this
-      capability could could simply list himself as the default gateway (and
-      so see all the victims traffic) we do not think this gives them
-      significantly more capabilities.</t>
+      capability could simply list himself as the default gateway (and so see
+      all the victims traffic) we do not think this gives them significantly
+      more capabilities. Fake DHCP servers are currently a security concern -
+      this doesn't make them any better or worse.</t>
 
       <t>Devices and systems that automatically connect to open network could
-      potentially be tracked using the techinques described in this document
-      (forcing the user to continually authenticate, or exposing thier browser
+      potentially be tracked using the techniques described in this document
+      (forcing the user to continually authenticate, or exposing their browser
       fingerprint), but similar tracking could already be performed with the
       standard captive portal mechanisms, so this doesn't seem to give the
-      attackers more capabilites.</t>
+      attackers more capabilities.</t>
 
-      <t>By simplyfing the interaction with the captive portal systems, and
+      <t>By simplifying the interaction with the captive portal systems, and
       doing away with the need for interception, we think that users will be
-      less likely to disable useful securtiy safeguards like DNSSEC
+      less likely to disable useful security safeguards like DNSSEC
       validation, VPNs, etc.</t>
 
       <t></t>
     </section>
 
     <section title="Acknowledgements">
-      <t>The author has discussed this idea with a number of folk, and asked
-      them to assist by becoming co-authors. Unfortunaly he has forgotten who
-      many of them were (Steve Sheng, Paul Ebersman?); if you were one of
-      them, I apologize.</t>
+      <t>The primary author has discussed this idea with a number of folk, and
+      asked them to assist by becoming co-authors. Unfortunately he has
+      forgotten who many of them were; if you were one of them, I
+      apologize.</t>
 
       <t>Thanks to Vint Cerf for the initial idea / asking me to write
       this.</t>

@@ -112,15 +112,14 @@
 
   <middle>
     <section title="Introduction">
-      <t>In many environments (coffee shops and hotels being the standard
-      examples) users need to connect to a captive portal device to agree to
-      an acceptable use policy or provide billing information before they can
-      access the Internet.</t>
+      <t>In many environments (coffee shops and hotels) users need to connect
+      to a captive portal device and agree to an acceptable use policy or
+      provide billing information before they can access the Internet.</t>
 
       <t>In order to present the user with the captive portal web page, many
       devices perform DNS and / or HTTP and / or IP hijacks. As well as being
-      kludgy hacks, these techniques looks very similar to attacks that things
-      like DNSSEC and TLS protect against.</t>
+      kludgy hacks, these techniques looks very similar to attacks that DNSSEC
+      and TLS protect against.</t>
 
       <t>This document describes a DHCP option (Captive-Portal) that informs
       DHCP clients that they are behind a captive portal device, and how to
@@ -139,17 +138,18 @@
     </section>
 
     <section title="Background">
-      <t>Many places provide public Internet access, but require that the user
-      first accepts some sort of Acceptable Use Policy (AUP) and / or provides
-      billing information (such as their last name and / or room number in a
-      hotel, credit card information, etc) though a web interface.</t>
+      <t>Many Internet Service Providers (ISPs) that offer public Internet
+      access require theuser to first accept an Acceptable Use Policy (AUP)
+      and / or provides billing information (such as their last name and / or
+      room number in a hotel, credit card information, etc) through a web
+      interface.</t>
 
-      <t>In order to meet this requirement many places implement a captive
-      portal (CP) - a system that intercepts user requests and forces them to
-      an interstitial login page.</t>
+      <t>In order to meet this requirement, some ISPs implement a captive
+      portal (CP) - a system that intercepts user requests and redirects them
+      to an interstitial login page.</t>
 
-      <t>Captive portals implement this interception in a number of ways,
-      including:</t>
+      <t>Captive portals intercept and redirects user requests in a number of
+      ways, including:</t>
 
       <t><list style="symbols">
           <t>DNS Redirection</t>
@@ -167,47 +167,44 @@
       have been authorized.</t>
 
       <section title="DNS Redirection">
-        <t>The captive portal either intercepts all DNS traffic or is
-        advertised (for example using DHCP) as the recursive server for the
-        network. Until the user has authenticated to the captive portal, the
-        CP responds to all DNS requests listing the address of its web portal.
-        Once the user has authenticated the CP returns the "correct"
-        addresses.</t>
+        <t>The CP either intercepts all DNS traffic or advertises itself (for
+        example using DHCP) as the recursive server for the network. Until the
+        user has authenticated to the captive portal, the CP responds to all
+        DNS requests listing the address of its web portal. Once the user has
+        authenticated the CP returns the "correct" addresses.</t>
 
-        <t>This technique has many shortcomings, including the fact that it
-        fails if the client is performing DNSSEC validation, if the client
-        already has the DNS information cached, etc.</t>
+        <t>This technique has many shortcomings. It fails if the client is
+        performing DNSSEC validation, or if the client already has the DNS
+        information cached.</t>
       </section>
 
       <section title="HTTP Redirection">
-        <t>The captive portal acts like a transparent HTTP proxy, but when it
-        sees an HTTP request from an unauthenticated client it intercepts the
-        request and responds with an HTTP status code 302 to redirect the
-        client to the Captive Portal Login.</t>
+        <t>In this implmentation, the CP acts like a transparent HTTP proxy,
+        but when it sees an HTTP request from an unauthenticated client it
+        intercepts the request and responds with an HTTP status code 302 to
+        redirect the client to the Captive Portal Login.</t>
 
-        <t>Among the issues with this technique are:</t>
+        <t>The issues with this technique include:</t>
 
         <t><list style="symbols">
-            <t>Fails if the user is only using HTTPS</t>
+            <t>It fails if the user is only using HTTPS</t>
 
-            <t>Exposes various private user information, such as HTTP Cookies,
-            etc.</t>
+            <t>It exposes various private user information, such as HTTP
+            Cookies, etc.</t>
 
-            <t>Doesn't work if the client has a VPN and / or proxies their web
-            traffic to an external web proxy.</t>
+            <t>It doesn't work if the client has a VPN and / or proxies their
+            web traffic to an external web proxy.</t>
           </list></t>
       </section>
 
       <section title="IP Hijacking">
-        <t>The captive portal intercepts connections to any IP address. It
-        spoofs the destination IP address and "pretends" to be whatever the
-        user tried to access.</t>
+        <t>In this scenario, the captive portal intercepts connections to any
+        IP address. It spoofs the destination IP address and "pretends" to be
+        whatever the user tried to access.</t>
 
-        <t>This has most of the same issues as the HTTP solution, but may also
-        break other protocols, may expose more of the users private
+        <t>This technique has similar issues as the HTTP solution, but may
+        also break other protocols, and may expose more of the users private
         information, etc.</t>
-
-        <t></t>
       </section>
     </section>
 

@@ -262,10 +262,10 @@
 
       <t><list style="numbers">
           <t>Not initiate new IP connections until the CP has been satisfied.
-          [TODO(Someone): Existing connections should be placed on hold (need
-          better text). This will happen more often than some expect -- you
-          buy 1h of Internet at a cafe and stay there for 3h -- this will
-          "interrupt" you a few times).]</t>
+          [TODO(Someone): Existing connections should be quiesced. This will
+          happen more often than some expect -- you buy 1h of Internet at a
+          cafe and stay there for 3h -- this will "interrupt" you a few
+          times).]</t>
 
           <t>Present a dialog box to the user informing that they are behind a
           captive portal and ask if they wish to proceed.</t>

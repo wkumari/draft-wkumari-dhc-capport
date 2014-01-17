@@ -19,7 +19,7 @@
   <?rfc compact="yes" ?>
 
   <front>
-    <!-- WK: Set long title. -->
+    <!--c WK: Set long title. -->
 
     <title abbrev="DHCP Captive-Portal">Captive-Portal identification in
     DHCP</title>
@@ -99,8 +99,8 @@
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other
-      establishments that offer Internet service to customers) it is common to
-      start new connections in a captive portal mode, i.e. highly restrict
+      establishments that offer Internet service to customers), it is common
+      to start new connections in a captive portal mode, i.e. highly restrict
       what the customer can do until the customer has accepted terms of
       service, provided payment information or authenticated.</t>
 
@@ -112,7 +112,7 @@
 
   <middle>
     <section title="Introduction">
-      <t>In many environments (coffee shops and hotels) users need to connect
+      <t>In many environments (coffee shops and hotels), users need to connect
       to a captive portal device and agree to an acceptable use policy or
       provide billing information before they can access the Internet.</t>
 
@@ -139,7 +139,7 @@
 
     <section title="Background">
       <t>Many Internet Service Providers (ISPs) that offer public Internet
-      access require theuser to first accept an Acceptable Use Policy (AUP)
+      access require the user to first accept an Acceptable Use Policy (AUP)
       and / or provides billing information (such as their last name and / or
       room number in a hotel, credit card information, etc) through a web
       interface.</t>
@@ -179,8 +179,8 @@
       </section>
 
       <section title="HTTP Redirection">
-        <t>In this implmentation, the CP acts like a transparent HTTP proxy,
-        but when it sees an HTTP request from an unauthenticated client it
+        <t>In this implementation, the CP acts like a transparent HTTP proxy;
+        but when it sees an HTTP request from an unauthenticated client, it
         intercepts the request and responds with an HTTP status code 302 to
         redirect the client to the Captive Portal Login.</t>
 
@@ -234,7 +234,7 @@
       <t>The URI SHOULD be a URL with an IP-literal for the host portion (to
       remove the need to allow DNS from unauthenticated clients).</t>
 
-      <t>[ED NOTE: Using an address literal is less than awesome, but better
+      <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
       need to allow DNS from unauthenticated clients (as we don't want to
       force users to use the CP's provided DNS) and some folk would use this
@@ -250,11 +250,11 @@
 
       <t>The purpose of the Captive-Portal DHCP Option is to inform the
       operating system and applications that they are behind a captive portal
-      type device, and will need to authenticate before getting network access
+      type device and will need to authenticate before getting network access
       (and how to reach the authentication page).</t>
 
       <t>The exact method that the interaction with the user occurs is device
-      / operating system / application dependent, the below is simply one
+      / operating system / application dependent. The below is simply one
       option.</t>
 
       <t>When the device receives a DHCP response with the Captive-Portal
@@ -304,7 +304,7 @@
       <t>An attacker with the ability to inject DHCP messages could include
       this option and so force users to contact him. As an attacker with this
       capability could simply list himself as the default gateway (and so see
-      all the victims traffic) we do not think this gives them significantly
+      all the victim's traffic), we do not think this gives them significantly
       more capabilities. Fake DHCP servers are currently a security concern -
       this doesn't make them any better or worse.</t>
 

@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-00" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-01" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="13" month="January" year="2014" />
+    <date day="23" month="January" year="2014" />
 
     <area>template</area>
 
@@ -211,10 +211,38 @@
     <section title="The Captive-Portal DHCP Option">
       <t>The Captive Portal DHCP Option (TBA1) informs the DHCP client that it
       is behind a captive portal and provides the URI to access the
-      authentication page.</t>
+      authentication page. This is primarily intended to improve the user
+      experiance; for the forseeable future captive portals will still need to
+      implement the interception techniques to serve legacy clinets.</t>
 
-      <t>The format of the DHCPv4 Captive-Portal DHCP option is shown
-      below.<figure>
+      <t>This draft is not intended to provide guidance on how to implement a
+      captive portal. As such, it assumes that the captive portal on a
+      dual-stack or IPv6-only network is already capable of intercepting IPv6
+      traffic. However, in order to support IPv6 with the proposed DHCP
+      option, there are some additional considerations. In a dual-stack
+      network, the network supports both IPv4 and IPv6 protocols
+      simultaneously, but can have a mix of IPv4-only, IPv6-only, and
+      dual-stack devices using the network, meaning that it may be necessary
+      to have parallel notifications via DHCPv4 and DHCPv6.</t>
+
+      <t>IPv4-only and dual-stack devices can technically both support
+      receiving the option via DHCPv4, but dual-stack implementations would
+      need to ensure that the correct action would be taken for both IPv4 and
+      IPv6 traffic despite only receiving an option via IPv4. For
+      devices/networks that only speak IPv6, and to avoid this dependency on
+      the implementation, a DHCPv6 option is necessary. </t>
+
+      <t>[ED NOTE:] This is complicated by the fact that not all devices
+      support DHCPv6, and thus it may be necessary to investigate other
+      methods to notify IPv6-only devices of a captive portal. Since this
+      option is only intended to help clients gracefully deal with networks
+      that have a captive portal, it may be acceptable to note that if a
+      client does not support DHCPv6, it simply won&rsquo;t be able to take
+      advantage of this optimization, but will otherwise function normally.
+      [/note]</t>
+
+      <t>The format of the DHCP Captive-Portal DHCP option is identical for
+      both DHCPv4 and DHCPv6 and is shown below.<figure>
           <artwork><![CDATA[  Code    Len          Data
   +------+------+------+------+------+--   --+-----+
   | code |  len |  URI                  ...        |
@@ -223,7 +251,8 @@
         </figure></t>
 
       <t><list style="symbols">
-          <t>Code: The Captive-Portal DHCP Option (TBA1)</t>
+          <t>Code: The Captive-Portal DHCP Option (TBA1 for DHCPv4, TBA2 for
+          DHCPv6)</t>
 
           <t>Len: The length, in octets of the URI.</t>
 
@@ -231,8 +260,11 @@
           connect to.</t>
         </list></t>
 
-      <t>The URI SHOULD be a URL with an IP-literal for the host portion (to
-      remove the need to allow DNS from unauthenticated clients).</t>
+      <t>The URI MUST be a URL with an IP-literal for the host portion (to
+      remove the need to allow DNS from unauthenticated clients). The DHCPv4
+      URI MUST contain an IPv4 address, and the DHCPv6 URI MUST contain an
+      IPv6 address (to account for IPv4 only or IPv6 only capable devices -
+      not everyting is dual stack!)</t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
@@ -294,10 +326,15 @@
       :-) ]</t>
 
       <t>This document defines DHCPv4 Captive-Portal option which requires
-      assignment of DHCPv4 option code TBD1 assigned from "Bootp and DHCP
+      assignment of DHCPv4 option code TBA1 assigned from "Bootp and DHCP
       options" registry (http://www.iana.org/assignments/
       bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
       [RFC2939].</t>
+
+      <t>The IANA is requested to assign an option codes for the DHCPv6
+      Captive-Portal (TBA2) option from the "DHCPv6 and DHCPv6 options"
+      registry (http://
+      www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml).</t>
     </section>
 
     <section anchor="security" title="Security Considerations">
@@ -319,8 +356,6 @@
       doing away with the need for interception, we think that users will be
       less likely to disable useful security safeguards like DNSSEC
       validation, VPNs, etc.</t>
-
-      <t></t>
     </section>
 
     <section title="Acknowledgements">
@@ -329,8 +364,8 @@
       forgotten who many of them were; if you were one of them, I
       apologize.</t>
 
-      <t>Thanks to Vint Cerf for the initial idea / asking me to write
-      this.</t>
+      <t>Thanks to Vint Cerf for the initial idea / asking me to write this.
+      Thanks to Wes George for supplying the v6 text.</t>
     </section>
   </middle>
 
@@ -360,7 +395,15 @@
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
-      <t>From -00 to -01.</t>
+      <t>From -00 to -01:</t>
+
+      <t><list style="symbols">
+          <t>Many nits and editorial changes.</t>
+
+          <t>Whole bunch of extra text and review from Wes George on v6.</t>
+        </list></t>
+
+      <t>From initial to -00.</t>
 
       <t><list style="symbols">
           <t>Nothing changed in the template!</t>

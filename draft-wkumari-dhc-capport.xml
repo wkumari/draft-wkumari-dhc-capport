@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-03" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-02" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,11 +91,7 @@
       </address>
     </author>
 
-    <date day="07" month="April" year="2014" />
-
-    <area>template</area>
-
-    <workgroup>DHC</workgroup>
+    <date day="16" month="April" year="2014" />
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other

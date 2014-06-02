@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-02" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-03" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="16" month="April" year="2014" />
+    <date day="1" month="June" year="2014"/>
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other
@@ -108,18 +108,18 @@
 
   <middle>
     <section title="Introduction">
-      <t>In many environments (coffee shops and hotels), users need to connect
-      to a captive portal device and agree to an acceptable use policy or
-      provide billing information before they can access the Internet.</t>
+      <t>In many environments users need to connect to a captive portal device
+      and agree to an acceptable use policy or provide billing information
+      before they can access the Internet.</t>
 
       <t>In order to present the user with the captive portal web page, many
       devices perform DNS and / or HTTP and / or IP hijacks. As well as being
       kludgy hacks, these techniques looks very similar to attacks that DNSSEC
-      and TLS protect against.</t>
+      and TLS protect against. This makes the user experience sub-optimal.</t>
 
-      <t>This document describes a DHCP option (Captive-Portal) that informs
-      DHCP clients that they are behind a captive portal device, and how to
-      contact it.</t>
+      <t>This document describes a DHCP option (Captive-Portal) and IPv6
+      Router Advertisement (RA) extension that informs clients that they are
+      behind a captive portal device, and how to contact it.</t>
 
       <t>This document neither condones nor condemns captive portals; instead
       it recognises that they are here to stay, and attempts to improve the
@@ -129,15 +129,15 @@
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
         document are to be interpreted as described in <xref
-        target="RFC2119"></xref>.</t>
+        target="RFC2119"/>.</t>
       </section>
     </section>
 
     <section title="Background">
       <t>Many Internet Service Providers (ISPs) that offer public Internet
       access require the user to first accept an Acceptable Use Policy (AUP)
-      and / or provides billing information (such as their last name and / or
-      room number in a hotel, credit card information, etc) through a web
+      and / or provides billing information (such as their last name and room
+      number in a hotel, credit card information, etc.) through a web
       interface.</t>
 
       <t>In order to meet this requirement, some ISPs implement a captive
@@ -158,9 +158,9 @@
 
           <t>Traffic blocking (until the user is authenticated)</t>
         </list>In order to ensure that the user is unable to access the
-      Internet, captive portals usually implement IP based filters, or place
-      the user in to a restricted VLAN or restricted IP range until after they
-      have been authorized.</t>
+      Internet until they have satisfied the requirements, captive portals
+      usually implement IP based filters, or place the user in to a restricted
+      VLAN (or restricted IP range) until after they have been authorized.</t>
 
       <section title="DNS Redirection">
         <t>The CP either intercepts all DNS traffic or advertises itself (for
@@ -170,8 +170,8 @@
         authenticated the CP returns the "correct" addresses.</t>
 
         <t>This technique has many shortcomings. It fails if the client is
-        performing DNSSEC validation, or if the client already has the DNS
-        information cached.</t>
+        performing DNSSEC validation, is running their own resolver, or
+        already has the DNS information cached.</t>
       </section>
 
       <section title="HTTP Redirection">
@@ -180,10 +180,10 @@
         intercepts the request and responds with an HTTP status code 302 to
         redirect the client to the Captive Portal Login.</t>
 
-        <t>The issues with this technique include:</t>
+        <t>This technique has a number of issues, including:</t>
 
         <t><list style="symbols">
-            <t>It fails if the user is only using HTTPS</t>
+            <t>It fails if the user is only using HTTPS.</t>
 
             <t>It exposes various private user information, such as HTTP
             Cookies, etc.</t>
@@ -200,7 +200,7 @@
 
         <t>This technique has similar issues as the HTTP solution, but may
         also break other protocols, and may expose more of the users private
-        information, etc.</t>
+        information.</t>
       </section>
     </section>
 
@@ -208,37 +208,11 @@
       <t>The Captive Portal DHCP Option (TBA1) informs the DHCP client that it
       is behind a captive portal and provides the URI to access the
       authentication page. This is primarily intended to improve the user
-      experiance; for the forseeable future captive portals will still need to
-      implement the interception techniques to serve legacy clinets.</t>
+      experience; for the foreseeable future captive portals will still need
+      to implement the interception techniques to serve legacy clients.</t>
 
-      <t>This draft is not intended to provide guidance on how to implement a
-      captive portal. As such, it assumes that the captive portal on a
-      dual-stack or IPv6-only network is already capable of intercepting IPv6
-      traffic. However, in order to support IPv6 with the proposed DHCP
-      option, there are some additional considerations. In a dual-stack
-      network, the network supports both IPv4 and IPv6 protocols
-      simultaneously, but can have a mix of IPv4-only, IPv6-only, and
-      dual-stack devices using the network, meaning that it may be necessary
-      to have parallel notifications via DHCPv4 and DHCPv6.</t>
-
-      <t>IPv4-only and dual-stack devices can technically both support
-      receiving the option via DHCPv4, but dual-stack implementations would
-      need to ensure that the correct action would be taken for both IPv4 and
-      IPv6 traffic despite only receiving an option via IPv4. For
-      devices/networks that only speak IPv6, and to avoid this dependency on
-      the implementation, a DHCPv6 option is necessary.</t>
-
-      <t>[ED NOTE:] This is complicated by the fact that not all devices
-      support DHCPv6, and thus it may be necessary to investigate other
-      methods to notify IPv6-only devices of a captive portal. Since this
-      option is only intended to help clients gracefully deal with networks
-      that have a captive portal, it may be acceptable to note that if a
-      client does not support DHCPv6, it simply won&rsquo;t be able to take
-      advantage of this optimization, but will otherwise function normally.
-      [/note]</t>
-
-      <t>The format of the DHCP Captive-Portal DHCP option is identical for
-      both DHCPv4 and DHCPv6 and is shown below.<figure>
+      <t>The format of the DHCP Captive-Portal DHCP option is shown
+      below.<figure>
           <artwork><![CDATA[  Code    Len          Data
   +------+------+------+------+------+--   --+-----+
   | code |  len |  URI                  ...        |
@@ -258,9 +232,7 @@
 
       <t>The URI MUST be a URL with an IP-literal for the host portion (to
       remove the need to allow DNS from unauthenticated clients). The DHCPv4
-      URI MUST contain an IPv4 address, and the DHCPv6 URI MUST contain an
-      IPv6 address (to account for IPv4 only or IPv6 only capable devices -
-      not everyting is dual stack!)</t>
+      URI MUST contain an IPv4 address.</t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
@@ -271,16 +243,14 @@
     </section>
 
     <section title="The Captive-Portal RA Option">
-      <t>[ Ed: I'm far from an RA expert, but it was suggested that we shold
-      advertize this via RA as well as DHCP. I think there are only 8 bits for
+      <t>[ Ed: I'm far from an RA expert. I think there are only 8 bits for
       Type, is it worth burning an option code on this? I have also specified
       that the option length should padded to multiples of 8 byte to better
-      align with the examples I've seen (and I'm on a plane so cannot easily
-      search for more!) Is this required / preferred, or is smaller RAs
-      better? ]</t>
+      align with the examples I've seen. Is this required / preferred, or is
+      smaller RAs better? ]</t>
 
       <t>This section describes the Captive-Portal Router Advertisement
-      option. </t>
+      option.</t>
 
       <t><figure>
           <artwork><![CDATA[ 0                   1                   2                   3
@@ -305,7 +275,7 @@
           <t hangText="URI">The URI of the authentication page that the user
           should connect to. This should be padded with NULL (0x0) to make the
           total option length (including the Type and Length fields) a
-          mutliple of 8 bytes. </t>
+          multiple of 8 bytes.</t>
         </list></t>
     </section>
 
@@ -318,46 +288,23 @@
       <t>The purpose of the Captive-Portal Option is to inform the operating
       system and applications that they are behind a captive portal type
       device and will need to authenticate before getting network access (and
-      how to reach the authentication page).</t>
+      how to reach the authentication page). What is done with this
+      information is left up to the operating system and application vendors.
+      This document provides a very high level example of what could be done
+      with this information.</t>
 
-      <t>The Captive-Portal Option is defined for IPv6 RAs and IPv6 DHCP and
-      IPv4 DHCP. The URIs in these SHOULD all be the same, but if they are
-      not, the precedence is as follows:</t>
-
-      <t><list style="numbers">
-          <t>IPv6 DHCP (most preferred)</t>
-
-          <t>IPv4 DHCP</t>
-
-          <t>IPv6 RA (least preferred)</t>
-        </list></t>
-
-      <t>This preference was chosen because an IPv6 capable client machine
-      will first get an IP address (and possibly the Captive-Portal option)
-      via RA, and will then get additional information via DHCP v6. The client
-      is not fully configured until it has completed the DHCP step, and so
-      this is "newer" information. The DHCP v4 preference is in the middle,
-      because it is likely that this will be delpoyed first on many captive
-      portals. Once IPv6 is deployed, we don't want legacy (forgotten!)
-      configuration to override the "newer" configuration information. [Ed:
-      This ordering is somewhat arbritary, as is the justification, but there
-      should be *some* standard and this seemed as good as any! ]</t>
-
-      <t>The exact method that the interaction with the user occurs is device
-      / operating system / application dependent. The below is simply one
-      option.</t>
-
-      <t>When the device receives a DHCP response with the Captive-Portal
-      Option it SHOULD:</t>
+      <t>When the device discovers that it is behind a captive portal it
+      SHOULD:</t>
 
       <t><list style="numbers">
-          <t>Not initiate new IP connections until the CP has been satisfied.
-          Existing connections should be quiesced. This will happen more often
-          than some expect -- you buy 1h of Internet at a cafe and stay there
-          for 3h -- this will "interrupt" you a few times).</t>
+          <t>Not initiate new IP connections until the CP has been satisfied
+          (other than those to the captive portal page and connectivity
+          checks). Existing connections should be quiesced (this will happen
+          more often than some expect -- you buy 1h of Internet at a cafe and
+          stay there for 3h -- this will "interrupt" you a few times). </t>
 
-          <t>Present a dialog box to the user informing that they are behind a
-          captive portal and ask if they wish to proceed.</t>
+          <t>Present a dialog box to the user informing them hat they are
+          behind a captive portal and ask if they wish to proceed.</t>
 
           <t>If the user elects to proceed, the device should initiate a
           connection to the captive portal login page using a web browser
@@ -366,8 +313,12 @@
           re-authenticate more easily in the future - the browser should keep
           these CP cookies separate from other cookies.</t>
 
-          <t>Once the user has authenticated (how does it know? HTTP
-          response?! Probe (ugh?)) normal IP connectivity should resume.</t>
+          <t>Once the user has authenticated normal IP connectivity should
+          resume. This document does not define how to know that the user has
+          authenticated [ Ed: Should it? And option would be for the "Thank
+          you for paying" page to contain a unique string (e.g: "CP_SATISFIED"
+          ]. Operating system vendors may wish to provide a public service
+          that their devices can use as a connectivity check.</t>
 
           <t>The device should (using an OS dependent method) expose to the
           user / user applications that they have connected though a captive
@@ -385,22 +336,18 @@
       bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
       [RFC2939].</t>
 
-      <t>The IANA is requested to also assign an option codes for the DHCPv6
-      Captive-Portal (TBA2) option from the "DHCPv6 and DHCPv6 options"
-      registry (http://
-      www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml).</t>
-
       <t>The IANA is also requested at assign an IPv6 RA Type code (TBA3) from
       the [TODO] registry. Thanks IANA!</t>
     </section>
 
     <section anchor="security" title="Security Considerations">
       <t>An attacker with the ability to inject DHCP messages could include
-      this option and so force users to contact him. As an attacker with this
-      capability could simply list himself as the default gateway (and so see
-      all the victim's traffic), we do not think this gives them significantly
-      more capabilities. Fake DHCP servers / fake RAs are currently a security
-      concern - this doesn't make them any better or worse.</t>
+      this option and so force users to contact an address of his choosing. As
+      an attacker with this capability could simply list himself as the
+      default gateway (and so intercept all the victim's traffic), this does
+      not provide them with significantly more capabilities. Fake DHCP servers
+      / fake RAs are currently a security concern - this doesn't make them any
+      better or worse.</t>
 
       <t>Devices and systems that automatically connect to open network could
       potentially be tracked using the techniques described in this document
@@ -412,7 +359,9 @@
       <t>By simplifying the interaction with the captive portal systems, and
       doing away with the need for interception, we think that users will be
       less likely to disable useful security safeguards like DNSSEC
-      validation, VPNs, etc.</t>
+      validation, VPNs, etc. In addition, because the system knows that it is
+      behind a captive portal it can know not to send cookies, credentials,
+      etc.</t>
     </section>
 
     <section title="Acknowledgements">
@@ -422,27 +371,14 @@
       apologize.</t>
 
       <t>Thanks to Vint Cerf for the initial idea / asking me to write this.
-      Thanks to Wes George for supplying the v6 text.</t>
+      Thanks to Wes George for supplying the v6 text. Thanks to Lorenzo and
+      Erik for the V6 RA kick in the pants.</t>
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
-
-      <reference anchor="IANA.AS_Numbers"
-                 target="http://www.iana.org/assignments/as-numbers">
-        <front>
-          <title abbrev="Autonomous System (AS) Numbers">Autonomous System
-          (AS) Numbers</title>
-
-          <author>
-            <organization>IANA</organization>
-          </author>
-
-          <date />
-        </front>
-      </reference>
     </references>
 
     <references title="Informative References">
@@ -452,10 +388,23 @@
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
+      <t>From -02 to 03:</t>
+
+      <t><list style="symbols">
+          <t>Removed the DHCPv6 stuff (as suggested / requested by Erik
+          Kline)</t>
+
+          <t>Simplified / cleaned up text (I'm inclined to waffle on, then
+          trim the fluff)</t>
+
+          <t>This was written on a United flight with in-flight WiFi -
+          unfortnatly I couldn't use it because their CP was borked.</t>
+        </list></t>
+
       <t>From -01 to 02:</t>
 
       <t><list style="symbols">
-          <t>Added the IPv6 RA stuff. </t>
+          <t>Added the IPv6 RA stuff.</t>
         </list></t>
 
       <t>From -00 to -01:</t>

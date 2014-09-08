@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-04" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-05" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="4" month="July" year="2014"/>
+    <date day="8" month="September" year="2014" />
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other
@@ -135,7 +135,7 @@
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
         document are to be interpreted as described in <xref
-        target="RFC2119"/>.</t>
+        target="RFC2119"></xref>.</t>
       </section>
     </section>
 
@@ -178,8 +178,8 @@
       or URL of the form http://fred:password@example.com). The user is often
       unaware of what is causing the issue (their browser appears to hang,
       saying something like "Downloading Proxy Script", or simply "The
-      Internet doesn't work"), and they become frustrated. This often results
-      in them not purchasing the Internet access provided by the captive
+      Internet doesn't work"), and they become frustrated. This may results in
+      them not purchasing the Internet access provided by the captive
       portal.</t>
 
       <section title="DNS Redirection">
@@ -218,7 +218,7 @@
         IP address. It spoofs the destination IP address and "pretends" to be
         whatever the user tried to access.</t>
 
-        <t>This technique has similar issues as the HTTP solution, but may
+        <t>This technique has issues similar to the HTTP solution, but may
         also break other protocols, and may expose more of the user's private
         information.</t>
       </section>
@@ -226,10 +226,11 @@
 
     <section title="The Captive-Portal DHCP Option">
       <t>The Captive Portal DHCP Option (TBA1) informs the DHCP client that it
-      is behind a captive portal and provides the URI to access the
+      is behind a captive portal and provides the URI to access an
       authentication page. This is primarily intended to improve the user
-      experience; for the foreseeable future captive portals will still need
-      to implement the interception techniques to serve legacy clients.</t>
+      experience; for the foreseeable future (until such time that most
+      systems implement this technique) captive portals will still need to
+      implement the interception techniques to serve legacy clients.</t>
 
       <t>The format of the DHCP Captive-Portal DHCP option is shown
       below.<figure>
@@ -250,9 +251,13 @@
           connect to.</t>
         </list></t>
 
-      <t>The URI MUST be a URL with an IP-literal for the host portion (to
-      remove the need to allow DNS from unauthenticated clients). The DHCPv4
-      URI MUST contain an IPv4 address.</t>
+      <t>The URI MUST NOT contain a DNS name, in order to not require the CP
+      to access DNS queries from an unauthenticated user. Rather, if IPv4 is
+      supported in the network, one option's URI MUST contain an IPv4 address
+      literal, and if IPv6 is supported in the network, one option's URI MUST
+      contain an IPv6 address literal. Note that this implies that a dual
+      stack network would include two such options in its DHCP reply or
+      RA.</t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
@@ -292,18 +297,18 @@
           option (including the Type and Length fields) in units of 8
           bytes.</t>
 
-          <t hangText="URI">The URI of the authentication page that the user
-          should connect to. This should be padded with NULL (0x0) to make the
-          total option length (including the Type and Length fields) a
-          multiple of 8 bytes.</t>
+          <t hangText="URI">The URI (containing an IPv6 literal) of the
+          authentication page that the user should connect to. This should be
+          padded with NULL (0x0) to make the total option length (including
+          the Type and Length fields) a multiple of 8 bytes.</t>
         </list></t>
     </section>
 
     <section title="Use of the Captive-Portal Option">
-      <t>[ED NOTE: This section is, and probably will remain, fairly hand
-      wavy. This option provides notice to the OS / User applications that
-      there is a CP, but I think that the UI / etc is best designed / handled
-      by the Operating System vendors / Application developers. ]</t>
+      <t>[ED NOTE: This option provides notice to the OS / User applications
+      that there is a CP. Because of differences in UI design between
+      Operating Systems, the exact behaviour by OS and Applications is left to
+      the OS vendor/Application Developer.]</t>
 
       <t>The purpose of the Captive-Portal Option is to inform the operating
       system and applications that they are behind a captive portal type
@@ -344,17 +349,16 @@
           connection to the captive portal login page using a web browser
           configured with a separate cookie store, and without a proxy server.
           If there is a VPN in place, this connection should be made outside
-          of the VPN. Some captive portals send the user a cookie when they
-          authenticate (so that the user can re-authenticate more easily in
-          the future - the browser should keep these CP cookies separate from
-          other cookies.</t>
+          of the VPN and the user should be informed that connection is
+          outside the VPN. Some captive portals send the user a cookie when
+          they authenticate (so that the user can re-authenticate more easily
+          in the future) - the browser should keep these CP cookies separate
+          from other cookies. </t>
 
-          <t>Once the user has authenticated normal IP connectivity should
-          resume. This document does not define how to know that the user has
-          authenticated [Ed: Should it? And option would be for the "Thank you
-          for paying" page to contain a unique string (e.g: "CP_SATISFIED"].
-          Operating system vendors may wish to provide a public service that
-          their devices can use as a connectivity check.</t>
+          <t>Once the user has authenticated, normal IP connectivity should
+          resume. The CP success page should contain a string, e.g
+          "CP_SATISFIED." The OS can then use this string to provide further
+          information to the user.</t>
 
           <t>The device should (using an OS dependent method) expose to the
           user / user applications that they have connected though a captive
@@ -409,6 +413,8 @@
       <t>Thanks to Vint Cerf for the initial idea / asking me to write this.
       Thanks to Wes George for supplying the IPv6 text. Thanks to Lorenzo and
       Erik for the V6 RA kick in the pants.</t>
+
+      <t>Thanks for Fred Baker for detailed review and comments.</t>
     </section>
   </middle>
 
@@ -417,12 +423,14 @@
       <?rfc include='reference.RFC.2119'?>
     </references>
 
-    <references title="Informative References">
-      <?rfc include='reference.I-D.draft-ietf-sidr-iana-objects-03.xml'?>
-    </references>
-
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 04 to 05:</t>
+
+      <t><list style="symbols">
+          <t>Integrated comments, primarily from Fred Baker.</t>
+        </list></t>
 
       <t>From 03 to 04:</t>
 

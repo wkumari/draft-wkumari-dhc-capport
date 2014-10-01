@@ -2,15 +2,16 @@
 
 
 
+
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Informational                            O. Gudmundsson
-Expires: March 12, 2015                                    Shinkuro Inc.
+Expires: April 4, 2015                                     Shinkuro Inc.
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                       September 8, 2014
+                                                         October 1, 2014
 
 
                Captive-Portal identification in DHCP / RA
@@ -44,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 12, 2015.
+   This Internet-Draft will expire on April 4, 2015.
 
 
 
@@ -53,9 +54,9 @@ Status of This Memo
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 1]
+Kumari, et al.            Expires April 4, 2015                 [Page 1]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
 Copyright Notice
@@ -109,9 +110,9 @@ Table of Contents
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 2]
+Kumari, et al.            Expires April 4, 2015                 [Page 2]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    This document neither condones nor condemns captive portals; instead,
@@ -165,9 +166,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 3]
+Kumari, et al.            Expires April 4, 2015                 [Page 3]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    of the these protections and the interception leads to poor user
@@ -221,9 +222,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 4]
+Kumari, et al.            Expires April 4, 2015                 [Page 4]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    This technique has issues similar to the HTTP solution, but may also
@@ -277,9 +278,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 5]
+Kumari, et al.            Expires April 4, 2015                 [Page 5]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    to better align with the examples I've seen.  Is this required /
@@ -333,9 +334,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 6]
+Kumari, et al.            Expires April 4, 2015                 [Page 6]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    will continue to be needed, because there is currently no definitive
@@ -389,9 +390,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 7]
+Kumari, et al.            Expires April 4, 2015                 [Page 7]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
    The IANA is also requested at assign an IPv6 RA Type code (TBA3) from
@@ -445,9 +446,9 @@ Internet-Draft             DHCP Captive-Portal            September 2014
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 8]
+Kumari, et al.            Expires April 4, 2015                 [Page 8]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
 Appendix A.  Changes / Author Notes.
@@ -501,9 +502,9 @@ Appendix A.  Changes / Author Notes.
 
 
 
-Kumari, et al.           Expires March 12, 2015                 [Page 9]
+Kumari, et al.            Expires April 4, 2015                 [Page 9]
 
-Internet-Draft             DHCP Captive-Portal            September 2014
+Internet-Draft             DHCP Captive-Portal              October 2014
 
 
 Authors' Addresses
@@ -557,5 +558,5 @@ Authors' Addresses
 
 
 
-Kumari, et al.           Expires March 12, 2015                [Page 10]
+Kumari, et al.            Expires April 4, 2015                [Page 10]
 ```

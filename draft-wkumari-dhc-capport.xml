@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-05" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-06" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="1" month="October" year="2014" />
+    <date day="2" month="December" year="2014"/>
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other
@@ -113,18 +113,21 @@
       information before they can access the Internet.</t>
 
       <t>In order to present the user with the captive portal web page, many
-      devices perform DNS and / or HTTP and / or IP hijacks. As well as being
-      kludgy hacks, these techniques looks very similar to attacks that DNSSEC
-      and TLS protect against, which makes the user experience
-      sub-optimal.</t>
+      devices perform DNS and / or HTTP and / or IP hijacks. In addition to
+      being kludgy hacks, these techniques resemble attacks that DNSSEC and
+      TLS are intended to protect against. In an attempt to discourage the
+      deliberate subversion of basic security tools, this document describes a
+      DHCP option (Captive-Portal) and an IPv6 Router Advertisement (RA)
+      extension that informs clients that they are behind a captive portal
+      device, and how to contact it.</t>
 
-      <t>This document describes a DHCP option (Captive-Portal) and an IPv6
-      Router Advertisement (RA) extension that informs clients that they are
-      behind a captive portal device, and how to contact it.</t>
+      <t> document describes a DHCP option (Captive-Portal) and an IPv6 Router
+      Advertisement (RA) extension that informs clients that they are behind a
+      captive portal device, and how to contact it.</t>
 
-      <t>This document neither condones nor condemns captive portals; instead,
-      it recognises that they are here to stay, and attempts to improve the
-      user experience.</t>
+      <t> This document neither condones nor condemns the use captive portals;
+      instead, it recognises that their apparent necessity, and attempts to
+      improve the user experience.</t>
 
       <t>The technique described in this document mainly improve the user
       experience when first connecting to a network behind a captive portal.
@@ -135,7 +138,7 @@
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
         document are to be interpreted as described in <xref
-        target="RFC2119"></xref>.</t>
+        target="RFC2119"/>.</t>
       </section>
     </section>
 
@@ -179,8 +182,9 @@
       unaware of what is causing the issue (their browser appears to hang,
       saying something like "Downloading Proxy Script", or simply "The
       Internet doesn't work"), and they become frustrated. This may results in
-      them not purchasing the Internet access provided by the captive
-      portal.</t>
+      them not purchasing the Internet access provided by the captive portal.
+      The connectivity attempts may also facilitate OS fingerprinting even
+      before a client attempts to connect to the portal itself.</t>
 
       <section title="DNS Redirection">
         <t>The CP either intercepts all DNS traffic or advertises itself (for
@@ -353,7 +357,7 @@
           outside the VPN. Some captive portals send the user a cookie when
           they authenticate (so that the user can re-authenticate more easily
           in the future) - the browser should keep these CP cookies separate
-          from other cookies. </t>
+          from other cookies.</t>
 
           <t>Once the user has authenticated, normal IP connectivity should
           resume. The CP success page should contain a string, e.g
@@ -387,7 +391,7 @@
       default gateway (and so intercept all the victim's traffic), this does
       not provide them with significantly more capabilities. Fake DHCP servers
       / fake RAs are currently a security concern - this doesn't make them any
-      better or worse.</t>
+      better or worse. </t>
 
       <t>Devices and systems that automatically connect to an open network
       could potentially be tracked using the techniques described in this
@@ -401,7 +405,9 @@
       less likely to disable useful security safeguards like DNSSEC
       validation, VPNs, etc. In addition, because the system knows that it is
       behind a captive portal, it can know not to send cookies, credentials,
-      etc.</t>
+      etc. Redirection to a portal where TLS can be used without hijacking can
+      ameliorate some of the implications of connecting to a potentially
+      malicious captive portal.</t>
     </section>
 
     <section title="Acknowledgements">
@@ -414,7 +420,8 @@
       Thanks to Wes George for supplying the IPv6 text. Thanks to Lorenzo and
       Erik for the V6 RA kick in the pants.</t>
 
-      <t>Thanks for Fred Baker for detailed review and comments.</t>
+      <t>Thanks for Fred Baker for detailed review and comments. Also great
+      thanks to Joel Jaeggli for providing feedback and text.</t>
     </section>
   </middle>
 
@@ -425,6 +432,22 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 05 to 06:</t>
+
+      <t><list style="symbols">
+          <t>Integrated comments from Joel, as below</t>
+
+          <t>Better introduction text, around the "kludgy hacks" section.</t>
+
+          <t>Better "neither condones nor condems" text</t>
+
+          <t>Fingerprint text.</t>
+
+          <t>Some discussions on the v4 literal stuff.</t>
+
+          <t>More Security Consideration text.</t>
+        </list></t>
 
       <t>From 04 to 05:</t>
 

@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-06" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-07" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="2" month="December" year="2014"/>
+    <date day="22" month="December" year="2014"/>
 
     <abstract>
       <t>In many environments (such as hotels, coffee shops and other
@@ -121,13 +121,9 @@
       extension that informs clients that they are behind a captive portal
       device, and how to contact it.</t>
 
-      <t> document describes a DHCP option (Captive-Portal) and an IPv6 Router
-      Advertisement (RA) extension that informs clients that they are behind a
-      captive portal device, and how to contact it.</t>
-
-      <t> This document neither condones nor condemns the use captive portals;
-      instead, it recognises that their apparent necessity, and attempts to
-      improve the user experience.</t>
+      <t>This document neither condones nor condemns the use of captive
+      portals; instead, it recognises that their apparent necessity, and
+      attempts to improve the user experience.</t>
 
       <t>The technique described in this document mainly improve the user
       experience when first connecting to a network behind a captive portal.
@@ -200,9 +196,11 @@
 
       <section title="HTTP Redirection">
         <t>In this implementation, the CP acts like a transparent HTTP proxy;
-        but when it sees an HTTP request from an unauthenticated client, it
-        intercepts the request and responds with an HTTP status code 302 to
-        redirect the client to the Captive Portal Login.</t>
+        but when it sees an HTTP request from an unauthenticated client using
+        HTTP/1.0, it intercepts the request and responds with an HTTP status
+        code 302 to redirect the client to the Captive Portal Login. If the
+        client is using HTTP/1.1, we respond with a status code 303 See
+        Other.</t>
 
         <t>This technique has a number of issues, including:</t>
 
@@ -262,6 +260,20 @@
       contain an IPv6 address literal. Note that this implies that a dual
       stack network would include two such options in its DHCP reply or
       RA.</t>
+
+      <t>In many cases, a CP would like to collect billing infomation (for
+      example, credit card information), and will want to do this over
+      SSL/TLS. In order to make this work, the web server on the IP literal
+      can redirect to a URI containing a DNS name. The CP implementor/operator
+      will need to ensure that the client machine can access this URI and all
+      service needed to make that work (for example, DNS, etc.). In this case,
+      the operator/implementor will potentially need to deal with issues such
+      as DNS tunnelling.</t>
+
+      <t>Captive Portals are free to serve a HTTP redirect on this address to
+      a DNS name (for example, so they can provide a TLS protected web page
+      for credit card information). This will require that the client be able
+      to perform DNS requests.</t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
@@ -329,22 +341,27 @@
       determine when they are behind a CP, but are usually effective for
       determining that the captive portal has been satisfied. These tests will
       continue to be needed, because there is currently no definitive signal
-      from the captive portal that it has been satisfied. The connectivity
-      test may also need to be used if the captive portal times out the user
-      session and needs the user to re-authenticate / pay again. The operating
-      system may still find the information about the captive portal URI
-      useful in this case.</t>
+      from the captive portal that it has been satisfied. [ Editor note: It
+      may be useful to write another document that specifies how a client can
+      determine that it has passed the CP. This document could also contain
+      advice to implmentors on only intercepting actually needed ports, how to
+      advertise that the CP needs to be statisfied *again*, etc. This should
+      not be done in this document though. ] The connectivity test may also
+      need to be used if the captive portal times out the user session and
+      needs the user to re-authenticate / pay again. The operating system may
+      still find the information about the captive portal URI useful in this
+      case.</t>
 
       <t>When the device is informed that it is behind a captive portal it
       SHOULD:</t>
 
       <t><list style="numbers">
-          <t>Not initiate new IP connections until the CP has been satisfied
-          (other than those to the captive portal page and connectivity
-          checks). Existing connections should be quiesced (this will happen
-          more often than some expect -- for example, the user purchases 1
-          hour of Internet at a cafe and stays there for 3 hours -- this will
-          "interrupt" the user a few times).</t>
+          <t> Not initiate new IP connections until the CP has been satisfied
+          (other than those to the captive portal browser session and
+          connectivity checks). Existing connections should be quiesced (this
+          will happen more often than some expect -- for example, the user
+          purchases 1 hour of Internet at a cafe and stays there for 3 hours
+          -- this will "interrupt" the user a few times).</t>
 
           <t>Present a dialog box to the user informing them that they are
           behind a captive portal and ask if they wish to proceed.</t>
@@ -380,8 +397,9 @@
       bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
       [RFC2939].</t>
 
-      <t>The IANA is also requested at assign an IPv6 RA Type code (TBA3) from
-      the [TODO] registry. Thanks IANA!</t>
+      <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA3)
+      from the "IPv6 Neighbor Discovery Option Formats" registry. Thanks
+      IANA!</t>
     </section>
 
     <section anchor="security" title="Security Considerations">
@@ -391,7 +409,7 @@
       default gateway (and so intercept all the victim's traffic), this does
       not provide them with significantly more capabilities. Fake DHCP servers
       / fake RAs are currently a security concern - this doesn't make them any
-      better or worse. </t>
+      better or worse.</t>
 
       <t>Devices and systems that automatically connect to an open network
       could potentially be tracked using the techniques described in this
@@ -420,8 +438,9 @@
       Thanks to Wes George for supplying the IPv6 text. Thanks to Lorenzo and
       Erik for the V6 RA kick in the pants.</t>
 
-      <t>Thanks for Fred Baker for detailed review and comments. Also great
-      thanks to Joel Jaeggli for providing feedback and text.</t>
+      <t>Thanks to Fred Baker and Asbjorn Tonnesen for detailed review and
+      comments. Also great thanks to Joel Jaeggli for providing feedback and
+      text.</t>
     </section>
   </middle>
 
@@ -432,6 +451,18 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 06 to 07:</t>
+
+      <t><list style="symbols">
+          <t>Incoroprated a bunch of comments from Asbjorn Tonnesen</t>
+
+          <t>Clarified that this document is only for the DHCP bits, not
+          everything.</t>
+
+          <t>CP's *can* do HTTP redirects to DNS banes, as long as they allow
+          access to all needed services.</t>
+        </list></t>
 
       <t>From 05 to 06:</t>
 

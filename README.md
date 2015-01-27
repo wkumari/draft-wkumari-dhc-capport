@@ -116,8 +116,9 @@ Kumari, et al.            Expires July 31, 2015                 [Page 2]
 Internet-Draft             DHCP Captive-Portal              January 2015
 
 
-   [ Ed note: This solution complements 802.11U / WiFi Passpoint.  It
-   can be quickly and easily deployed, and works on wired as well ]
+   [ Ed note: This solution is somewhat similar / complements 802.11u /
+   WiFi Passpoint Online Sign-up, but is much simpler, easier to deploy,
+   and works on wired as well ]
 
 1.1.  Requirements notation
 
@@ -163,7 +164,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    appears to hang, saying something like "Downloading Proxy Script", or
    simply "The Internet doesn't work"), and they become frustrated.
    This may result in them not purchasing the Internet access provided
-   by the captive portal.  The connectivity attempts may also facilitate
 
 
 
@@ -172,6 +172,7 @@ Kumari, et al.            Expires July 31, 2015                 [Page 3]
 Internet-Draft             DHCP Captive-Portal              January 2015
 
 
+   by the captive portal.  The connectivity attempts may also facilitate
    OS fingerprinting even before a client attempts to connect to the
    portal itself.
 
@@ -215,7 +216,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    This technique has issues similar to the HTTP solution, but may also
    break other protocols, and may expose more of the user's private
    information.
-
 
 
 

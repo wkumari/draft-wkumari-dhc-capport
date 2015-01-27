@@ -122,8 +122,9 @@
       portals; instead, it recognises that their apparent necessity, and
       attempts to improve the user experience.</t>
 
-      <t>[ Ed note: This solution complements 802.11U / WiFi Passpoint. It can
-      be quickly and easily deployed, and works on wired as well ]</t>
+      <t>[ Ed note: This solution is somewhat similar / complements 802.11u /
+      WiFi Passpoint Online Sign-up, but is much simpler, easier to deploy,
+      and works on wired as well ]</t>
 
       <section title="Requirements notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",

@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-08" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-09" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -21,8 +21,8 @@
   <front>
     <!--c WK: Set long title. -->
 
-    <title abbrev="DHCP Captive-Portal">Captive-Portal identification in
-    DHCPv4 / RA</title>
+    <title abbrev="DHCP Captive-Portal">Captive-Portal identification in DHCP
+    / RA</title>
 
     <author fullname="Warren Kumari" initials="W." surname="Kumari">
       <organization>Google</organization>
@@ -99,9 +99,9 @@
       captive portal mode. This highly restricts what the customer can do
       until the customer has authenticated.</t>
 
-      <t>This document describes a DHCPv4 option (and an IPv6 RA extension) to
-      inform clients that they are behind some sort of captive portal device,
-      and that they will need to authenticate to get Internet Access.</t>
+      <t>This document describes a DHCP option (and a RA extension) to inform
+      clients that they are behind some sort of captive portal device, and
+      that they will need to authenticate to get Internet Access.</t>
     </abstract>
   </front>
 
@@ -111,13 +111,12 @@
       device and agree to an acceptable use policy and / or provide billing
       information before they can access the Internet.</t>
 
-      <t>Many devices perform DNS, HHTP, and / or IP hijacks in order to
-      present the user with the captive portal web page. These kludgy
-      workarounds and techniques resemble attacks that DNSSEC and TLS are
-      intended to protect against. This document describes a DHCPv4 option
-      (Captive Portal) and an IPv6 Router Advertisement (RA) extension that
-      informs clients that they are behind a captive portal device and how to
-      contact it.</t>
+      <t>Many devices perform DNS, HTTP, and / or IP hijacks in order to
+      present the user with the captive portal web page. These workarounds and
+      techniques resemble attacks that DNSSEC and TLS are intended to protect
+      against. This document describe a DHCP option (Captive Portal) and an
+      IPv6 Router Advertisement (RA) extension that informs clients that they
+      are behind a captive portal device and how to contact it.</t>
 
       <t>This document neither condones nor condemns the use of captive
       portals; instead, it recognises that their apparent necessity, and
@@ -218,45 +217,66 @@
       </section>
     </section>
 
-    <section title="The Captive-Portal IPv4 DHCP Option">
-      <t>The Captive Portal DHCP Option (TBA1) informs an IPv4 client that it
-      is behind a captive portal and provides the URI to access an
-      authentication page. This is primarily intended to improve the user
-      experience; for the foreseeable future (until such time that most
-      systems implement this technique) captive portals will still need to
-      implement the interception techniques to serve legacy clients.</t>
-
-      <t>The format of the DHCP Captive-Portal DHCP option is shown
-      below.<figure>
-          <artwork><![CDATA[  Code    Len          Data
-  +------+------+------+------+------+--   --+-----+
-  | code |  len |  URI                  ...        |
-  +------+------+------+------+------+--   --+-----+
-]]></artwork>
-        </figure></t>
-
-      <t><list style="symbols">
-          <t>Code: The Captive-Portal DHCP Option (TBA1)</t>
-
-          <t>Len: The length, in octets of the URI.</t>
-
-          <t>URI: The URI of the authentication page that the user should
-          connect to.</t>
-        </list></t>
+    <section title="The Captive-Portal DHCP Option">
+      <t>The Captive Portal DHCP Option informs the client that it is behind a
+      captive portal and provides the URI to access an authentication page.
+      This is primarily intended to improve the user experience; for the
+      foreseeable future (until such time that most systems implement this
+      technique) captive portals will still need to implement the interception
+      techniques to serve legacy clients.</t>
 
       <t>In order to avoid having to perform DNS interception, the URI SHOULD
-      contain an IPv4 address literal.</t>
-
-      <t>For cases requiring SSL/TLS (collection of billing information for
-      example), the IP literal can redirect to a URI containing a DNS
-      name.</t>
+      contain an address literal, but MAY contain a DNS name if the captive
+      portal allows the client to perform DNS requests to resolve the name.
+      </t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
       need to allow DNS from unauthenticated clients (as we don't want to
       force users to use the CP's provided DNS) and some users would use this
-      to DNS Tunnel out. This would make the CP admin block external
-      recursives).]</t>
+      to DNS Tunnel out, which may make the CP admin block external
+      recursives). DNS is needed to allow operators to serve SSL/TLS for e.g
+      billing (certificates with IP addresses are frowned upon :-))]</t>
+
+      <section title="IPv4 DHCP Option">
+        <t>The format of the IPv4 Captive-Portal DHCP option is shown
+        below.<figure>
+            <artwork><![CDATA[  Code    Len          Data
+  +------+------+------+------+------+--   --+-----+
+  | code |  len |  URI                  ...        |
+  +------+------+------+------+------+--   --+-----+
+]]></artwork>
+          </figure></t>
+
+        <t><list style="symbols">
+            <t>Code: The Captive-Portal DHCPv4 Option (TBA1)</t>
+
+            <t>Len: The length, in octets of the URI.</t>
+
+            <t>URI: The URI of the authentication page that the user should
+            connect to.</t>
+          </list></t>
+      </section>
+
+      <section title="IPv6 DHCP Option">
+        <t>The format of the IPv6 Captive-Portal DHCP option is shown below.
+        Other than the code it is identical to the IPv4 DHCP option.<figure>
+            <artwork><![CDATA[  Code    Len          Data
+  +------+------+------+------+------+--   --+-----+
+  | code |  len |  URI                  ...        |
+  +------+------+------+------+------+--   --+-----+
+]]></artwork>
+          </figure></t>
+
+        <t><list style="symbols">
+            <t>Code: The Captive-Portal DHCPv6Option (TBA2)</t>
+
+            <t>Len: The length, in octets of the URI.</t>
+
+            <t>URI: The URI of the authentication page that the user should
+            connect to.</t>
+          </list></t>
+      </section>
     </section>
 
     <section title="The Captive-Portal IPv6 RA Option">
@@ -277,7 +297,7 @@
         </figure></t>
 
       <t><list style="hanging">
-          <t hangText="Type">TBA2</t>
+          <t hangText="Type">TBA3</t>
 
           <t hangText="Length">8-bit unsigned integer. The length of the
           option (including the Type and Length fields) in units of 8
@@ -315,12 +335,20 @@
       from the captive portal that it has been satisfied. [ Editor note: It
       may be useful to write another document that specifies how a client can
       determine that it has passed the CP. This document could also contain
-      advice to implmentors on only intercepting actually needed ports, how to
-      advertise that the CP needs to be statisfied *again*, etc. This should
+      advice to implementors on only intercepting actually needed ports, how
+      to advertise that the CP needs to be satisfied *again*, etc. This should
       not be done in this document though. ] The connectivity test may also
       need to be used if the captive portal times out the user session and
       needs the user to re-authenticate. The operating system may still find
       the information about the captive portal URI useful in this case.</t>
+
+      <t>If the device gets different URIs (for example, via DHCPv6 and IPv6
+      RA) it should try them in the following order: DHCPv4, DHCPv6, RA.</t>
+
+      <t>[Ed note: This ordering is somewhat arbitrary - this order was chosen
+      because this is the order I expect the code to be implemented by OS
+      vendors, and I'd like the same behavior from newer and older devices to
+      make troubleshooting easier.]</t>
 
       <t>When the device is informed that it is behind a captive portal it
       should:</t>
@@ -361,11 +389,14 @@
     </section>
 
     <section title="IANA Considerations">
-      <t>This document defines the DHCP Captive-Portal option and requires
-      assignment of an option code (TBA1) to be assigned from "Bootp and DHCP
-      options" registry (http://www.iana.org/assignments/
+      <t>This document defines two DHCP Captive-Portal options, one for IPv6
+      and one for IPv6. It requires assignment of an option code (TBA1) to be
+      assigned from "Bootp and DHCP options" registry
+      (http://www.iana.org/assignments/
       bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
-      [RFC2939].</t>
+      [RFC2939]. It also requires assignment of an option code (TBA2) from the
+      "DHCPv6 and DHCPv6 options" registry
+      (http://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml).</t>
 
       <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA2)
       from the "IPv6 Neighbor Discovery Option Formats" registry. Thanks
@@ -416,6 +447,13 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 08 to 09:</t>
+
+      <t><list style="symbols">
+          <t>Put back the DHCPv6 option, and made the fact that is separate
+          from the DHCPv4 option clearer (Ted Lemon)</t>
+        </list></t>
 
       <t>From 07 to 08:</t>
 

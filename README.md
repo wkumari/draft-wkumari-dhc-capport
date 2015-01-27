@@ -15,8 +15,8 @@ Expires: July 31, 2015                                     Shinkuro Inc.
                                                         January 27, 2015
 
 
-              Captive-Portal identification in DHCPv4 / RA
-                      draft-wkumari-dhc-capport-08
+               Captive-Portal identification in DHCP / RA
+                      draft-wkumari-dhc-capport-09
 
 Abstract
 
@@ -25,10 +25,9 @@ Abstract
    captive portal mode.  This highly restricts what the customer can do
    until the customer has authenticated.
 
-   This document describes a DHCPv4 option (and an IPv6 RA extension) to
-   inform clients that they are behind some sort of captive portal
-   device, and that they will need to authenticate to get Internet
-   Access.
+   This document describes a DHCP option (and a RA extension) to inform
+   clients that they are behind some sort of captive portal device, and
+   that they will need to authenticate to get Internet Access.
 
 Status of This Memo
 
@@ -51,6 +50,7 @@ Copyright Notice
 
    Copyright (c) 2015 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
+
 
 
 
@@ -78,15 +78,17 @@ Table of Contents
      2.1.  DNS Redirection . . . . . . . . . . . . . . . . . . . . .   4
      2.2.  HTTP Redirection  . . . . . . . . . . . . . . . . . . . .   4
      2.3.  IP Hijacking  . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  The Captive-Portal IPv4 DHCP Option . . . . . . . . . . . . .   4
-   4.  The Captive-Portal IPv6 RA Option . . . . . . . . . . . . . .   5
+   3.  The Captive-Portal DHCP Option  . . . . . . . . . . . . . . .   5
+     3.1.  IPv4 DHCP Option  . . . . . . . . . . . . . . . . . . . .   5
+     3.2.  IPv6 DHCP Option  . . . . . . . . . . . . . . . . . . . .   5
+   4.  The Captive-Portal IPv6 RA Option . . . . . . . . . . . . . .   6
    5.  Use of the Captive-Portal Option  . . . . . . . . . . . . . .   6
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   8
-   Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .   8
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
@@ -94,20 +96,18 @@ Table of Contents
    device and agree to an acceptable use policy and / or provide billing
    information before they can access the Internet.
 
-   Many devices perform DNS, HHTP, and / or IP hijacks in order to
-   present the user with the captive portal web page.  These kludgy
-   workarounds and techniques resemble attacks that DNSSEC and TLS are
-   intended to protect against.  This document describes a DHCPv4 option
-   (Captive Portal) and an IPv6 Router Advertisement (RA) extension that
-   informs clients that they are behind a captive portal device and how
-   to contact it.
+   Many devices perform DNS, HTTP, and / or IP hijacks in order to
+   present the user with the captive portal web page.  These workarounds
+   and techniques resemble attacks that DNSSEC and TLS are intended to
+   protect against.  This document describe a DHCP option (Captive
+   Portal) and an IPv6 Router Advertisement (RA) extension that informs
+   clients that they are behind a captive portal device and how to
+   contact it.
 
    This document neither condones nor condemns the use of captive
    portals; instead, it recognises that their apparent necessity, and
    attempts to improve the user experience.
 
-   [ Ed note: This solution complements 802.11U / WiFi Passpoint.  It
-   can be quickly and easily deployed, and works on wired as well ]
 
 
 
@@ -115,6 +115,9 @@ Kumari, et al.            Expires July 31, 2015                 [Page 2]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
+
+   [ Ed note: This solution complements 802.11U / WiFi Passpoint.  It
+   can be quickly and easily deployed, and works on wired as well ]
 
 1.1.  Requirements notation
 
@@ -161,9 +164,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    simply "The Internet doesn't work"), and they become frustrated.
    This may result in them not purchasing the Internet access provided
    by the captive portal.  The connectivity attempts may also facilitate
-   OS fingerprinting even before a client attempts to connect to the
-   portal itself.
-
 
 
 
@@ -171,6 +171,9 @@ Kumari, et al.            Expires July 31, 2015                 [Page 3]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
+
+   OS fingerprinting even before a client attempts to connect to the
+   portal itself.
 
 2.1.  DNS Redirection
 
@@ -213,12 +216,9 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    break other protocols, and may expose more of the user's private
    information.
 
-3.  The Captive-Portal IPv4 DHCP Option
 
-   The Captive Portal DHCP Option (TBA1) informs an IPv4 client that it
-   is behind a captive portal and provides the URI to access an
-   authentication page.  This is primarily intended to improve the user
-   experience; for the foreseeable future (until such time that most
+
+
 
 
 
@@ -228,35 +228,68 @@ Kumari, et al.            Expires July 31, 2015                 [Page 4]
 Internet-Draft             DHCP Captive-Portal              January 2015
 
 
-   systems implement this technique) captive portals will still need to
-   implement the interception techniques to serve legacy clients.
+3.  The Captive-Portal DHCP Option
 
-   The format of the DHCP Captive-Portal DHCP option is shown below.
+   The Captive Portal DHCP Option informs the client that it is behind a
+   captive portal and provides the URI to access an authentication page.
+   This is primarily intended to improve the user experience; for the
+   foreseeable future (until such time that most systems implement this
+   technique) captive portals will still need to implement the
+   interception techniques to serve legacy clients.
+
+   In order to avoid having to perform DNS interception, the URI SHOULD
+   contain an address literal, but MAY contain a DNS name if the captive
+   portal allows the client to perform DNS requests to resolve the name.
+
+   [ED NOTE: Using an address literal is less than ideal, but better
+   than the alternatives.  Recommending a DNS name means that the CP
+   would need to allow DNS from unauthenticated clients (as we don't
+   want to force users to use the CP's provided DNS) and some users
+   would use this to DNS Tunnel out, which may make the CP admin block
+   external recursives).  DNS is needed to allow operators to serve SSL/
+   TLS for e.g billing (certificates with IP addresses are frowned upon
+   :-))]
+
+3.1.  IPv4 DHCP Option
+
+   The format of the IPv4 Captive-Portal DHCP option is shown below.
 
      Code    Len          Data
      +------+------+------+------+------+--   --+-----+
      | code |  len |  URI                  ...        |
      +------+------+------+------+------+--   --+-----+
 
-   o  Code: The Captive-Portal DHCP Option (TBA1)
+   o  Code: The Captive-Portal DHCPv4 Option (TBA1)
 
    o  Len: The length, in octets of the URI.
 
    o  URI: The URI of the authentication page that the user should
       connect to.
 
-   In order to avoid having to perform DNS interception, the URI SHOULD
-   contain an IPv4 address literal.
+3.2.  IPv6 DHCP Option
 
-   For cases requiring SSL/TLS (collection of billing information for
-   example), the IP literal can redirect to a URI containing a DNS name.
+   The format of the IPv6 Captive-Portal DHCP option is shown below.
+   Other than the code it is identical to the IPv4 DHCP option.
 
-   [ED NOTE: Using an address literal is less than ideal, but better
-   than the alternatives.  Recommending a DNS name means that the CP
-   would need to allow DNS from unauthenticated clients (as we don't
-   want to force users to use the CP's provided DNS) and some users
-   would use this to DNS Tunnel out.  This would make the CP admin block
-   external recursives).]
+     Code    Len          Data
+     +------+------+------+------+------+--   --+-----+
+     | code |  len |  URI                  ...        |
+     +------+------+------+------+------+--   --+-----+
+
+
+
+
+Kumari, et al.            Expires July 31, 2015                 [Page 5]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
+   o  Code: The Captive-Portal DHCPv6Option (TBA2)
+
+   o  Len: The length, in octets of the URI.
+
+   o  URI: The URI of the authentication page that the user should
+      connect to.
 
 4.  The Captive-Portal IPv6 RA Option
 
@@ -274,15 +307,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                Figure 2: Captive-Portal RA Option Format
 
-   Type  TBA2
-
-
-
-
-Kumari, et al.            Expires July 31, 2015                 [Page 5]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
+   Type  TBA3
 
    Length  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) in units of 8 bytes.
@@ -308,6 +333,13 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    vendors.  This document provides a very high level example of what
    could be done with this information.
 
+
+
+Kumari, et al.            Expires July 31, 2015                 [Page 6]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
    Many operating systems / applications already include a "connectivity
    test" to determine if they are behind a captive portal (for example,
    attempting to fetch a specific URL and looking for a specific string
@@ -318,13 +350,21 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    signal from the captive portal that it has been satisfied. [ Editor
    note: It may be useful to write another document that specifies how a
    client can determine that it has passed the CP.  This document could
-   also contain advice to implmentors on only intercepting actually
-   needed ports, how to advertise that the CP needs to be statisfied
+   also contain advice to implementors on only intercepting actually
+   needed ports, how to advertise that the CP needs to be satisfied
    *again*, etc.  This should not be done in this document though. ] The
    connectivity test may also need to be used if the captive portal
    times out the user session and needs the user to re-authenticate.
    The operating system may still find the information about the captive
    portal URI useful in this case.
+
+   If the device gets different URIs (for example, via DHCPv6 and IPv6
+   RA) it should try them in the following order: DHCPv4, DHCPv6, RA.
+
+   [Ed note: This ordering is somewhat arbitrary - this order was chosen
+   because this is the order I expect the code to be implemented by OS
+   vendors, and I'd like the same behavior from newer and older devices
+   to make troubleshooting easier.]
 
    When the device is informed that it is behind a captive portal it
    should:
@@ -332,14 +372,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    1.  Not initiate new IP connections until the CP has been satisfied
        (other than those to the captive portal browser session and
        connectivity checks).  Existing connections should be quiesced
-
-
-
-Kumari, et al.            Expires July 31, 2015                 [Page 6]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
-
        (this will happen more often than some expect -- for example, the
        user purchases 1 hour of Internet at a cafe and stays there for 3
        hours -- this will "interrupt" the user a few times).
@@ -357,6 +389,13 @@ Internet-Draft             DHCP Captive-Portal              January 2015
        authenticate more easily in the future) - the browser should keep
        these CP cookies separate from other cookies.
 
+
+
+Kumari, et al.            Expires July 31, 2015                 [Page 7]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
    4.  Once the user has authenticated, normal IP connectivity should
        resume.  The CP success page should contain a string, e.g
        "CP_SATISFIED."  The OS can then use this string to provide
@@ -371,10 +410,14 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 6.  IANA Considerations
 
-   This document defines the DHCP Captive-Portal option and requires
-   assignment of an option code (TBA1) to be assigned from "Bootp and
-   DHCP options" registry (http://www.iana.org/assignments/ bootp-dhcp-
-   parameters/bootp-dhcp-parameters.xml), as specified in [RFC2939].
+   This document defines two DHCP Captive-Portal options, one for IPv6
+   and one for IPv6.  It requires assignment of an option code (TBA1) to
+   be assigned from "Bootp and DHCP options" registry (http://www.iana
+   .org/assignments/ bootp-dhcp-parameters/bootp-dhcp-parameters.xml),
+   as specified in [RFC2939].  It also requires assignment of an option
+   code (TBA2) from the "DHCPv6 and DHCPv6 options" registry
+   (http://www.iana.org/assignments/dhcpv6-parameters/
+   dhcpv6-parameters.xml).
 
    IANA is also requested to assign an IPv6 RA Option Type code (TBA2)
    from the "IPv6 Neighbor Discovery Option Formats" registry.  Thanks
@@ -387,15 +430,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    As an attacker with this capability could simply list himself as the
    default gateway (and so intercept all the victim's traffic), this
    does not provide them with significantly more capabilities.  Fake
-
-
-
-
-Kumari, et al.            Expires July 31, 2015                 [Page 7]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
-
    DHCP servers / fake RAs are currently a security concern - this
    doesn't make them any better or worse.
 
@@ -410,6 +444,14 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    doing away with the need for interception, we think that users will
    be less likely to disable useful security safeguards like DNSSEC
    validation, VPNs, etc.  In addition, because the system knows that it
+
+
+
+Kumari, et al.            Expires July 31, 2015                 [Page 8]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
    is behind a captive portal, it can know not to send cookies,
    credentials, etc.  Redirection to a portal where TLS can be used
    without hijacking can ameliorate some of the implications of
@@ -434,6 +476,11 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
+   From 08 to 09:
+
+   o  Put back the DHCPv6 option, and made the fact that is separate
+      from the DHCPv4 option clearer (Ted Lemon)
+
    From 07 to 08:
 
    o  Incorporated comments from Ted Lemon.  Made the document much
@@ -445,13 +492,6 @@ Appendix A.  Changes / Author Notes.
 
    o  Incoroprated a bunch of comments from Asbjorn Tonnesen
 
-
-
-Kumari, et al.            Expires July 31, 2015                 [Page 8]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
-
    o  Clarified that this document is only for the DHCP bits, not
       everything.
 
@@ -459,6 +499,14 @@ Internet-Draft             DHCP Captive-Portal              January 2015
       access to all needed services.
 
    From 05 to 06:
+
+
+
+
+Kumari, et al.            Expires July 31, 2015                 [Page 9]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
 
    o  Integrated comments from Joel, as below
 
@@ -499,15 +547,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    o  Simplified / cleaned up text (I'm inclined to waffle on, then trim
       the fluff)
 
-
-
-
-
-Kumari, et al.            Expires July 31, 2015                 [Page 9]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
-
    o  This was written on a United flight with in-flight WiFi -
       unfortunately I couldn't use it because their CP was borked. :-P
 
@@ -516,6 +555,14 @@ Internet-Draft             DHCP Captive-Portal              January 2015
    o  Added the IPv6 RA stuff.
 
    From -00 to -01:
+
+
+
+
+Kumari, et al.            Expires July 31, 2015                [Page 10]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
 
    o  Many nits and editorial changes.
 
@@ -551,19 +598,6 @@ Authors' Addresses
    Email: ebersman-ietf@dragon.net
 
 
-
-
-
-
-
-
-
-
-Kumari, et al.            Expires July 31, 2015                [Page 10]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
-
    Steve Sheng
    Internet Corporation for Assigned Names and Numbers
    12025 Waterfront Drive, Suite 300
@@ -572,40 +606,6 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
    Phone: +1.310.301.5800
    Email: steve.sheng@icann.org
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

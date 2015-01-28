@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-09" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-10" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="27" month="January" year="2015"/>
+    <date day="28" month="January" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -218,18 +218,24 @@
       </section>
     </section>
 
-    <section title="The Captive-Portal DHCP Option">
-      <t>The Captive Portal DHCP Option informs the client that it is behind a
-      captive portal and provides the URI to access an authentication page.
-      This is primarily intended to improve the user experience; for the
+    <section title="The Captive-Portal Option">
+      <t>The Captive Portal DHCP / RA Option informs the client that it is
+      behind a captive portal and provides the URI to access an authentication
+      page. This is primarily intended to improve the user experience; for the
       foreseeable future (until such time that most systems implement this
       technique) captive portals will still need to implement the interception
       techniques to serve legacy clients.</t>
 
+      <t>In order to support multiple "classes" of clients (e.g: IPv4 only,
+      IPv6 only with DHCPv6, IPv6 only with RA) the captive portal can provide
+      the URI via multiple methods (IPv4 DHCP, IPv6 DHCP, IPv6 RA). The
+      captive portal operator should ensure that the URIs handed out are
+      equivalent to reduce the chance of operational problems.</t>
+
       <t>In order to avoid having to perform DNS interception, the URI SHOULD
       contain an address literal, but MAY contain a DNS name if the captive
-      portal allows the client to perform DNS requests to resolve the name.
-      </t>
+      portal allows the client to perform DNS requests to resolve the
+      name.</t>
 
       <t>[ED NOTE: Using an address literal is less than ideal, but better
       than the alternatives. Recommending a DNS name means that the CP would
@@ -343,14 +349,6 @@
       needs the user to re-authenticate. The operating system may still find
       the information about the captive portal URI useful in this case.</t>
 
-      <t>If the device gets different URIs (for example, via DHCPv6 and IPv6
-      RA) it should try them in the following order: DHCPv4, DHCPv6, RA.</t>
-
-      <t>[Ed note: This ordering is somewhat arbitrary - this order was chosen
-      because this is the order I expect the code to be implemented by OS
-      vendors, and I'd like the same behavior from newer and older devices to
-      make troubleshooting easier.]</t>
-
       <t>When the device is informed that it is behind a captive portal it
       should:</t>
 
@@ -449,6 +447,16 @@
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
+      <t>From 09 to 10:</t>
+
+      <t><list style="symbols">
+          <t>Ted Lemon and Joel Jaeggli: there's no benefit to insisting on an
+          ordering. I think you should just say that the ordering is
+          indeterminate, and if different mechanisms give non-equivalent
+          answers, this is likely to cause operational problems in
+          practice.</t>
+        </list></t>
+
       <t>From 08 to 09:</t>
 
       <t><list style="symbols">
@@ -462,7 +470,7 @@
           <t>Incorporated comments from Ted Lemon. Made the document much
           shorter.</t>
 
-          <t>Some cleanup. </t>
+          <t>Some cleanup.</t>
         </list></t>
 
       <t>From 06 to 07:</t>

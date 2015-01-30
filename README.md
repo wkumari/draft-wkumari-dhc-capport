@@ -7,16 +7,16 @@
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Informational                            O. Gudmundsson
-Expires: August 1, 2015                                    Shinkuro Inc.
+Expires: August 3, 2015                                       CloudFlare
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                        January 28, 2015
+                                                        January 30, 2015
 
 
                Captive-Portal identification in DHCP / RA
-                      draft-wkumari-dhc-capport-10
+                      draft-wkumari-dhc-capport-11
 
 Abstract
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 1, 2015.
+   This Internet-Draft will expire on August 3, 2015.
 
 Copyright Notice
 
@@ -55,7 +55,7 @@ Copyright Notice
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 1]
+Kumari, et al.           Expires August 3, 2015                 [Page 1]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 2]
+Kumari, et al.           Expires August 3, 2015                 [Page 2]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -167,7 +167,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 3]
+Kumari, et al.           Expires August 3, 2015                 [Page 3]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -223,7 +223,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 4]
+Kumari, et al.           Expires August 3, 2015                 [Page 4]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -279,7 +279,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 5]
+Kumari, et al.           Expires August 3, 2015                 [Page 5]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -335,7 +335,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 6]
+Kumari, et al.           Expires August 3, 2015                 [Page 6]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -391,7 +391,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 7]
+Kumari, et al.           Expires August 3, 2015                 [Page 7]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -447,7 +447,7 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-Kumari, et al.           Expires August 1, 2015                 [Page 8]
+Kumari, et al.           Expires August 3, 2015                 [Page 8]
 
 Internet-Draft             DHCP Captive-Portal              January 2015
 
@@ -484,6 +484,10 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
+   From 10 to 11:
+
+   o  Updared Olafur's affiliation.
+
    From 09 to 10:
 
    o  Ted Lemon and Joel Jaeggli: there's no benefit to insisting on an
@@ -496,17 +500,18 @@ Appendix A.  Changes / Author Notes.
    o  Put back the DHCPv6 option, and made the fact that is separate
       from the DHCPv4 option clearer (Ted Lemon)
 
+
+
+
+Kumari, et al.           Expires August 3, 2015                 [Page 9]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
    From 07 to 08:
 
    o  Incorporated comments from Ted Lemon.  Made the document much
       shorter.
-
-
-
-Kumari, et al.           Expires August 1, 2015                 [Page 9]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
 
    o  Some cleanup.
 
@@ -550,19 +555,20 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
    o  Connectivity Check test.
 
+
+
+
+
+Kumari, et al.           Expires August 3, 2015                [Page 10]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
+
+
    o  Posting just before the draft cutoff - "I love deadlines.  I love
       the whooshing noise they make as they go by." -- Douglas Adams,
       The Salmon of Doubt
 
    From -02 to 03:
-
-
-
-
-Kumari, et al.           Expires August 1, 2015                [Page 10]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
-
 
    o  Removed the DHCPv6 stuff (as suggested / requested by Erik Kline)
 
@@ -598,26 +604,26 @@ Authors' Addresses
 
 
    Olafur Gudmundsson
-   Shinkuro Inc.
-   4922 Fairmont Av, Suite 250
-   Bethesda, MD  20814
+   CloudFlare
+   San Francisco, CA  94107
    USA
 
-   Email: ogud@ogud.com
+   Email: olafur@cloudflare.com
+
+
+
+
+
+
+Kumari, et al.           Expires August 3, 2015                [Page 11]
+
+Internet-Draft             DHCP Captive-Portal              January 2015
 
 
    Paul Ebersman
    Comcast
 
    Email: ebersman-ietf@dragon.net
-
-
-
-
-
-Kumari, et al.           Expires August 1, 2015                [Page 11]
-
-Internet-Draft             DHCP Captive-Portal              January 2015
 
 
    Steve Sheng
@@ -665,11 +671,5 @@ Internet-Draft             DHCP Captive-Portal              January 2015
 
 
 
-
-
-
-
-
-
-Kumari, et al.           Expires August 1, 2015                [Page 12]
+Kumari, et al.           Expires August 3, 2015                [Page 12]
 ```

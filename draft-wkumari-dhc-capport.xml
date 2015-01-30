@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-10" ipr="trust200902">
+<rfc category="info" docName="draft-wkumari-dhc-capport-11" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -43,22 +43,22 @@
     </author>
 
     <author fullname="Olafur Gudmundsson" initials="O." surname="Gudmundsson">
-      <organization>Shinkuro Inc.</organization>
+      <organization>CloudFlare</organization>
 
       <address>
         <postal>
-          <street>4922 Fairmont Av, Suite 250</street>
+          <street/>
 
-          <city>Bethesda</city>
+          <city>San Francisco</city>
 
-          <region>MD</region>
+          <region>CA</region>
 
-          <code>20814</code>
+          <code>94107</code>
 
           <country>USA</country>
         </postal>
 
-        <email>ogud@ogud.com</email>
+        <email>olafur@cloudflare.com</email>
       </address>
     </author>
 
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="28" month="January" year="2015"/>
+    <date day="30" month="January" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -446,6 +446,10 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 10 to 11:<list style="symbols">
+          <t>Updared Olafur's affiliation.</t>
+        </list></t>
 
       <t>From 09 to 10:</t>
 

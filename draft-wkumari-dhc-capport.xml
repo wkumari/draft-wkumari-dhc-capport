@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-wkumari-dhc-capport-11" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-12" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="30" month="January" year="2015"/>
+    <date day="04" month="March" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -114,9 +114,10 @@
       <t>Many devices perform DNS, HTTP, and / or IP hijacks in order to
       present the user with the captive portal web page. These workarounds and
       techniques resemble attacks that DNSSEC and TLS are intended to protect
-      against. This document describe a DHCP option (Captive Portal) and an
-      IPv6 Router Advertisement (RA) extension that informs clients that they
-      are behind a captive portal device and how to contact it.</t>
+      against. This document describe a DHCP (<xref target="RFC2131"/>) option
+      (Captive Portal) and an IPv6 Router Advertisement (RA) (<xref
+      target="RFC4861"/>) extension that informs clients that they are behind
+      a captive portal device and how to contact it.</t>
 
       <t>This document neither condones nor condemns the use of captive
       portals; instead, it recognises that their apparent necessity, and
@@ -227,10 +228,11 @@
       techniques to serve legacy clients.</t>
 
       <t>In order to support multiple "classes" of clients (e.g: IPv4 only,
-      IPv6 only with DHCPv6, IPv6 only with RA) the captive portal can provide
-      the URI via multiple methods (IPv4 DHCP, IPv6 DHCP, IPv6 RA). The
-      captive portal operator should ensure that the URIs handed out are
-      equivalent to reduce the chance of operational problems.</t>
+      IPv6 only with DHCPv6(<xref target="RFC3315"/>), IPv6 only with RA) the
+      captive portal can provide the URI via multiple methods (IPv4 DHCP, IPv6
+      DHCP, IPv6 RA). The captive portal operator should ensure that the URIs
+      handed out are equivalent to reduce the chance of operational
+      problems.</t>
 
       <t>In order to avoid having to perform DNS interception, the URI SHOULD
       contain an address literal, but MAY contain a DNS name if the captive
@@ -250,13 +252,13 @@
         below.<figure>
             <artwork><![CDATA[  Code    Len          Data
   +------+------+------+------+------+--   --+-----+
-  | code |  len |  URI                  ...        |
+  | code | len  |  URI                  ...        |
   +------+------+------+------+------+--   --+-----+
 ]]></artwork>
           </figure></t>
 
         <t><list style="symbols">
-            <t>Code: The Captive-Portal DHCPv4 Option (TBA1)</t>
+            <t>Code: The Captive-Portal DHCPv4 Option (TBA1) (one octet)</t>
 
             <t>Len: The length, in octets of the URI.</t>
 
@@ -267,22 +269,28 @@
 
       <section title="IPv6 DHCP Option">
         <t>The format of the IPv6 Captive-Portal DHCP option is shown below.
-        Other than the code it is identical to the IPv4 DHCP option.<figure>
-            <artwork><![CDATA[  Code    Len          Data
-  +------+------+------+------+------+--   --+-----+
-  | code |  len |  URI                  ...        |
-  +------+------+------+------+------+--   --+-----+
+        <figure>
+            <artwork><![CDATA[   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          option-code          |          option-len           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   .                      URI (variable length)                    .
+   |                              ...                              |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
 
         <t><list style="symbols">
-            <t>Code: The Captive-Portal DHCPv6Option (TBA2)</t>
+            <t>option-code: The Captive-Portal DHCPv6Option (TBA2) (two
+            octets)</t>
 
-            <t>Len: The length, in octets of the URI.</t>
+            <t>option-len: The length, in octets of the URI.</t>
 
             <t>URI: The URI of the authentication page that the user should
             connect to.</t>
-          </list></t>
+          </list>See <xref target="RFC7227"/>, Section 5.7 for more examples
+        of DHCP Options with URIs.</t>
       </section>
     </section>
 
@@ -349,16 +357,17 @@
       needs the user to re-authenticate. The operating system may still find
       the information about the captive portal URI useful in this case.</t>
 
-      <t>When the device is informed that it is behind a captive portal it
-      should:</t>
+      <t> When the device is informed that it is behind a captive portal on a
+      particular network interface, it should:</t>
 
       <t><list style="numbers">
-          <t>Not initiate new IP connections until the CP has been satisfied
-          (other than those to the captive portal browser session and
-          connectivity checks). Existing connections should be quiesced (this
-          will happen more often than some expect -- for example, the user
-          purchases 1 hour of Internet at a cafe and stays there for 3 hours
-          -- this will "interrupt" the user a few times).</t>
+          <t>Not initiate new IP connections through that interface until
+          until the CP has been satisfied (other than those to the captive
+          portal browser session and connectivity checks). Existing
+          connections should be quiesced (this will happen more often than
+          some expect -- for example, the user purchases 1 hour of Internet at
+          a cafe and stays there for 3 hours -- this will "interrupt" the user
+          a few times).</t>
 
           <t>Present a dialog box to the user informing them that they are
           behind a captive portal and ask if they wish to proceed.</t>
@@ -397,7 +406,7 @@
       "DHCPv6 and DHCPv6 options" registry
       (http://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml).</t>
 
-      <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA2)
+      <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA3)
       from the "IPv6 Neighbor Discovery Option Formats" registry. Thanks
       IANA!</t>
     </section>
@@ -441,11 +450,30 @@
 
   <back>
     <references title="Normative References">
-      <?rfc include='reference.RFC.2119'?>
+      <?rfc include='reference.RFC.2119'
+?>
+
+      <?rfc include='reference.RFC.3315'?>
+
+      <?rfc include='reference.RFC.7227'
+?>
+
+      <?rfc include='reference.RFC.2131'
+?>
+
+      <?rfc include='reference.RFC.4861'
+?>
     </references>
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From -11 to -12:</t>
+
+      <t><list style="symbols">
+          <t>Integrated a whole bunch of comments from Ted Lemon, including
+          missing references, track, missing size of DHCP option, </t>
+        </list></t>
 
       <t>From 10 to 11:<list style="symbols">
           <t>Updared Olafur's affiliation.</t>

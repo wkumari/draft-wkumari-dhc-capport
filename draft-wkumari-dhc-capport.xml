@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="10" month="April" year="2015"/>
+    <date day="21" month="April" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -101,7 +101,22 @@
 
       <t>This document describes a DHCP option (and a RA extension) to inform
       clients that they are behind some sort of captive portal device, and
-      that they will need to authenticate to get Internet Access.</t>
+      that they will need to authenticate to get Internet Access. It is not a
+      full solution to address all of the issues that clients may have with
+      captive portals, but it is designed to be used in larger solutions. </t>
+
+      <t>[ Ed note (remove): This document basically informs a client that it
+      is behind a captive portal, and where to contact the captive portal. It
+      does not remove the need for clients to probe for CPs, it merely speeds
+      up and simplifies discovery. It is not a captive portal interaction
+      protocol - that will be developed in another document - see the CP
+      mailing list: https://www.ietf.org/mailman/listinfo/captive-portals. It
+      is expected that this protocol will include things like a way to
+      determine how much time is remaining, how to re-authnticate, when the CP
+      has been satisfied, etc. ]</t>
+
+      <t>[ Ed note (remove): This document is being developed in github:
+      https://github.com/wkumari/draft-wkumari-dhc-capport . ]</t>
     </abstract>
   </front>
 
@@ -109,14 +124,19 @@
     <section title="Introduction">
       <t>In many environments, users need to connect to a captive portal
       device and agree to an acceptable use policy (AUP) and / or provide
-      billing information before they can access the Internet.</t>
+      billing information before they can access the Internet. It is
+      anticipated that the IETF will work on a more fully featured protocol at
+      some point, to ease interaction with Captive Portals. Regardless of how
+      that protocol operates, it is expected that this document will provide
+      needed functionality (the client will need to know when it is behind a
+      CP and how to contact it). </t>
 
       <t>In order to present users with the payment or AUP pages the captive
       portal device has to intercept the user's connections and redirect the
       user to the captive portal, using methods that are very similar to
       man-in-the-middle (MITM) attacks. As increasing focus is placed on
       security, and end nodes adopt a more secure stance, these interception
-      techniques will become less effective and / or more intrusive. </t>
+      techniques will become less effective and / or more intrusive.</t>
 
       <t>This document describe a DHCP (<xref target="RFC2131"/>) option
       (Captive Portal) and an IPv6 Router Advertisement (RA) (<xref
@@ -170,7 +190,7 @@
       VPNs, DNSSEC, TLS) are designed to protect against. The interaction of
       these protections and the interception leads to poor user experiences,
       such as long timeouts, inability to reach the captive portal web page,
-      and similar issues. </t>
+      and similar issues.</t>
 
       <t>The interception may also cause other issues for the user - for
       example, in some cases many tabs in a browser will be redirected, and
@@ -410,8 +430,7 @@
           should keep these CP cookies separate from other cookies.</t>
 
           <t>Once the user has authenticated, normal IP connectivity should
-          resume. The CP success page should contain a string, e.g
-          "CP_SATISFIED." The OS can then use this string to provide further
+          resume. The OS can then use this string to provide further
           information to the user.</t>
 
           <t>The device should (using an OS dependent method) expose to the

@@ -15,7 +15,7 @@ Expires: October 23, 2015                                     CloudFlare
                                                           April 21, 2015
 
 
-               Captive-Portal identification in DHCP / RA
+               Captive-Portal Identification in DHCP / RA
                       draft-wkumari-dhc-capport-13
 
 Abstract
@@ -29,7 +29,7 @@ Abstract
    clients that they are behind some sort of captive portal device, and
    that they will need to authenticate to get Internet Access.  It is
    not a full solution to address all of the issues that clients may
-   have with captive portals, but it is designed to be used in larger
+   have with captive portals; it is designed to be used in larger
    solutions.
 
    [ Ed note (remove): This document basically informs a client that it
@@ -40,7 +40,7 @@ Abstract
    see the CP mailing list: https://www.ietf.org/mailman/listinfo/
    captive-portals.  It is expected that this protocol will include
    things like a way to determine how much time is remaining, how to re-
-   authnticate, when the CP has been satisfied, etc. ]
+   authenticate, when the CP has been satisfied, etc. ]
 
    [ Ed note (remove): This document is being developed in github:
    https://github.com/wkumari/draft-wkumari-dhc-capport . ]
@@ -98,13 +98,13 @@ Table of Contents
      3.2.  IPv6 DHCP Option  . . . . . . . . . . . . . . . . . . . .   7
    4.  The Captive-Portal IPv6 RA Option . . . . . . . . . . . . . .   7
    5.  Use of the Captive-Portal Option  . . . . . . . . . . . . . .   8
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .  10
-   Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .  11
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
+   Appendix A.  new section  . . . . . . . . . . . . . . . . . . . .   9
+   Appendix B.  Changes / Author Notes.  . . . . . . . . . . . . . .  11
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
-
 
 
 
@@ -124,10 +124,10 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    anticipated that the IETF will work on a more fully featured protocol
    at some point, to ease interaction with Captive Portals.  Regardless
    of how that protocol operates, it is expected that this document will
-   provide needed functionality (the client will need to know when it is
-   behind a CP and how to contact it).
+   provide needed functionality because the client will need to know
+   when it is behind a CP and how to contact it.
 
-   In order to present users with the payment or AUP pages the captive
+   In order to present users with the payment or AUP pages, the captive
    portal device has to intercept the user's connections and redirect
    the user to the captive portal, using methods that are very similar
    to man-in-the-middle (MITM) attacks.  As increasing focus is placed
@@ -201,7 +201,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    example, in some cases many tabs in a browser will be redirected, and
    getting back to the original pages may be difficult, some
    applications may perform DNS requests when the computer connects to a
-   network and will cache the redirect DNS response and requre a
+   network and will cache the redirect DNS response and require a
    restart, etc.  The captive portal itself can also become a security
    concern - for example, instances have been observed where the captive
    portal will log the URLs that it has intercepted, including URLs that
@@ -217,8 +217,8 @@ Internet-Draft             DHCP Captive-Portal                April 2015
 
    By informing the end user's computer that it is behind a captive
    portal (and how to contact the captive portal) this document improves
-   the users's experiance (by speeding up their interaction), improves
-   security (by not leaking cookies and credentials) and improves the
+   the users' experience (by speeding up their interaction), improves
+   security (by not leaking cookies and credentials), and improves the
    success of the captive portal.
 
 
@@ -290,8 +290,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    behind a captive portal and provides the URI to access an
    authentication page.  This is primarily intended to improve the user
    experience by getting them to the captive portal faster; for the
-   foreseeable future (until such time that most systems implement this
-   technique) captive portals will still need to implement the
+   foreseeable future, captive portals will still need to implement the
    interception techniques to serve legacy clients, and clients will
    need to perform probing to detect captive portals.
 
@@ -330,6 +329,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
 
    o  URI: The URI of the authentication page that the user should
       connect to.
+
 
 
 
@@ -411,71 +411,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    device and will need to authenticate before getting network access
    (and how to reach the authentication page).  What is done with this
    information is left up to the operating system and application
-   vendors.  This document provides a very high level example of what
-   could be done with this information.
-
-   Many operating systems / applications already include a "connectivity
-   test" to determine if they are behind a captive portal (for example,
-   attempting to fetch a specific URL and looking for a specific string
-   (such as "Success").  These tests sometimes fail or take a long time
-   to determine when they are behind a CP, but are usually effective for
-   determining that the captive portal has been satisfied.  These tests
-   will continue to be needed, because there is currently no definitive
-   signal from the captive portal that it has been satisfied. [ Editor
-   note: It may be useful to write another document that specifies how a
-   client can determine that it has passed the CP.  This document could
-   also contain advice to implementors on only intercepting actually
-   needed ports, how to advertise that the CP needs to be satisfied
-   *again*, etc.  This should not be done in this document though. ] The
-   connectivity test may also need to be used if the captive portal
-   times out the user session and needs the user to re-authenticate.
-   The operating system may still find the information about the captive
-   portal URI useful in this case.
-
-   When the device is informed that it is behind a captive portal on a
-   particular network interface, it should:
-
-   1.  Not initiate new IP connections through that interface until the
-       CP has been satisfied (other than those to the captive portal
-       browser session and connectivity checks).  Existing connections
-       should be quiesced (this will happen more often than some expect
-       -- for example, the user purchases 1 hour of Internet at a cafe
-       and stays there for 3 hours -- this will "interrupt" the user a
-       few times).
-
-
-
-
-
-Kumari, et al.          Expires October 23, 2015                [Page 8]
-
-Internet-Draft             DHCP Captive-Portal                April 2015
-
-
-   2.  Present a dialog box to the user informing them that they are
-       behind a captive portal and ask if they wish to proceed.
-
-   3.  If the user elects to proceed, the device should initiate a
-       connection to the captive portal login page using a web browser
-       configured with a separate profile, incliding a separate cookie
-       store, and without a proxy server.  If there is a VPN in place,
-       this connection should be made outside of the VPN context and the
-       user should be informed that connection is outside the VPN.  Some
-       captive portals send the user a cookie when they authenticate (so
-       that the user can re-authenticate more easily in the future) -
-       the browser should keep these CP cookies separate from other
-       cookies.
-
-   4.  Once the user has authenticated, normal IP connectivity should
-       resume.  The OS can then use this string to provide further
-       information to the user.
-
-   5.  The device should (using an OS dependent method) expose to the
-       user / user applications that they have connected though a
-       captive portal (for example by creating a file in /proc/net/
-       containing the interface and captive portal URI).  This should
-       continue until the network changes, or a new DHCP message without
-       the CP is received.
+   vendors.
 
 6.  IANA Considerations
 
@@ -497,26 +433,24 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    An attacker with the ability to inject DHCP messages could include
    this option and so force users to contact an address of his choosing.
    As an attacker with this capability could simply list himself as the
-   default gateway (and so intercept all the victim's traffic), this
+   default gateway (and so intercept all the victim's traffic); this
    does not provide them with significantly more capabilities.  Fake
-
-
-
-
-Kumari, et al.          Expires October 23, 2015                [Page 9]
-
-Internet-Draft             DHCP Captive-Portal                April 2015
-
-
    DHCP servers / fake RAs are currently a security concern - this
    doesn't make them any better or worse.
 
    Devices and systems that automatically connect to an open network
    could potentially be tracked using the techniques described in this
    document (forcing the user to continually authenticate, or exposing
-   their browser fingerprint.)  However, similar tracking can already be
+   their browser fingerprint).  However, similar tracking can already be
    performed with the standard captive portal mechanisms, so this
    technique does not give the attackers more capabilities.
+
+
+
+Kumari, et al.          Expires October 23, 2015                [Page 8]
+
+Internet-Draft             DHCP Captive-Portal                April 2015
+
 
    By simplifying the interaction with the captive portal systems, and
    doing away with the need for interception, we think that users will
@@ -556,6 +490,72 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    [RFC6797]  Hodges, J., Jackson, C., and A. Barth, "HTTP Strict
               Transport Security (HSTS)", RFC 6797, November 2012.
 
+   [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
+              S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
+              BCP 187, RFC 7227, May 2014.
+
+Appendix A.  new section
+
+   Many operating systems / applications already include a "connectivity
+   test" to determine if they are behind a captive portal (for example,
+   attempting to fetch a specific URL and looking for a specific string
+   (such as "Success").  These tests sometimes fail or take a long time
+
+
+
+Kumari, et al.          Expires October 23, 2015                [Page 9]
+
+Internet-Draft             DHCP Captive-Portal                April 2015
+
+
+   to determine when they are behind a CP, but are usually effective for
+   determining that the captive portal has been satisfied.  These tests
+   will continue to be needed, because there is currently no definitive
+   signal from the captive portal that it has been satisfied. [ Editor
+   note: It may be useful to write another document that specifies how a
+   client can determine that it has passed the CP.  This document could
+   also contain advice to implementors on only intercepting actually
+   needed ports, how to advertise that the CP needs to be satisfied
+   *again*, etc.  This should not be done in this document, though. ]
+   The connectivity test may also need to be used if the captive portal
+   times out the user session and needs the user to re-authenticate.
+   The operating system may still find the information about the captive
+   portal URI useful in this case.
+
+   When the device is informed that it is behind a captive portal on a
+   particular network interface, it should:
+
+   1.  Not initiate new IP connections through that interface until the
+       CP has been satisfied (other than those to the captive portal
+       browser session and connectivity checks).  Existing connections
+       should be quiesced (this will happen more often than some expect
+       -- for example, the user purchases 1 hour of Internet at a cafe
+       and stays there for 3 hours -- this will "interrupt" the user a
+       few times).
+
+   2.  Present a dialog box to the user informing them that they are
+       behind a captive portal and ask if they wish to proceed.
+
+   3.  If the user elects to proceed, the device should initiate a
+       connection to the captive portal login page using a web browser
+       configured with a separate profile, including a separate cookie
+       store, and without a proxy server.  If there is a VPN in place,
+       this connection should be made outside of the VPN context and the
+       user should be informed that connection is outside the VPN.  Some
+       captive portals send the user a cookie when they authenticate (so
+       that the user can re-authenticate more easily in the future) -
+       the browser should keep these CP cookies separate from other
+       cookies.
+
+   4.  Once the user has authenticated, normal IP connectivity should
+       resume.  The OS can then use this string to provide further
+       information to the user.
+
+   5.  The device should (using an OS dependent method) expose to the
+       user / user applications that they have connected though a
+       captive portal (for example by creating a file in /proc/net/
+       containing the interface and captive portal URI).  This should
+
 
 
 
@@ -564,17 +564,21 @@ Kumari, et al.          Expires October 23, 2015               [Page 10]
 Internet-Draft             DHCP Captive-Portal                April 2015
 
 
-   [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
-              S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
-              BCP 187, RFC 7227, May 2014.
+       continue until the network changes, or a new DHCP message without
+       the CP is received.
 
-Appendix A.  Changes / Author Notes.
+Appendix B.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
+   From 13.1 to 13.2:
+
+   o  Moved all of the "what an OS could do with this info" to an
+      Appendix, to make it even clearer that this is simply an exxample.
+
    From -12 to -13.1:
 
-   There was a Caprive Portal Bar BoF held at the Dallas IETF meeting.
+   There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
    See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
    details.  This document was discussed, and I got a fair bit of
    feedback.  Incorporating some of this in -13.
@@ -594,7 +598,7 @@ Appendix A.  Changes / Author Notes.
 
    From 10 to 11:
 
-   o  Updared Olafur's affiliation.
+   o  Updated Olafur's affiliation.
 
    From 09 to 10:
 
@@ -608,10 +612,6 @@ Appendix A.  Changes / Author Notes.
    o  Put back the DHCPv6 option, and made the fact that is separate
       from the DHCPv4 option clearer (Ted Lemon)
 
-   From 07 to 08:
-
-   o  Incorporated comments from Ted Lemon.  Made the document much
-      shorter.
 
 
 
@@ -619,6 +619,11 @@ Kumari, et al.          Expires October 23, 2015               [Page 11]
 
 Internet-Draft             DHCP Captive-Portal                April 2015
 
+
+   From 07 to 08:
+
+   o  Incorporated comments from Ted Lemon.  Made the document much
+      shorter.
 
    o  Some cleanup.
 
@@ -629,7 +634,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
    o  Clarified that this document is only for the DHCP bits, not
       everything.
 
-   o  CP's *can* do HTTP redirects to DNS banes, as long as they allow
+   o  CP's *can* do HTTP redirects to DNS names, as long as they allow
       access to all needed services.
 
    From 05 to 06:
@@ -638,7 +643,7 @@ Internet-Draft             DHCP Captive-Portal                April 2015
 
    o  Better introduction text, around the "kludgy hacks" section.
 
-   o  Better "neither condones nor condems" text
+   o  Better "neither condones nor condemns" text
 
    o  Fingerprint text.
 
@@ -662,11 +667,6 @@ Internet-Draft             DHCP Captive-Portal                April 2015
 
    o  Connectivity Check test.
 
-   o  Posting just before the draft cutoff - "I love deadlines.  I love
-      the whooshing noise they make as they go by." -- Douglas Adams,
-      The Salmon of Doubt
-
-   From -02 to 03:
 
 
 
@@ -675,6 +675,12 @@ Kumari, et al.          Expires October 23, 2015               [Page 12]
 
 Internet-Draft             DHCP Captive-Portal                April 2015
 
+
+   o  Posting just before the draft cutoff - "I love deadlines.  I love
+      the whooshing noise they make as they go by." -- Douglas Adams,
+      The Salmon of Doubt
+
+   From -02 to 03:
 
    o  Removed the DHCPv6 stuff (as suggested / requested by Erik Kline)
 
@@ -717,12 +723,6 @@ Authors' Addresses
    Email: olafur@cloudflare.com
 
 
-   Paul Ebersman
-   Comcast
-
-   Email: ebersman-ietf@dragon.net
-
-
 
 
 
@@ -730,6 +730,12 @@ Authors' Addresses
 Kumari, et al.          Expires October 23, 2015               [Page 13]
 
 Internet-Draft             DHCP Captive-Portal                April 2015
+
+
+   Paul Ebersman
+   Comcast
+
+   Email: ebersman-ietf@dragon.net
 
 
    Steve Sheng
@@ -740,12 +746,6 @@ Internet-Draft             DHCP Captive-Portal                April 2015
 
    Phone: +1.310.301.5800
    Email: steve.sheng@icann.org
-
-
-
-
-
-
 
 
 

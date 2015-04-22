@@ -21,7 +21,7 @@
   <front>
     <!--c WK: Set long title. -->
 
-    <title abbrev="DHCP Captive-Portal">Captive-Portal identification in DHCP
+    <title abbrev="DHCP Captive-Portal">Captive-Portal Identification in DHCP
     / RA</title>
 
     <author fullname="Warren Kumari" initials="W." surname="Kumari">
@@ -103,7 +103,7 @@
       clients that they are behind some sort of captive portal device, and
       that they will need to authenticate to get Internet Access. It is not a
       full solution to address all of the issues that clients may have with
-      captive portals, but it is designed to be used in larger solutions. </t>
+      captive portals; it is designed to be used in larger solutions. </t>
 
       <t>[ Ed note (remove): This document basically informs a client that it
       is behind a captive portal, and where to contact the captive portal. It
@@ -112,8 +112,8 @@
       protocol - that will be developed in another document - see the CP
       mailing list: https://www.ietf.org/mailman/listinfo/captive-portals. It
       is expected that this protocol will include things like a way to
-      determine how much time is remaining, how to re-authnticate, when the CP
-      has been satisfied, etc. ]</t>
+      determine how much time is remaining, how to re-authenticate, when the
+      CP has been satisfied, etc. ]</t>
 
       <t>[ Ed note (remove): This document is being developed in github:
       https://github.com/wkumari/draft-wkumari-dhc-capport . ]</t>
@@ -128,10 +128,10 @@
       anticipated that the IETF will work on a more fully featured protocol at
       some point, to ease interaction with Captive Portals. Regardless of how
       that protocol operates, it is expected that this document will provide
-      needed functionality (the client will need to know when it is behind a
-      CP and how to contact it). </t>
+      needed functionality because the client will need to know when it is
+      behind a CP and how to contact it. </t>
 
-      <t>In order to present users with the payment or AUP pages the captive
+      <t>In order to present users with the payment or AUP pages, the captive
       portal device has to intercept the user's connections and redirect the
       user to the captive portal, using methods that are very similar to
       man-in-the-middle (MITM) attacks. As increasing focus is placed on
@@ -196,7 +196,7 @@
       example, in some cases many tabs in a browser will be redirected, and
       getting back to the original pages may be difficult, some applications
       may perform DNS requests when the computer connects to a network and
-      will cache the redirect DNS response and requre a restart, etc. The
+      will cache the redirect DNS response and require a restart, etc. The
       captive portal itself can also become a security concern - for example,
       instances have been observed where the captive portal will log the URLs
       that it has intercepted, including URLs that include credenitals.</t>
@@ -211,8 +211,8 @@
 
       <t>By informing the end user's computer that it is behind a captive
       portal (and how to contact the captive portal) this document improves
-      the users's experiance (by speeding up their interaction), improves
-      security (by not leaking cookies and credentials) and improves the
+      the users' experience (by speeding up their interaction), improves
+      security (by not leaking cookies and credentials), and improves the
       success of the captive portal.</t>
 
       <section title="DNS Redirection">
@@ -268,11 +268,10 @@
       <t>The Captive Portal DHCP / RA Option informs the client that it is
       behind a captive portal and provides the URI to access an authentication
       page. This is primarily intended to improve the user experience by
-      getting them to the captive portal faster; for the foreseeable future
-      (until such time that most systems implement this technique) captive
-      portals will still need to implement the interception techniques to
-      serve legacy clients, and clients will need to perform probing to detect
-      captive portals.</t>
+      getting them to the captive portal faster; for the foreseeable future,
+      captive portals will still need to implement the interception techniques
+      to serve legacy clients, and clients will need to perform probing to
+      detect captive portals.</t>
 
       <t>In order to support multiple "classes" of clients (e.g: IPv4 only,
       IPv6 only with DHCPv6(<xref target="RFC3315"/>), IPv6 only with RA) the
@@ -384,62 +383,7 @@
       device and will need to authenticate before getting network access (and
       how to reach the authentication page). What is done with this
       information is left up to the operating system and application vendors.
-      This document provides a very high level example of what could be done
-      with this information.</t>
-
-      <t>Many operating systems / applications already include a "connectivity
-      test" to determine if they are behind a captive portal (for example,
-      attempting to fetch a specific URL and looking for a specific string
-      (such as "Success"). These tests sometimes fail or take a long time to
-      determine when they are behind a CP, but are usually effective for
-      determining that the captive portal has been satisfied. These tests will
-      continue to be needed, because there is currently no definitive signal
-      from the captive portal that it has been satisfied. [ Editor note: It
-      may be useful to write another document that specifies how a client can
-      determine that it has passed the CP. This document could also contain
-      advice to implementors on only intercepting actually needed ports, how
-      to advertise that the CP needs to be satisfied *again*, etc. This should
-      not be done in this document though. ] The connectivity test may also
-      need to be used if the captive portal times out the user session and
-      needs the user to re-authenticate. The operating system may still find
-      the information about the captive portal URI useful in this case.</t>
-
-      <t>When the device is informed that it is behind a captive portal on a
-      particular network interface, it should:</t>
-
-      <t><list style="numbers">
-          <t>Not initiate new IP connections through that interface until the
-          CP has been satisfied (other than those to the captive portal
-          browser session and connectivity checks). Existing connections
-          should be quiesced (this will happen more often than some expect --
-          for example, the user purchases 1 hour of Internet at a cafe and
-          stays there for 3 hours -- this will "interrupt" the user a few
-          times).</t>
-
-          <t>Present a dialog box to the user informing them that they are
-          behind a captive portal and ask if they wish to proceed.</t>
-
-          <t>If the user elects to proceed, the device should initiate a
-          connection to the captive portal login page using a web browser
-          configured with a separate profile, incliding a separate cookie
-          store, and without a proxy server. If there is a VPN in place, this
-          connection should be made outside of the VPN context and the user
-          should be informed that connection is outside the VPN. Some captive
-          portals send the user a cookie when they authenticate (so that the
-          user can re-authenticate more easily in the future) - the browser
-          should keep these CP cookies separate from other cookies.</t>
-
-          <t>Once the user has authenticated, normal IP connectivity should
-          resume. The OS can then use this string to provide further
-          information to the user.</t>
-
-          <t>The device should (using an OS dependent method) expose to the
-          user / user applications that they have connected though a captive
-          portal (for example by creating a file in /proc/net/ containing the
-          interface and captive portal URI). This should continue until the
-          network changes, or a new DHCP message without the CP is
-          received.</t>
-        </list></t>
+      </t>
     </section>
 
     <section title="IANA Considerations">
@@ -461,7 +405,7 @@
       <t>An attacker with the ability to inject DHCP messages could include
       this option and so force users to contact an address of his choosing. As
       an attacker with this capability could simply list himself as the
-      default gateway (and so intercept all the victim's traffic), this does
+      default gateway (and so intercept all the victim's traffic); this does
       not provide them with significantly more capabilities. Fake DHCP servers
       / fake RAs are currently a security concern - this doesn't make them any
       better or worse.</t>
@@ -469,7 +413,7 @@
       <t>Devices and systems that automatically connect to an open network
       could potentially be tracked using the techniques described in this
       document (forcing the user to continually authenticate, or exposing
-      their browser fingerprint.) However, similar tracking can already be
+      their browser fingerprint). However, similar tracking can already be
       performed with the standard captive portal mechanisms, so this technique
       does not give the attackers more capabilities.</t>
 
@@ -513,12 +457,76 @@
       <?rfc include='reference.RFC.6797'?>
     </references>
 
+    <section title="new section">
+      <t>Many operating systems / applications already include a "connectivity
+      test" to determine if they are behind a captive portal (for example,
+      attempting to fetch a specific URL and looking for a specific string
+      (such as "Success"). These tests sometimes fail or take a long time to
+      determine when they are behind a CP, but are usually effective for
+      determining that the captive portal has been satisfied. These tests will
+      continue to be needed, because there is currently no definitive signal
+      from the captive portal that it has been satisfied. [ Editor note: It
+      may be useful to write another document that specifies how a client can
+      determine that it has passed the CP. This document could also contain
+      advice to implementors on only intercepting actually needed ports, how
+      to advertise that the CP needs to be satisfied *again*, etc. This should
+      not be done in this document, though. ] The connectivity test may also
+      need to be used if the captive portal times out the user session and
+      needs the user to re-authenticate. The operating system may still find
+      the information about the captive portal URI useful in this case.</t>
+
+      <t>When the device is informed that it is behind a captive portal on a
+      particular network interface, it should:</t>
+
+      <t><list style="numbers">
+          <t>Not initiate new IP connections through that interface until the
+          CP has been satisfied (other than those to the captive portal
+          browser session and connectivity checks). Existing connections
+          should be quiesced (this will happen more often than some expect --
+          for example, the user purchases 1 hour of Internet at a cafe and
+          stays there for 3 hours -- this will "interrupt" the user a few
+          times).</t>
+
+          <t>Present a dialog box to the user informing them that they are
+          behind a captive portal and ask if they wish to proceed.</t>
+
+          <t>If the user elects to proceed, the device should initiate a
+          connection to the captive portal login page using a web browser
+          configured with a separate profile, including a separate cookie
+          store, and without a proxy server. If there is a VPN in place, this
+          connection should be made outside of the VPN context and the user
+          should be informed that connection is outside the VPN. Some captive
+          portals send the user a cookie when they authenticate (so that the
+          user can re-authenticate more easily in the future) - the browser
+          should keep these CP cookies separate from other cookies.</t>
+
+          <t>Once the user has authenticated, normal IP connectivity should
+          resume. The OS can then use this string to provide further
+          information to the user.</t>
+
+          <t>The device should (using an OS dependent method) expose to the
+          user / user applications that they have connected though a captive
+          portal (for example by creating a file in /proc/net/ containing the
+          interface and captive portal URI). This should continue until the
+          network changes, or a new DHCP message without the CP is
+          received.</t>
+        </list></t>
+    </section>
+
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
+      <t>From 13.1 to 13.2:</t>
+
+      <t><list style="symbols">
+          <t>Moved all of the "what an OS could do with this info" to an
+          Appendix, to make it even clearer that this is simply an
+          exxample.</t>
+        </list></t>
+
       <t>From -12 to -13.1:</t>
 
-      <t>There was a Caprive Portal Bar BoF held at the Dallas IETF meeting.
+      <t>There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
       See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
       details. This document was discussed, and I got a fair bit of feedback.
       Incorporating some of this in -13.</t>
@@ -540,7 +548,7 @@
         </list></t>
 
       <t>From 10 to 11:<list style="symbols">
-          <t>Updared Olafur's affiliation.</t>
+          <t>Updated Olafur's affiliation.</t>
         </list></t>
 
       <t>From 09 to 10:</t>
@@ -577,7 +585,7 @@
           <t>Clarified that this document is only for the DHCP bits, not
           everything.</t>
 
-          <t>CP's *can* do HTTP redirects to DNS banes, as long as they allow
+          <t>CP's *can* do HTTP redirects to DNS names, as long as they allow
           access to all needed services.</t>
         </list></t>
 
@@ -588,7 +596,7 @@
 
           <t>Better introduction text, around the "kludgy hacks" section.</t>
 
-          <t>Better "neither condones nor condems" text</t>
+          <t>Better "neither condones nor condemns" text</t>
 
           <t>Fingerprint text.</t>
 

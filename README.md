@@ -310,9 +310,6 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               September 2007.
 
-   [RFC6797]  Hodges, J., Jackson, C., and A. Barth, "HTTP Strict
-              Transport Security (HSTS)", RFC 6797, November 2012.
-
    [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
               S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
               BCP 187, RFC 7227, May 2014.
@@ -321,7 +318,7 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
-   From 13 to 14:
+   From 13.2 to 13(posted):
 
    o  Shortened the document by removing most of the [Editors notes],
       Section 2, Section 5 and Appendix A.  They were mainly background
@@ -333,14 +330,15 @@ Appendix A.  Changes / Author Notes.
    o  Moved all of the "what an OS could do with this info" to an
       Appendix, to make it even clearer that this is simply an example.
 
+   From -12 to -13.1:
+
+
 
 
 Kumari, et al.          Expires December 20, 2015               [Page 6]
 
 Internet-Draft             DHCP Captive-Portal                 June 2015
 
-
-   From -12 to -13.1:
 
    There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
    See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
@@ -387,6 +385,8 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
    o  Incoroprated a bunch of comments from Asbjorn Tonnesen
 
+   o  Clarified that this document is only for the DHCP bits, not
+      everything.
 
 
 
@@ -395,9 +395,6 @@ Kumari, et al.          Expires December 20, 2015               [Page 7]
 
 Internet-Draft             DHCP Captive-Portal                 June 2015
 
-
-   o  Clarified that this document is only for the DHCP bits, not
-      everything.
 
    o  CP's *can* do HTTP redirects to DNS names, as long as they allow
       access to all needed services.
@@ -443,7 +440,10 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
    o  Simplified / cleaned up text (I'm inclined to waffle on, then trim
       the fluff)
 
+   o  This was written on a United flight with in-flight WiFi -
+      unfortunately I couldn't use it because their CP was borked. :-P
 
+   From -01 to 02:
 
 
 
@@ -451,11 +451,6 @@ Kumari, et al.          Expires December 20, 2015               [Page 8]
 
 Internet-Draft             DHCP Captive-Portal                 June 2015
 
-
-   o  This was written on a United flight with in-flight WiFi -
-      unfortunately I couldn't use it because their CP was borked. :-P
-
-   From -01 to 02:
 
    o  Added the IPv6 RA stuff.
 
@@ -494,20 +489,6 @@ Authors' Addresses
    Email: ebersman-ietf@dragon.net
 
 
-
-
-
-
-
-
-
-
-
-Kumari, et al.          Expires December 20, 2015               [Page 9]
-
-Internet-Draft             DHCP Captive-Portal                 June 2015
-
-
    Steve Sheng
    Internet Corporation for Assigned Names and Numbers
    12025 Waterfront Drive, Suite 300
@@ -522,42 +503,5 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kumari, et al.          Expires December 20, 2015              [Page 10]
+Kumari, et al.          Expires December 20, 2015               [Page 9]
 ```

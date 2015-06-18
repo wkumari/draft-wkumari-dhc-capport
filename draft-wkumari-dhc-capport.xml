@@ -308,14 +308,12 @@
 
       <?rfc include='reference.RFC.4861'
 ?>
-
-      <?rfc include='reference.RFC.6797'?>
     </references>
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
-      <t>From 13 to 14:<list style="symbols">
+      <t>From 13.2 to 13(posted):<list style="symbols">
           <t>Shortened the document by removing most of the [Editors notes],
           Section 2, Section 5 and Appendix A. They were mainly background and
           have served their purpose. This change suggested by Paul

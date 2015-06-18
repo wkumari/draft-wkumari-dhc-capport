@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-13" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-14" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="21" month="April" year="2015"/>
+    <date day="18" month="June" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -103,17 +103,7 @@
       clients that they are behind some sort of captive portal device, and
       that they will need to authenticate to get Internet Access. It is not a
       full solution to address all of the issues that clients may have with
-      captive portals; it is designed to be used in larger solutions. </t>
-
-      <t>[ Ed note (remove): This document basically informs a client that it
-      is behind a captive portal, and where to contact the captive portal. It
-      does not remove the need for clients to probe for CPs, it merely speeds
-      up and simplifies discovery. It is not a captive portal interaction
-      protocol - that will be developed in another document - see the CP
-      mailing list: https://www.ietf.org/mailman/listinfo/captive-portals. It
-      is expected that this protocol will include things like a way to
-      determine how much time is remaining, how to re-authenticate, when the
-      CP has been satisfied, etc. ]</t>
+      captive portals; it is designed to be used in larger solutions.</t>
 
       <t>[ Ed note (remove): This document is being developed in github:
       https://github.com/wkumari/draft-wkumari-dhc-capport . ]</t>
@@ -129,7 +119,7 @@
       some point, to ease interaction with Captive Portals. Regardless of how
       that protocol operates, it is expected that this document will provide
       needed functionality because the client will need to know when it is
-      behind a CP and how to contact it. </t>
+      behind a CP and how to contact it.</t>
 
       <t>In order to present users with the payment or AUP pages, the captive
       portal device has to intercept the user's connections and redirect the
@@ -143,124 +133,11 @@
       target="RFC4861"/>) extension that informs clients that they are behind
       a captive portal device and how to contact it.</t>
 
-      <t>This document neither condones nor condemns the use of captive
-      portals; instead, it recognises that their apparent necessity, and
-      attempts to improve the user experience and increase the success of
-      captive portals.</t>
-
-      <t>[ Ed note: This solution is somewhat similar / complements 802.11u /
-      WiFi Passpoint Online Sign-up, but is much simpler, easier to deploy,
-      and works on wired as well ]</t>
-
       <section title="Requirements notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
         document are to be interpreted as described in <xref
         target="RFC2119"/>.</t>
-      </section>
-    </section>
-
-    <section title="Background">
-      <t>Some ISPs implement a captive portal (CP) - a system that intercepts
-      user requests and redirects them to an interstitial login page - in
-      order to require the user accept an Acceptable Use Policy (AUP), provide
-      billing information, or otherwise authenticate a user prior to allowing
-      them to access the Internet.</t>
-
-      <t>Captive portals intercept and redirect user requests in a number of
-      ways, including:</t>
-
-      <t><list style="symbols">
-          <t>DNS Redirection</t>
-
-          <t>IP Redirection</t>
-
-          <t>HTTP Redirection</t>
-
-          <t>Restricted scope addresses</t>
-
-          <t>Traffic blocking (until the user is authenticated)</t>
-        </list>In order to ensure that the user is unable to access the
-      Internet until they have satisfied the requirements, captive portals
-      usually implement IP based filters, or place the user into a restricted
-      VLAN (or restricted IP range) until after they have been authorized /
-      satisfied.</t>
-
-      <t>These techniques are very similar to attacks that protocols (such as
-      VPNs, DNSSEC, TLS) are designed to protect against. The interaction of
-      these protections and the interception leads to poor user experiences,
-      such as long timeouts, inability to reach the captive portal web page,
-      and similar issues.</t>
-
-      <t>The interception may also cause other issues for the user - for
-      example, in some cases many tabs in a browser will be redirected, and
-      getting back to the original pages may be difficult, some applications
-      may perform DNS requests when the computer connects to a network and
-      will cache the redirect DNS response and require a restart, etc. The
-      captive portal itself can also become a security concern - for example,
-      instances have been observed where the captive portal will log the URLs
-      that it has intercepted, including URLs that include credenitals.</t>
-
-      <t>The user is often unaware of what is causing the issue (their browser
-      appears to hang, saying something like "Downloading Proxy Script", or
-      simply "The Internet doesn't work"), and they become frustrated. This
-      may result in them not purchasing the Internet access provided by the
-      captive portal. The connectivity attempts may also facilitate OS
-      fingerprinting even before a client attempts to connect to the portal
-      itself.</t>
-
-      <t>By informing the end user's computer that it is behind a captive
-      portal (and how to contact the captive portal) this document improves
-      the users' experience (by speeding up their interaction), improves
-      security (by not leaking cookies and credentials), and improves the
-      success of the captive portal.</t>
-
-      <section title="DNS Redirection">
-        <t>The CP either intercepts all DNS traffic or advertises itself (for
-        example using DHCP) as the recursive server for the network. Until the
-        user has authenticated to the captive portal, the CP responds to all
-        DNS requests listing the address of its web portal. Once the user has
-        authenticated, the CP returns the "correct" addresses.</t>
-
-        <t>This technique has many shortcomings. It fails if the client is
-        performing DNSSEC validation, is running their own resolver, is using
-        a VPN, or already has the DNS information cached. Many applications
-        also ignore the DNS TTL, and so may incorrectly cache the captive
-        portal's IP address, requring a restart of the application.,</t>
-      </section>
-
-      <section title="HTTP Redirection">
-        <t>In this implementation, the CP acts like a transparent HTTP proxy;
-        but when it sees an HTTP request from an unauthenticated client using
-        HTTP/1.0, it intercepts the request and responds with an HTTP status
-        code 302 to redirect the client to the Captive Portal Login. If the
-        client is using HTTP/1.1, it respond with a status code 303
-        instead.</t>
-
-        <t>This technique has a number of issues, including:</t>
-
-        <t><list style="symbols">
-            <t>It fails if the user is only using HTTPS sites.</t>
-
-            <t>If the address the user browsed to uses HSTS <xref
-            target="RFC6797">(see </xref>).</t>
-
-            <t>It exposes various private user information, such as HTTP
-            Cookies, etc.</t>
-
-            <t>It doesn't work if the client has a VPN and / or proxies their
-            web traffic to an external SSL/TLS proxy.</t>
-          </list></t>
-      </section>
-
-      <section title="IP Hijacking">
-        <t>In this scenario, the captive portal intercepts connections to any
-        IP address. It spoofs the destination IP address and "pretends" to be
-        whatever the user tried to access.</t>
-
-        <t>This technique has issues similar to the HTTP solution, but may
-        also break other protocols, and may expose more of the user's private
-        information.</t>
       </section>
     </section>
 
@@ -284,14 +161,6 @@
       contain an address literal, but MAY contain a DNS name if the captive
       portal allows the client to perform DNS requests to resolve the
       name.</t>
-
-      <t>[ED NOTE: Using an address literal is less than ideal, but better
-      than the alternatives. Recommending a DNS name means that the CP would
-      need to allow DNS from unauthenticated clients (as we don't want to
-      force users to use the CP's provided DNS) and some users would use this
-      to DNS Tunnel out, which may make the CP admin block external
-      recursives). DNS is needed to allow operators to serve SSL/TLS for e.g
-      billing (certificates with IP addresses are frowned upon :-))]</t>
 
       <section title="IPv4 DHCP Option">
         <t>The format of the IPv4 Captive-Portal DHCP option is shown
@@ -372,20 +241,6 @@
         </list></t>
     </section>
 
-    <section title="Use of the Captive-Portal Option">
-      <t>[ED NOTE: This option provides notice to the OS / User applications
-      that there is a CP. Because of differences in UI design between
-      Operating Systems, the exact behaviour by OS and Applications is left to
-      the OS vendor/Application Developer.]</t>
-
-      <t>The purpose of the Captive-Portal Option is to inform the operating
-      system and applications that they are behind a captive portal type
-      device and will need to authenticate before getting network access (and
-      how to reach the authentication page). What is done with this
-      information is left up to the operating system and application vendors.
-      </t>
-    </section>
-
     <section title="IANA Considerations">
       <t>This document defines two DHCP Captive-Portal options, one for IPv6
       and one for IPv6. It requires assignment of an option code (TBA1) to be
@@ -432,9 +287,9 @@
       Thanks to Wes George for supplying the IPv6 text. Thanks to Lorenzo and
       Erik for the V6 RA kick in the pants.</t>
 
-      <t>Thanks to Fred Baker, Ted Lemon, Martin Nilsson, Ole Troan and
-      Asbjorn Tonnesen for detailed review and comments. Also great thanks to
-      Joel Jaeggli for providing feedback and text.</t>
+      <t>Thanks to Fred Baker, Paul Hoffman, Ted Lemon, Martin Nilsson, Ole
+      Troan and Asbjorn Tonnesen for detailed review and comments. Also great
+      thanks to Joel Jaeggli for providing feedback and text.</t>
     </section>
   </middle>
 
@@ -457,71 +312,22 @@
       <?rfc include='reference.RFC.6797'?>
     </references>
 
-    <section title="new section">
-      <t>Many operating systems / applications already include a "connectivity
-      test" to determine if they are behind a captive portal (for example,
-      attempting to fetch a specific URL and looking for a specific string
-      (such as "Success"). These tests sometimes fail or take a long time to
-      determine when they are behind a CP, but are usually effective for
-      determining that the captive portal has been satisfied. These tests will
-      continue to be needed, because there is currently no definitive signal
-      from the captive portal that it has been satisfied. [ Editor note: It
-      may be useful to write another document that specifies how a client can
-      determine that it has passed the CP. This document could also contain
-      advice to implementors on only intercepting actually needed ports, how
-      to advertise that the CP needs to be satisfied *again*, etc. This should
-      not be done in this document, though. ] The connectivity test may also
-      need to be used if the captive portal times out the user session and
-      needs the user to re-authenticate. The operating system may still find
-      the information about the captive portal URI useful in this case.</t>
-
-      <t>When the device is informed that it is behind a captive portal on a
-      particular network interface, it should:</t>
-
-      <t><list style="numbers">
-          <t>Not initiate new IP connections through that interface until the
-          CP has been satisfied (other than those to the captive portal
-          browser session and connectivity checks). Existing connections
-          should be quiesced (this will happen more often than some expect --
-          for example, the user purchases 1 hour of Internet at a cafe and
-          stays there for 3 hours -- this will "interrupt" the user a few
-          times).</t>
-
-          <t>Present a dialog box to the user informing them that they are
-          behind a captive portal and ask if they wish to proceed.</t>
-
-          <t>If the user elects to proceed, the device should initiate a
-          connection to the captive portal login page using a web browser
-          configured with a separate profile, including a separate cookie
-          store, and without a proxy server. If there is a VPN in place, this
-          connection should be made outside of the VPN context and the user
-          should be informed that connection is outside the VPN. Some captive
-          portals send the user a cookie when they authenticate (so that the
-          user can re-authenticate more easily in the future) - the browser
-          should keep these CP cookies separate from other cookies.</t>
-
-          <t>Once the user has authenticated, normal IP connectivity should
-          resume. The OS can then use this string to provide further
-          information to the user.</t>
-
-          <t>The device should (using an OS dependent method) expose to the
-          user / user applications that they have connected though a captive
-          portal (for example by creating a file in /proc/net/ containing the
-          interface and captive portal URI). This should continue until the
-          network changes, or a new DHCP message without the CP is
-          received.</t>
-        </list></t>
-    </section>
-
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 13 to 14:<list style="symbols">
+          <t>Shortened the document by removing most of the [Editors notes],
+          Section 2, Section 5 and Appendix A. They were mainly background and
+          have served their purpose. This change suggested by Paul
+          Hoffman.</t>
+        </list></t>
 
       <t>From 13.1 to 13.2:</t>
 
       <t><list style="symbols">
           <t>Moved all of the "what an OS could do with this info" to an
           Appendix, to make it even clearer that this is simply an
-          exxample.</t>
+          example.</t>
         </list></t>
 
       <t>From -12 to -13.1:</t>

@@ -16,7 +16,7 @@ Expires: December 20, 2015                                    CloudFlare
 
 
                Captive-Portal Identification in DHCP / RA
-                      draft-wkumari-dhc-capport-13
+                     draft-wkumari-dhc-capport-14.1
 
 Abstract
 
@@ -30,7 +30,8 @@ Abstract
    that they will need to authenticate to get Internet Access.  It is
    not a full solution to address all of the issues that clients may
    have with captive portals; it is designed to be used in larger
-   solutions.
+   solutions.  The method of authenticating to, and interacting with the
+   captive portal is out of scope of this document.
 
    [ Ed note (remove): This document is being developed in github:
    https://github.com/wkumari/draft-wkumari-dhc-capport . ]
@@ -51,7 +52,6 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on December 20, 2015.
-
 
 
 
@@ -233,14 +233,13 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 4.  IANA Considerations
 
-   This document defines two DHCP Captive-Portal options, one for IPv6
+   This document defines two DHCP Captive-Portal options, one for IPv4
    and one for IPv6.  It requires assignment of an option code (TBA1) to
    be assigned from "Bootp and DHCP options" registry
-   (http://www.iana.org/assignments/ bootp-dhcp-parameters/bootp-dhcp-
-   parameters.xml), as specified in [RFC2939].  It also requires
-   assignment of an option code (TBA2) from the "DHCPv6 and DHCPv6
-   options" registry (http://www.iana.org/assignments/dhcpv6-parameters/
-   dhcpv6-parameters.xml).
+   (hhttp://www.iana.org/assignments/bootp-dhcp-parameters), as
+   specified in [RFC2939].  It also requires assignment of an option
+   code (TBA2) from the "DHCPv6 and DHCPv6 options" registry
+   (http://www.iana.org/assignments/dhcpv6-parameters).
 
    IANA is also requested to assign an IPv6 RA Option Type code (TBA3)
    from the "IPv6 Neighbor Discovery Option Formats" registry.  Thanks
@@ -252,9 +251,17 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
    this option and so force users to contact an address of his choosing.
    As an attacker with this capability could simply list himself as the
    default gateway (and so intercept all the victim's traffic); this
-   does not provide them with significantly more capabilities.  Fake
-   DHCP servers / fake RAs are currently a security concern - this
-   doesn't make them any better or worse.
+   does not provide them with significantly more capabilities, but
+   because this document removes the need for interception, the attacker
+   may have an easier time performing the attack.  As the operating
+   systems and application that make use of this information know that
+   they are connecting to a captive portal device (as opposed to
+   intercepted connections) they can render the page in a sandboxed
+   environment and take other precautions, such as clearly labeling the
+   page as untrusted.  The means of sandboxing and user interface
+   presenting this information is not covered in this document - by its
+   nature it is implementation specific and best left to the application
+   and user interface designers.
 
    Devices and systems that automatically connect to an open network
    could potentially be tracked using the techniques described in this
@@ -269,13 +276,6 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
    validation, VPNs, etc.  In addition, because the system knows that it
    is behind a captive portal, it can know not to send cookies,
    credentials, etc.  Redirection to a portal where TLS can be used
-   without hijacking can ameliorate some of the implications of
-   connecting to a potentially malicious captive portal.
-
-
-
-
-
 
 
 
@@ -283,6 +283,9 @@ Kumari, et al.          Expires December 20, 2015               [Page 5]
 
 Internet-Draft             DHCP Captive-Portal                 June 2015
 
+
+   without hijacking can ameliorate some of the implications of
+   connecting to a potentially malicious captive portal.
 
 6.  Acknowledgements
 
@@ -297,26 +300,45 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 7.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
+              RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC2131]  Droms, R., "Dynamic Host Configuration Protocol", RFC
-              2131, March 1997.
+              2131, DOI 10.17487/RFC2131, March 1997,
+              <http://www.rfc-editor.org/info/rfc2131>.
 
-   [RFC3315]  Droms, R., Bound, J., Volz, B., Lemon, T., Perkins, C.,
-              and M. Carney, "Dynamic Host Configuration Protocol for
-              IPv6 (DHCPv6)", RFC 3315, July 2003.
+   [RFC3315]  Droms, R., Ed., Bound, J., Volz, B., Lemon, T., Perkins,
+              C., and M. Carney, "Dynamic Host Configuration Protocol
+              for IPv6 (DHCPv6)", RFC 3315, DOI 10.17487/RFC3315, July
+              2003, <http://www.rfc-editor.org/info/rfc3315>.
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
-              September 2007.
+              DOI 10.17487/RFC4861, September 2007,
+              <http://www.rfc-editor.org/info/rfc4861>.
 
    [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
               S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
-              BCP 187, RFC 7227, May 2014.
+              BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
+              <http://www.rfc-editor.org/info/rfc7227>.
 
 Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
+
+   From 13 to 14.1:
+
+   o  Added a bunch of disclaimers explaining that this is not a
+      complete solution.  We expect that the actual interaction bit
+      should be done in CAPPORT.
+
+
+
+Kumari, et al.          Expires December 20, 2015               [Page 6]
+
+Internet-Draft             DHCP Captive-Portal                 June 2015
+
 
    From 13.2 to 13(posted):
 
@@ -331,14 +353,6 @@ Appendix A.  Changes / Author Notes.
       Appendix, to make it even clearer that this is simply an example.
 
    From -12 to -13.1:
-
-
-
-
-Kumari, et al.          Expires December 20, 2015               [Page 6]
-
-Internet-Draft             DHCP Captive-Portal                 June 2015
-
 
    There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
    See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
@@ -374,6 +388,14 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
    o  Put back the DHCPv6 option, and made the fact that is separate
       from the DHCPv4 option clearer (Ted Lemon)
 
+
+
+
+Kumari, et al.          Expires December 20, 2015               [Page 7]
+
+Internet-Draft             DHCP Captive-Portal                 June 2015
+
+
    From 07 to 08:
 
    o  Incorporated comments from Ted Lemon.  Made the document much
@@ -387,14 +409,6 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
    o  Clarified that this document is only for the DHCP bits, not
       everything.
-
-
-
-
-Kumari, et al.          Expires December 20, 2015               [Page 7]
-
-Internet-Draft             DHCP Captive-Portal                 June 2015
-
 
    o  CP's *can* do HTTP redirects to DNS names, as long as they allow
       access to all needed services.
@@ -429,6 +443,15 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
    o  Connectivity Check test.
 
+
+
+
+
+Kumari, et al.          Expires December 20, 2015               [Page 8]
+
+Internet-Draft             DHCP Captive-Portal                 June 2015
+
+
    o  Posting just before the draft cutoff - "I love deadlines.  I love
       the whooshing noise they make as they go by." -- Douglas Adams,
       The Salmon of Doubt
@@ -444,13 +467,6 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
       unfortunately I couldn't use it because their CP was borked. :-P
 
    From -01 to 02:
-
-
-
-Kumari, et al.          Expires December 20, 2015               [Page 8]
-
-Internet-Draft             DHCP Captive-Portal                 June 2015
-
 
    o  Added the IPv6 RA stuff.
 
@@ -483,6 +499,15 @@ Authors' Addresses
    Email: olafur@cloudflare.com
 
 
+
+
+
+
+Kumari, et al.          Expires December 20, 2015               [Page 9]
+
+Internet-Draft             DHCP Captive-Portal                 June 2015
+
+
    Paul Ebersman
    Comcast
 
@@ -503,5 +528,36 @@ Authors' Addresses
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 9]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kumari, et al.          Expires December 20, 2015              [Page 10]
 ```

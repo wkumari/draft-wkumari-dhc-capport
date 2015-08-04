@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-13" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-14.1" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -103,7 +103,9 @@
       clients that they are behind some sort of captive portal device, and
       that they will need to authenticate to get Internet Access. It is not a
       full solution to address all of the issues that clients may have with
-      captive portals; it is designed to be used in larger solutions.</t>
+      captive portals; it is designed to be used in larger solutions. The
+      method of authenticating to, and interacting with the captive portal is
+      out of scope of this document.</t>
 
       <t>[ Ed note (remove): This document is being developed in github:
       https://github.com/wkumari/draft-wkumari-dhc-capport . ]</t>
@@ -242,14 +244,13 @@
     </section>
 
     <section title="IANA Considerations">
-      <t>This document defines two DHCP Captive-Portal options, one for IPv6
+      <t>This document defines two DHCP Captive-Portal options, one for IPv4
       and one for IPv6. It requires assignment of an option code (TBA1) to be
       assigned from "Bootp and DHCP options" registry
-      (http://www.iana.org/assignments/
-      bootp-dhcp-parameters/bootp-dhcp-parameters.xml), as specified in
-      [RFC2939]. It also requires assignment of an option code (TBA2) from the
-      "DHCPv6 and DHCPv6 options" registry
-      (http://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml).</t>
+      (hhttp://www.iana.org/assignments/bootp-dhcp-parameters), as specified
+      in [RFC2939]. It also requires assignment of an option code (TBA2) from
+      the "DHCPv6 and DHCPv6 options" registry
+      (http://www.iana.org/assignments/dhcpv6-parameters).</t>
 
       <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA3)
       from the "IPv6 Neighbor Discovery Option Formats" registry. Thanks
@@ -261,9 +262,17 @@
       this option and so force users to contact an address of his choosing. As
       an attacker with this capability could simply list himself as the
       default gateway (and so intercept all the victim's traffic); this does
-      not provide them with significantly more capabilities. Fake DHCP servers
-      / fake RAs are currently a security concern - this doesn't make them any
-      better or worse.</t>
+      not provide them with significantly more capabilities, but because this
+      document removes the need for interception, the attacker may have an
+      easier time performing the attack. As the operating systems and
+      application that make use of this information know that they are
+      connecting to a captive portal device (as opposed to intercepted
+      connections) they can render the page in a sandboxed environment and
+      take other precautions, such as clearly labeling the page as untrusted.
+      The means of sandboxing and user interface presenting this information
+      is not covered in this document - by its nature it is implementation
+      specific and best left to the application and user interface
+      designers.</t>
 
       <t>Devices and systems that automatically connect to an open network
       could potentially be tracked using the techniques described in this
@@ -312,6 +321,12 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 13 to 14.1:<list style="symbols">
+          <t>Added a bunch of disclaimers explaining that this is not a
+          complete solution. We expect that the actual interaction bit should
+          be done in CAPPORT.</t>
+        </list></t>
 
       <t>From 13.2 to 13(posted):<list style="symbols">
           <t>Shortened the document by removing most of the [Editors notes],

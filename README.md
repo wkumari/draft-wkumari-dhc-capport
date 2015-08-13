@@ -7,12 +7,12 @@
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Standards Track                          O. Gudmundsson
-Expires: December 20, 2015                                    CloudFlare
+Expires: February 14, 2016                                    CloudFlare
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                           June 18, 2015
+                                                         August 13, 2015
 
 
                Captive-Portal Identification in DHCP / RA
@@ -51,13 +51,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 20, 2015.
+   This Internet-Draft will expire on February 14, 2016.
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 1]
+Kumari, et al.          Expires February 14, 2016               [Page 1]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 Copyright Notice
@@ -111,9 +111,9 @@ Table of Contents
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 2]
+Kumari, et al.          Expires February 14, 2016               [Page 2]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    This document describe a DHCP ([RFC2131]) option (Captive Portal) and
@@ -167,9 +167,9 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 3]
+Kumari, et al.          Expires February 14, 2016               [Page 3]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 2.2.  IPv6 DHCP Option
@@ -223,9 +223,9 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 4]
+Kumari, et al.          Expires February 14, 2016               [Page 4]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
       be padded with NULL (0x0) to make the total option length
@@ -279,9 +279,9 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 5]
+Kumari, et al.          Expires February 14, 2016               [Page 5]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    without hijacking can ameliorate some of the implications of
@@ -327,7 +327,7 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
-   From 13 to 14.1:
+   From 13 to 14:
 
    o  Added a bunch of disclaimers explaining that this is not a
       complete solution.  We expect that the actual interaction bit
@@ -335,9 +335,9 @@ Appendix A.  Changes / Author Notes.
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 6]
+Kumari, et al.          Expires February 14, 2016               [Page 6]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    From 13.2 to 13(posted):
@@ -391,9 +391,9 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 7]
+Kumari, et al.          Expires February 14, 2016               [Page 7]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    From 07 to 08:
@@ -447,9 +447,9 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 8]
+Kumari, et al.          Expires February 14, 2016               [Page 8]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    o  Posting just before the draft cutoff - "I love deadlines.  I love
@@ -503,9 +503,9 @@ Authors' Addresses
 
 
 
-Kumari, et al.          Expires December 20, 2015               [Page 9]
+Kumari, et al.          Expires February 14, 2016               [Page 9]
 
-Internet-Draft             DHCP Captive-Portal                 June 2015
+Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    Paul Ebersman
@@ -559,5 +559,5 @@ Internet-Draft             DHCP Captive-Portal                 June 2015
 
 
 
-Kumari, et al.          Expires December 20, 2015              [Page 10]
+Kumari, et al.          Expires February 14, 2016              [Page 10]
 ```

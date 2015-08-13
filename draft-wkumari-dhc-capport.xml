@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="18" month="June" year="2015"/>
+    <date day="13" month="August" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -322,7 +322,7 @@
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
-      <t>From 13 to 14.1:<list style="symbols">
+      <t>From 13 to 14:<list style="symbols">
           <t>Added a bunch of disclaimers explaining that this is not a
           complete solution. We expect that the actual interaction bit should
           be done in CAPPORT.</t>

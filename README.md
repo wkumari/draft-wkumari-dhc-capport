@@ -7,16 +7,16 @@
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Standards Track                          O. Gudmundsson
-Expires: February 14, 2016                                    CloudFlare
+Expires: February 25, 2016                                    CloudFlare
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                         August 13, 2015
+                                                         August 24, 2015
 
 
                Captive-Portal Identification in DHCP / RA
-                     draft-wkumari-dhc-capport-14.1
+                      draft-wkumari-dhc-capport-15
 
 Abstract
 
@@ -51,11 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 14, 2016.
+   This Internet-Draft will expire on February 25, 2016.
 
 
 
-Kumari, et al.          Expires February 14, 2016               [Page 1]
+Kumari, et al.          Expires February 25, 2016               [Page 1]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari, et al.          Expires February 14, 2016               [Page 2]
+Kumari, et al.          Expires February 25, 2016               [Page 2]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -145,8 +145,9 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    problems.
 
    In order to avoid having to perform DNS interception, the URI SHOULD
-   contain an address literal, but MAY contain a DNS name if the captive
-   portal allows the client to perform DNS requests to resolve the name.
+   contain an address literal.  If the captive portal allows the client
+   to perform DNS requests to resolve the name, it is then acceptable
+   for the URI to contain a DNS name.
 
 2.1.  IPv4 DHCP Option
 
@@ -166,8 +167,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-
-Kumari, et al.          Expires February 14, 2016               [Page 3]
+Kumari, et al.          Expires February 25, 2016               [Page 3]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -223,7 +223,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-Kumari, et al.          Expires February 14, 2016               [Page 4]
+Kumari, et al.          Expires February 25, 2016               [Page 4]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -279,7 +279,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-Kumari, et al.          Expires February 14, 2016               [Page 5]
+Kumari, et al.          Expires February 25, 2016               [Page 5]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -293,9 +293,10 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    Thanks to Wes George for supplying the IPv6 text.  Thanks to Lorenzo
    and Erik for the V6 RA kick in the pants.
 
-   Thanks to Fred Baker, Paul Hoffman, Ted Lemon, Martin Nilsson, Ole
-   Troan and Asbjorn Tonnesen for detailed review and comments.  Also
-   great thanks to Joel Jaeggli for providing feedback and text.
+   Thanks to Fred Baker, Paul Hoffman, Barry Leiba, Ted Lemon, Martin
+   Nilsson, Ole Troan and Asbjorn Tonnesen for detailed review and
+   comments.  Also great thanks to Joel Jaeggli for providing feedback
+   and text.
 
 7.  Normative References
 
@@ -327,18 +328,23 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
+   From 14 to 15:
+
+   o  Incorporated readability comment from Barry Leiba
+
+
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 6]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    From 13 to 14:
 
    o  Added a bunch of disclaimers explaining that this is not a
       complete solution.  We expect that the actual interaction bit
       should be done in CAPPORT.
-
-
-
-Kumari, et al.          Expires February 14, 2016               [Page 6]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    From 13.2 to 13(posted):
 
@@ -383,18 +389,17 @@ Internet-Draft             DHCP Captive-Portal               August 2015
       indeterminate, and if different mechanisms give non-equivalent
       answers, this is likely to cause operational problems in practice.
 
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 7]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    From 08 to 09:
 
    o  Put back the DHCPv6 option, and made the fact that is separate
       from the DHCPv4 option clearer (Ted Lemon)
-
-
-
-
-Kumari, et al.          Expires February 14, 2016               [Page 7]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    From 07 to 08:
 
@@ -438,19 +443,19 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Some disclaimers about it working better on initial connection
       versus CP timeout.
 
+
+
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 8]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    o  Some more text explaining that CP interception is
       indistinguishable from an attack.
 
    o  Connectivity Check test.
-
-
-
-
-
-Kumari, et al.          Expires February 14, 2016               [Page 8]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  Posting just before the draft cutoff - "I love deadlines.  I love
       the whooshing noise they make as they go by." -- Douglas Adams,
@@ -491,21 +496,24 @@ Authors' Addresses
    Email: warren@kumari.net
 
 
+
+
+
+
+
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 9]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    Olafur Gudmundsson
    CloudFlare
    San Francisco, CA  94107
    USA
 
    Email: olafur@cloudflare.com
-
-
-
-
-
-
-Kumari, et al.          Expires February 14, 2016               [Page 9]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    Paul Ebersman
@@ -551,13 +559,5 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-
-
-
-
-
-
-
-
-Kumari, et al.          Expires February 14, 2016              [Page 10]
+Kumari, et al.          Expires February 25, 2016              [Page 10]
 ```

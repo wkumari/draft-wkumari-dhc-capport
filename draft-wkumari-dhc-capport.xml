@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-15" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-15.1" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -180,7 +180,8 @@
             <t>Len: The length, in octets of the URI.</t>
 
             <t>URI: The URI of the authentication page that the user should
-            connect to.</t>
+            connect to (encoded following the rules in <xref
+            target="RFC3986"/>).</t>
           </list></t>
       </section>
 
@@ -205,7 +206,8 @@
             <t>option-len: The length, in octets of the URI.</t>
 
             <t>URI: The URI of the authentication page that the user should
-            connect to.</t>
+            connect to (encoded following the rules in <xref
+            target="RFC3986"/>).</t>
           </list>See <xref target="RFC7227"/>, Section 5.7 for more examples
         of DHCP Options with URIs.</t>
       </section>
@@ -310,6 +312,8 @@
 
       <?rfc include='reference.RFC.3315'?>
 
+      <?rfc include='reference.RFC.3986'?>
+
       <?rfc include='reference.RFC.7227'
 ?>
 
@@ -322,6 +326,12 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 15 to 15.1:<list style="symbols">
+          <t>Incorporated Brian Haberman's IESG review comment: "I think you
+          need to specify somewhere that the URIs are encoded following the
+          rules in RFC 3986."</t>
+        </list></t>
 
       <t>From 14 to 15:<list style="symbols">
           <t>Incorporated readability comment from Barry Leiba</t>

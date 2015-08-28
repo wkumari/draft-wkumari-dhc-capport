@@ -16,7 +16,7 @@ Expires: February 25, 2016                                    CloudFlare
 
 
                Captive-Portal Identification in DHCP / RA
-                      draft-wkumari-dhc-capport-15
+                     draft-wkumari-dhc-capport-15.1
 
 Abstract
 
@@ -87,8 +87,8 @@ Table of Contents
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    7.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
-   Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -163,7 +163,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Len: The length, in octets of the URI.
 
    o  URI: The URI of the authentication page that the user should
-      connect to.
+      connect to (encoded following the rules in [RFC3986]).
 
 
 
@@ -190,7 +190,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  option-len: The length, in octets of the URI.
 
    o  URI: The URI of the authentication page that the user should
-      connect to.
+      connect to (encoded following the rules in [RFC3986]).
 
    See [RFC7227], Section 5.7 for more examples of DHCP Options with
    URIs.
@@ -314,6 +314,11 @@ Internet-Draft             DHCP Captive-Portal               August 2015
               for IPv6 (DHCPv6)", RFC 3315, DOI 10.17487/RFC3315, July
               2003, <http://www.rfc-editor.org/info/rfc3315>.
 
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66, RFC
+              3986, DOI 10.17487/RFC3986, January 2005,
+              <http://www.rfc-editor.org/info/rfc3986>.
+
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               DOI 10.17487/RFC4861, September 2007,
@@ -324,13 +329,8 @@ Internet-Draft             DHCP Captive-Portal               August 2015
               BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
               <http://www.rfc-editor.org/info/rfc7227>.
 
-Appendix A.  Changes / Author Notes.
 
-   [RFC Editor: Please remove this section before publication ]
 
-   From 14 to 15:
-
-   o  Incorporated readability comment from Barry Leiba
 
 
 
@@ -339,6 +339,20 @@ Kumari, et al.          Expires February 25, 2016               [Page 6]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
+
+Appendix A.  Changes / Author Notes.
+
+   [RFC Editor: Please remove this section before publication ]
+
+   From 15 to 15.1:
+
+   o  Incorporated Brian Haberman's IESG review comment: "I think you
+      need to specify somewhere that the URIs are encoded following the
+      rules in RFC 3986."
+
+   From 14 to 15:
+
+   o  Incorporated readability comment from Barry Leiba
 
    From 13 to 14:
 
@@ -375,6 +389,13 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    From -11 to -12:
 
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 7]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    o  Integrated a whole bunch of comments from Ted Lemon, including
       missing references, track, missing size of DHCP option,
 
@@ -388,13 +409,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
       ordering.  I think you should just say that the ordering is
       indeterminate, and if different mechanisms give non-equivalent
       answers, this is likely to cause operational problems in practice.
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 7]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    From 08 to 09:
 
@@ -430,6 +444,14 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Some discussions on the v4 literal stuff.
 
+
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 8]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    o  More Security Consideration text.
 
    From 04 to 05:
@@ -442,15 +464,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Some disclaimers about it working better on initial connection
       versus CP timeout.
-
-
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 8]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  Some more text explaining that CP interception is
       indistinguishable from an attack.
@@ -485,6 +498,16 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Nothing changed in the template!
 
+
+
+
+
+
+Kumari, et al.          Expires February 25, 2016               [Page 9]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
 Authors' Addresses
 
    Warren Kumari
@@ -494,18 +517,6 @@ Authors' Addresses
    US
 
    Email: warren@kumari.net
-
-
-
-
-
-
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 9]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    Olafur Gudmundsson
@@ -530,17 +541,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    Phone: +1.310.301.5800
    Email: steve.sheng@icann.org
-
-
-
-
-
-
-
-
-
-
-
 
 
 

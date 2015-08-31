@@ -7,16 +7,16 @@
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Standards Track                          O. Gudmundsson
-Expires: February 25, 2016                                    CloudFlare
+Expires: March 3, 2016                                        CloudFlare
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                         August 24, 2015
+                                                         August 31, 2015
 
 
                Captive-Portal Identification in DHCP / RA
-                     draft-wkumari-dhc-capport-15.1
+                      draft-wkumari-dhc-capport-16
 
 Abstract
 
@@ -51,11 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 25, 2016.
+   This Internet-Draft will expire on March 3, 2016.
 
 
 
-Kumari, et al.          Expires February 25, 2016               [Page 1]
+Kumari, et al.            Expires March 3, 2016                 [Page 1]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -82,11 +82,11 @@ Table of Contents
    2.  The Captive-Portal Option . . . . . . . . . . . . . . . . . .   3
      2.1.  IPv4 DHCP Option  . . . . . . . . . . . . . . . . . . . .   3
      2.2.  IPv6 DHCP Option  . . . . . . . . . . . . . . . . . . . .   4
-   3.  The Captive-Portal IPv6 RA Option . . . . . . . . . . . . . .   4
-   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
+     2.3.  The Captive-Portal IPv6 RA Option . . . . . . . . . . . .   4
+   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
    Appendix A.  Changes / Author Notes.  . . . . . . . . . . . . . .   7
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari, et al.          Expires February 25, 2016               [Page 2]
+Kumari, et al.            Expires March 3, 2016                 [Page 2]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
@@ -142,12 +142,15 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    portal can provide the URI via multiple methods (IPv4 DHCP, IPv6
    DHCP, IPv6 RA).  The captive portal operator should ensure that the
    URIs handed out are equivalent to reduce the chance of operational
-   problems.
+   problems.  The maximum length of the URI that can be carried in IPv4
+   DHCP is 255 byte, and so URIs longer than 255 bytes should not be
+   used in IPv6 DHCP or IPv6 RA.
 
    In order to avoid having to perform DNS interception, the URI SHOULD
    contain an address literal.  If the captive portal allows the client
    to perform DNS requests to resolve the name, it is then acceptable
-   for the URI to contain a DNS name.
+   for the URI to contain a DNS name.  The URI paramter is not null
+   terminated.
 
 2.1.  IPv4 DHCP Option
 
@@ -162,15 +165,15 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Len: The length, in octets of the URI.
 
-   o  URI: The URI of the authentication page that the user should
-      connect to (encoded following the rules in [RFC3986]).
 
 
-
-Kumari, et al.          Expires February 25, 2016               [Page 3]
+Kumari, et al.            Expires March 3, 2016                 [Page 3]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
+
+   o  URI: The contact URI for the captive portal that the user should
+      connect to (encoded following the rules in [RFC3986]).
 
 2.2.  IPv6 DHCP Option
 
@@ -189,13 +192,13 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  option-len: The length, in octets of the URI.
 
-   o  URI: The URI of the authentication page that the user should
+   o  URI: The contact URI for the captive portal that the user should
       connect to (encoded following the rules in [RFC3986]).
 
    See [RFC7227], Section 5.7 for more examples of DHCP Options with
    URIs.
 
-3.  The Captive-Portal IPv6 RA Option
+2.3.  The Captive-Portal IPv6 RA Option
 
    This section describes the Captive-Portal Router Advertisement
    option.
@@ -216,22 +219,23 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    Length  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) in units of 8 bytes.
 
-   URI  The URI of the authentication page that the user should connect
-      to.  For the reasons described above, the implementer might want
-      to use an IP address literal instead of a DNS name.  This should
 
 
 
 
-Kumari, et al.          Expires February 25, 2016               [Page 4]
+Kumari, et al.            Expires March 3, 2016                 [Page 4]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
 
-      be padded with NULL (0x0) to make the total option length
-      (including the Type and Length fields) a multiple of 8 bytes.
+   URI  The contact URI for the captive portal that the user should
+      connect to.  For the reasons described above, the implementer
+      might want to use an IP address literal instead of a DNS name.
+      This should be padded with NULL (0x0) to make the total option
+      length (including the Type and Length fields) a multiple of 8
+      bytes.
 
-4.  IANA Considerations
+3.  IANA Considerations
 
    This document defines two DHCP Captive-Portal options, one for IPv4
    and one for IPv6.  It requires assignment of an option code (TBA1) to
@@ -245,7 +249,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    from the "IPv6 Neighbor Discovery Option Formats" registry.  Thanks
    IANA!
 
-5.  Security Considerations
+4.  Security Considerations
 
    An attacker with the ability to inject DHCP messages could include
    this option and so force users to contact an address of his choosing.
@@ -270,24 +274,31 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    performed with the standard captive portal mechanisms, so this
    technique does not give the attackers more capabilities.
 
+   Captive portals are increasingly hijacking TLS connections to force >
+   browsers to talk to the portal.  Providing the portal's URI via a
+
+
+
+Kumari, et al.            Expires March 3, 2016                 [Page 5]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
+   DHCP or RA option is a cleaner technique, and reduces user
+   expectations of being hijacked - this may improve security by making
+   users more reluctant to accept TLS hijacking, which can be performed
+   from beyond the network associated with the captive portal.
+
    By simplifying the interaction with the captive portal systems, and
    doing away with the need for interception, we think that users will
    be less likely to disable useful security safeguards like DNSSEC
    validation, VPNs, etc.  In addition, because the system knows that it
    is behind a captive portal, it can know not to send cookies,
-   credentials, etc.  Redirection to a portal where TLS can be used
+   credentials, etc.  By handing out a URI using which is protected with
+   TLS, the captive portal operator can attempt to reassure the user
+   that the captive portal is not malicious.
 
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 5]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
-
-   without hijacking can ameliorate some of the implications of
-   connecting to a potentially malicious captive portal.
-
-6.  Acknowledgements
+5.  Acknowledgements
 
    Thanks to Vint Cerf for the initial idea / asking me to write this.
    Thanks to Wes George for supplying the IPv6 text.  Thanks to Lorenzo
@@ -295,10 +306,11 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    Thanks to Fred Baker, Paul Hoffman, Barry Leiba, Ted Lemon, Martin
    Nilsson, Ole Troan and Asbjorn Tonnesen for detailed review and
-   comments.  Also great thanks to Joel Jaeggli for providing feedback
-   and text.
+   comments.  Thanks for David Black for review and providing text for
+   the security considerations.  Also great thanks to Joel Jaeggli for
+   providing feedback and text.
 
-7.  Normative References
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
@@ -319,6 +331,15 @@ Internet-Draft             DHCP Captive-Portal               August 2015
               3986, DOI 10.17487/RFC3986, January 2005,
               <http://www.rfc-editor.org/info/rfc3986>.
 
+
+
+
+
+Kumari, et al.            Expires March 3, 2016                 [Page 6]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               DOI 10.17487/RFC4861, September 2007,
@@ -329,20 +350,14 @@ Internet-Draft             DHCP Captive-Portal               August 2015
               BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
               <http://www.rfc-editor.org/info/rfc7227>.
 
-
-
-
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 6]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
-
 Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
+
+   From 15.1 to 16:
+
+      Incorporated (missed) comments from David Black's GenART / OpsDir
+      review.
 
    From 15 to 15.1:
 
@@ -374,6 +389,13 @@ Appendix A.  Changes / Author Notes.
 
    From -12 to -13.1:
 
+
+
+Kumari, et al.            Expires March 3, 2016                 [Page 7]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
    See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
    details.  This document was discussed, and I got a fair bit of
@@ -388,13 +410,6 @@ Appendix A.  Changes / Author Notes.
    o  Integrated a bunch of useful comments from Martin Nilsson
 
    From -11 to -12:
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 7]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  Integrated a whole bunch of comments from Ted Lemon, including
       missing references, track, missing size of DHCP option,
@@ -429,6 +444,14 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Clarified that this document is only for the DHCP bits, not
       everything.
 
+
+
+
+Kumari, et al.            Expires March 3, 2016                 [Page 8]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    o  CP's *can* do HTTP redirects to DNS names, as long as they allow
       access to all needed services.
 
@@ -443,14 +466,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Fingerprint text.
 
    o  Some discussions on the v4 literal stuff.
-
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 8]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  More Security Consideration text.
 
@@ -486,6 +501,13 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    From -01 to 02:
 
+
+
+Kumari, et al.            Expires March 3, 2016                 [Page 9]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    o  Added the IPv6 RA stuff.
 
    From -00 to -01:
@@ -497,16 +519,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    From initial to -00.
 
    o  Nothing changed in the template!
-
-
-
-
-
-
-Kumari, et al.          Expires February 25, 2016               [Page 9]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
 Authors' Addresses
 
@@ -547,17 +559,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Kumari, et al.          Expires February 25, 2016              [Page 10]
+Kumari, et al.            Expires March 3, 2016                [Page 10]
 ```

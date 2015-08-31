@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-15.1" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-16" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="24" month="August" year="2015"/>
+    <date day="31" month="August" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -156,13 +156,15 @@
       IPv6 only with DHCPv6(<xref target="RFC3315"/>), IPv6 only with RA) the
       captive portal can provide the URI via multiple methods (IPv4 DHCP, IPv6
       DHCP, IPv6 RA). The captive portal operator should ensure that the URIs
-      handed out are equivalent to reduce the chance of operational
-      problems.</t>
+      handed out are equivalent to reduce the chance of operational problems.
+      The maximum length of the URI that can be carried in IPv4 DHCP is 255
+      byte, and so URIs longer than 255 bytes should not be used in IPv6 DHCP
+      or IPv6 RA.</t>
 
       <t>In order to avoid having to perform DNS interception, the URI SHOULD
       contain an address literal. If the captive portal allows the client to
       perform DNS requests to resolve the name, it is then acceptable for the
-      URI to contain a DNS name.</t>
+      URI to contain a DNS name. The URI paramter is not null terminated.</t>
 
       <section title="IPv4 DHCP Option">
         <t>The format of the IPv4 Captive-Portal DHCP option is shown
@@ -179,8 +181,8 @@
 
             <t>Len: The length, in octets of the URI.</t>
 
-            <t>URI: The URI of the authentication page that the user should
-            connect to (encoded following the rules in <xref
+            <t>URI: The contact URI for the captive portal that the user
+            should connect to (encoded following the rules in <xref
             target="RFC3986"/>).</t>
           </list></t>
       </section>
@@ -205,20 +207,19 @@
 
             <t>option-len: The length, in octets of the URI.</t>
 
-            <t>URI: The URI of the authentication page that the user should
-            connect to (encoded following the rules in <xref
+            <t>URI: The contact URI for the captive portal that the user
+            should connect to (encoded following the rules in <xref
             target="RFC3986"/>).</t>
           </list>See <xref target="RFC7227"/>, Section 5.7 for more examples
         of DHCP Options with URIs.</t>
       </section>
-    </section>
 
-    <section title="The Captive-Portal IPv6 RA Option">
-      <t>This section describes the Captive-Portal Router Advertisement
-      option.</t>
+      <section title="The Captive-Portal IPv6 RA Option">
+        <t>This section describes the Captive-Portal Router Advertisement
+        option.</t>
 
-      <t><figure>
-          <artwork><![CDATA[ 0                   1                   2                   3
+        <t><figure>
+            <artwork><![CDATA[ 0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |     Type      |     Length    |              URI              .
@@ -228,21 +229,23 @@
    .                                                               .
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             Figure 2: Captive-Portal RA Option Format]]></artwork>
-        </figure></t>
+          </figure></t>
 
-      <t><list style="hanging">
-          <t hangText="Type">TBA3</t>
+        <t><list style="hanging">
+            <t hangText="Type">TBA3</t>
 
-          <t hangText="Length">8-bit unsigned integer. The length of the
-          option (including the Type and Length fields) in units of 8
-          bytes.</t>
+            <t hangText="Length">8-bit unsigned integer. The length of the
+            option (including the Type and Length fields) in units of 8
+            bytes.</t>
 
-          <t hangText="URI">The URI of the authentication page that the user
-          should connect to. For the reasons described above, the implementer
-          might want to use an IP address literal instead of a DNS name. This
-          should be padded with NULL (0x0) to make the total option length
-          (including the Type and Length fields) a multiple of 8 bytes.</t>
-        </list></t>
+            <t hangText="URI">The contact URI for the captive portal that the
+            user should connect to. For the reasons described above, the
+            implementer might want to use an IP address literal instead of a
+            DNS name. This should be padded with NULL (0x0) to make the total
+            option length (including the Type and Length fields) a multiple of
+            8 bytes.</t>
+          </list></t>
+      </section>
     </section>
 
     <section title="IANA Considerations">
@@ -283,14 +286,21 @@
       performed with the standard captive portal mechanisms, so this technique
       does not give the attackers more capabilities.</t>
 
+      <t>Captive portals are increasingly hijacking TLS connections to force
+      &gt; browsers to talk to the portal. Providing the portal's URI via a
+      DHCP or RA option is a cleaner technique, and reduces user expectations
+      of being hijacked - this may improve security by making users more
+      reluctant to accept TLS hijacking, which can be performed from beyond
+      the network associated with the captive portal.</t>
+
       <t>By simplifying the interaction with the captive portal systems, and
       doing away with the need for interception, we think that users will be
       less likely to disable useful security safeguards like DNSSEC
       validation, VPNs, etc. In addition, because the system knows that it is
       behind a captive portal, it can know not to send cookies, credentials,
-      etc. Redirection to a portal where TLS can be used without hijacking can
-      ameliorate some of the implications of connecting to a potentially
-      malicious captive portal.</t>
+      etc. By handing out a URI using which is protected with TLS, the captive
+      portal operator can attempt to reassure the user that the captive portal
+      is not malicious.</t>
     </section>
 
     <section title="Acknowledgements">
@@ -300,8 +310,9 @@
 
       <t>Thanks to Fred Baker, Paul Hoffman, Barry Leiba, Ted Lemon, Martin
       Nilsson, Ole Troan and Asbjorn Tonnesen for detailed review and
-      comments. Also great thanks to Joel Jaeggli for providing feedback and
-      text.</t>
+      comments. Thanks for David Black for review and providing text for the
+      security considerations. Also great thanks to Joel Jaeggli for providing
+      feedback and text.</t>
     </section>
   </middle>
 
@@ -326,6 +337,11 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 15.1 to 16:<list>
+          <t>Incorporated (missed) comments from David Black's GenART / OpsDir
+          review.</t>
+        </list></t>
 
       <t>From 15 to 15.1:<list style="symbols">
           <t>Incorporated Brian Haberman's IESG review comment: "I think you

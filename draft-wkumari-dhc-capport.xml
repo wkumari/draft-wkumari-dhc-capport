@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-16" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-16.1" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -287,11 +287,11 @@
       does not give the attackers more capabilities.</t>
 
       <t>Captive portals are increasingly hijacking TLS connections to force
-      &gt; browsers to talk to the portal. Providing the portal's URI via a
-      DHCP or RA option is a cleaner technique, and reduces user expectations
-      of being hijacked - this may improve security by making users more
-      reluctant to accept TLS hijacking, which can be performed from beyond
-      the network associated with the captive portal.</t>
+      browsers to talk to the portal. Providing the portal's URI via a DHCP or
+      RA option is a cleaner technique, and reduces user expectations of being
+      hijacked - this may improve security by making users more reluctant to
+      accept TLS hijacking, which can be performed from beyond the network
+      associated with the captive portal.</t>
 
       <t>By simplifying the interaction with the captive portal systems, and
       doing away with the need for interception, we think that users will be
@@ -308,11 +308,11 @@
       Thanks to Wes George for supplying the IPv6 text. Thanks to Lorenzo and
       Erik for the V6 RA kick in the pants.</t>
 
-      <t>Thanks to Fred Baker, Paul Hoffman, Barry Leiba, Ted Lemon, Martin
-      Nilsson, Ole Troan and Asbjorn Tonnesen for detailed review and
-      comments. Thanks for David Black for review and providing text for the
-      security considerations. Also great thanks to Joel Jaeggli for providing
-      feedback and text.</t>
+      <t>Thanks to Fred Baker, David Farmer, Paul Hoffman, Barry Leiba, Ted
+      Lemon, Martin Nilsson, Ole Troan and Asbjorn Tonnesen for detailed
+      review and comments. Thanks for David Black for review and providing
+      text for the security considerations. Also great thanks to Joel Jaeggli
+      for providing feedback and text.</t>
     </section>
   </middle>
 
@@ -338,7 +338,11 @@
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
 
-      <t>From 15.1 to 16:<list>
+      <t>From 16 to 16.1:<list style="symbols">
+          <t>Nit from David Farmer.</t>
+        </list></t>
+
+      <t>From 15.1 to 16:<list style="symbols">
           <t>Incorporated (missed) comments from David Black's GenART / OpsDir
           review.</t>
         </list></t>

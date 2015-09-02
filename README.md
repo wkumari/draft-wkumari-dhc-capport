@@ -16,7 +16,7 @@ Expires: March 3, 2016                                        CloudFlare
 
 
                Captive-Portal Identification in DHCP / RA
-                      draft-wkumari-dhc-capport-16
+                     draft-wkumari-dhc-capport-16.1
 
 Abstract
 
@@ -274,7 +274,7 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    performed with the standard captive portal mechanisms, so this
    technique does not give the attackers more capabilities.
 
-   Captive portals are increasingly hijacking TLS connections to force >
+   Captive portals are increasingly hijacking TLS connections to force
    browsers to talk to the portal.  Providing the portal's URI via a
 
 
@@ -304,11 +304,11 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    Thanks to Wes George for supplying the IPv6 text.  Thanks to Lorenzo
    and Erik for the V6 RA kick in the pants.
 
-   Thanks to Fred Baker, Paul Hoffman, Barry Leiba, Ted Lemon, Martin
-   Nilsson, Ole Troan and Asbjorn Tonnesen for detailed review and
-   comments.  Thanks for David Black for review and providing text for
-   the security considerations.  Also great thanks to Joel Jaeggli for
-   providing feedback and text.
+   Thanks to Fred Baker, David Farmer, Paul Hoffman, Barry Leiba, Ted
+   Lemon, Martin Nilsson, Ole Troan and Asbjorn Tonnesen for detailed
+   review and comments.  Thanks for David Black for review and providing
+   text for the security considerations.  Also great thanks to Joel
+   Jaeggli for providing feedback and text.
 
 6.  Normative References
 
@@ -354,9 +354,13 @@ Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
 
+   From 16 to 16.1:
+
+   o  Nit from David Farmer.
+
    From 15.1 to 16:
 
-      Incorporated (missed) comments from David Black's GenART / OpsDir
+   o  Incorporated (missed) comments from David Black's GenART / OpsDir
       review.
 
    From 15 to 15.1:
@@ -384,10 +388,6 @@ Appendix A.  Changes / Author Notes.
 
    From 13.1 to 13.2:
 
-   o  Moved all of the "what an OS could do with this info" to an
-      Appendix, to make it even clearer that this is simply an example.
-
-   From -12 to -13.1:
 
 
 
@@ -395,6 +395,11 @@ Kumari, et al.            Expires March 3, 2016                 [Page 7]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
+
+   o  Moved all of the "what an OS could do with this info" to an
+      Appendix, to make it even clearer that this is simply an example.
+
+   From -12 to -13.1:
 
    There was a Captive Portal Bar BoF held at the Dallas IETF meeting.
    See https://github.com/httpwg/wiki/wiki/Captive-Portals for some
@@ -439,11 +444,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    From 06 to 07:
 
-   o  Incoroprated a bunch of comments from Asbjorn Tonnesen
-
-   o  Clarified that this document is only for the DHCP bits, not
-      everything.
-
 
 
 
@@ -451,6 +451,11 @@ Kumari, et al.            Expires March 3, 2016                 [Page 8]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
+
+   o  Incoroprated a bunch of comments from Asbjorn Tonnesen
+
+   o  Clarified that this document is only for the DHCP bits, not
+      everything.
 
    o  CP's *can* do HTTP redirects to DNS names, as long as they allow
       access to all needed services.
@@ -496,17 +501,17 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Simplified / cleaned up text (I'm inclined to waffle on, then trim
       the fluff)
 
-   o  This was written on a United flight with in-flight WiFi -
-      unfortunately I couldn't use it because their CP was borked. :-P
-
-   From -01 to 02:
-
 
 
 Kumari, et al.            Expires March 3, 2016                 [Page 9]
 
 Internet-Draft             DHCP Captive-Portal               August 2015
 
+
+   o  This was written on a United flight with in-flight WiFi -
+      unfortunately I couldn't use it because their CP was borked. :-P
+
+   From -01 to 02:
 
    o  Added the IPv6 RA stuff.
 
@@ -545,6 +550,20 @@ Authors' Addresses
    Email: ebersman-ietf@dragon.net
 
 
+
+
+
+
+
+
+
+
+
+Kumari, et al.            Expires March 3, 2016                [Page 10]
+
+Internet-Draft             DHCP Captive-Portal               August 2015
+
+
    Steve Sheng
    Internet Corporation for Assigned Names and Numbers
    12025 Waterfront Drive, Suite 300
@@ -559,5 +578,42 @@ Authors' Addresses
 
 
 
-Kumari, et al.            Expires March 3, 2016                [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kumari, et al.            Expires March 3, 2016                [Page 11]
 ```

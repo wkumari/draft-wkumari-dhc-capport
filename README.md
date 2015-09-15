@@ -7,16 +7,16 @@
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Intended status: Standards Track                          O. Gudmundsson
-Expires: March 3, 2016                                        CloudFlare
+Expires: March 18, 2016                                       CloudFlare
                                                              P. Ebersman
                                                                  Comcast
                                                                 S. Sheng
                                                                    ICANN
-                                                         August 31, 2015
+                                                      September 15, 2015
 
 
                Captive-Portal Identification in DHCP / RA
-                     draft-wkumari-dhc-capport-16.1
+                     draft-wkumari-dhc-capport-16.2
 
 Abstract
 
@@ -25,13 +25,13 @@ Abstract
    captive portal mode.  This highly restricts what the customer can do
    until the customer has authenticated.
 
-   This document describes a DHCP option (and a RA extension) to inform
-   clients that they are behind some sort of captive portal device, and
-   that they will need to authenticate to get Internet Access.  It is
-   not a full solution to address all of the issues that clients may
-   have with captive portals; it is designed to be used in larger
-   solutions.  The method of authenticating to, and interacting with the
-   captive portal is out of scope of this document.
+   This document describes a DHCP option (and a Router Advertisement
+   extension) to inform clients that they are behind some sort of
+   captive portal device, and that they will need to authenticate to get
+   Internet Access.  It is not a full solution to address all of the
+   issues that clients may have with captive portals; it is designed to
+   be used in larger solutions.  The method of authenticating to, and
+   interacting with the captive portal is out of scope of this document.
 
    [ Ed note (remove): This document is being developed in github:
    https://github.com/wkumari/draft-wkumari-dhc-capport . ]
@@ -51,13 +51,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 3, 2016.
+   This Internet-Draft will expire on March 18, 2016.
 
 
 
-Kumari, et al.            Expires March 3, 2016                 [Page 1]
+Kumari, et al.           Expires March 18, 2016                 [Page 1]
 
-Internet-Draft             DHCP Captive-Portal               August 2015
+Internet-Draft             DHCP Captive-Portal            September 2015
 
 
 Copyright Notice
@@ -93,7 +93,7 @@ Table of Contents
 1.  Introduction
 
    In many environments, users need to connect to a captive portal
-   device and agree to an acceptable use policy (AUP) and / or provide
+   device and agree to an Acceptable Use Policy (AUP) and / or provide
    billing information before they can access the Internet.  It is
    anticipated that the IETF will work on a more fully featured protocol
    at some point, to ease interaction with Captive Portals.  Regardless
@@ -111,9 +111,9 @@ Table of Contents
 
 
 
-Kumari, et al.            Expires March 3, 2016                 [Page 2]
+Kumari, et al.           Expires March 18, 2016                 [Page 2]
 
-Internet-Draft             DHCP Captive-Portal               August 2015
+Internet-Draft             DHCP Captive-Portal            September 2015
 
 
    This document describe a DHCP ([RFC2131]) option (Captive Portal) and
@@ -167,9 +167,9 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-Kumari, et al.            Expires March 3, 2016                 [Page 3]
+Kumari, et al.           Expires March 18, 2016                 [Page 3]
 
-Internet-Draft             DHCP Captive-Portal               August 2015
+Internet-Draft             DHCP Captive-Portal            September 2015
 
 
    o  URI: The contact URI for the captive portal that the user should
@@ -223,9 +223,9 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-Kumari, et al.            Expires March 3, 2016                 [Page 4]
+Kumari, et al.           Expires March 18, 2016                 [Page 4]
 
-Internet-Draft             DHCP Captive-Portal               August 2015
+Internet-Draft             DHCP Captive-Portal            September 2015
 
 
    URI  The contact URI for the captive portal that the user should
@@ -279,9 +279,9 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-Kumari, et al.            Expires March 3, 2016                 [Page 5]
+Kumari, et al.           Expires March 18, 2016                 [Page 5]
 
-Internet-Draft             DHCP Captive-Portal               August 2015
+Internet-Draft             DHCP Captive-Portal            September 2015
 
 
    DHCP or RA option is a cleaner technique, and reduces user
@@ -321,24 +321,29 @@ Internet-Draft             DHCP Captive-Portal               August 2015
               2131, DOI 10.17487/RFC2131, March 1997,
               <http://www.rfc-editor.org/info/rfc2131>.
 
+   [RFC2939]  Droms, R., "Procedures and IANA Guidelines for Definition
+              of New DHCP Options and Message Types", BCP 43, RFC 2939,
+              DOI 10.17487/RFC2939, September 2000,
+              <http://www.rfc-editor.org/info/rfc2939>.
+
    [RFC3315]  Droms, R., Ed., Bound, J., Volz, B., Lemon, T., Perkins,
               C., and M. Carney, "Dynamic Host Configuration Protocol
               for IPv6 (DHCPv6)", RFC 3315, DOI 10.17487/RFC3315, July
               2003, <http://www.rfc-editor.org/info/rfc3315>.
 
+
+
+
+
+Kumari, et al.           Expires March 18, 2016                 [Page 6]
+
+Internet-Draft             DHCP Captive-Portal            September 2015
+
+
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66, RFC
               3986, DOI 10.17487/RFC3986, January 2005,
               <http://www.rfc-editor.org/info/rfc3986>.
-
-
-
-
-
-Kumari, et al.            Expires March 3, 2016                 [Page 6]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
@@ -353,6 +358,10 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 Appendix A.  Changes / Author Notes.
 
    [RFC Editor: Please remove this section before publication ]
+
+   From 16.1 to 16.2:
+
+   o  Integrated comments from Benoit's IESG Comment.
 
    From 16 to 16.1:
 
@@ -379,6 +388,14 @@ Appendix A.  Changes / Author Notes.
       complete solution.  We expect that the actual interaction bit
       should be done in CAPPORT.
 
+
+
+
+Kumari, et al.           Expires March 18, 2016                 [Page 7]
+
+Internet-Draft             DHCP Captive-Portal            September 2015
+
+
    From 13.2 to 13(posted):
 
    o  Shortened the document by removing most of the [Editors notes],
@@ -387,14 +404,6 @@ Appendix A.  Changes / Author Notes.
       Hoffman.
 
    From 13.1 to 13.2:
-
-
-
-
-Kumari, et al.            Expires March 3, 2016                 [Page 7]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  Moved all of the "what an OS could do with this info" to an
       Appendix, to make it even clearer that this is simply an example.
@@ -435,6 +444,14 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Put back the DHCPv6 option, and made the fact that is separate
       from the DHCPv4 option clearer (Ted Lemon)
 
+
+
+
+Kumari, et al.           Expires March 18, 2016                 [Page 8]
+
+Internet-Draft             DHCP Captive-Portal            September 2015
+
+
    From 07 to 08:
 
    o  Incorporated comments from Ted Lemon.  Made the document much
@@ -443,14 +460,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
    o  Some cleanup.
 
    From 06 to 07:
-
-
-
-
-Kumari, et al.            Expires March 3, 2016                 [Page 8]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  Incoroprated a bunch of comments from Asbjorn Tonnesen
 
@@ -490,6 +499,15 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Connectivity Check test.
 
+
+
+
+
+Kumari, et al.           Expires March 18, 2016                 [Page 9]
+
+Internet-Draft             DHCP Captive-Portal            September 2015
+
+
    o  Posting just before the draft cutoff - "I love deadlines.  I love
       the whooshing noise they make as they go by." -- Douglas Adams,
       The Salmon of Doubt
@@ -500,13 +518,6 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
    o  Simplified / cleaned up text (I'm inclined to waffle on, then trim
       the fluff)
-
-
-
-Kumari, et al.            Expires March 3, 2016                 [Page 9]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
-
 
    o  This was written on a United flight with in-flight WiFi -
       unfortunately I couldn't use it because their CP was borked. :-P
@@ -544,24 +555,19 @@ Authors' Addresses
    Email: olafur@cloudflare.com
 
 
+
+
+
+
+Kumari, et al.           Expires March 18, 2016                [Page 10]
+
+Internet-Draft             DHCP Captive-Portal            September 2015
+
+
    Paul Ebersman
    Comcast
 
    Email: ebersman-ietf@dragon.net
-
-
-
-
-
-
-
-
-
-
-
-Kumari, et al.            Expires March 3, 2016                [Page 10]
-
-Internet-Draft             DHCP Captive-Portal               August 2015
 
 
    Steve Sheng
@@ -609,11 +615,5 @@ Internet-Draft             DHCP Captive-Portal               August 2015
 
 
 
-
-
-
-
-
-
-Kumari, et al.            Expires March 3, 2016                [Page 11]
+Kumari, et al.           Expires March 18, 2016                [Page 11]
 ```

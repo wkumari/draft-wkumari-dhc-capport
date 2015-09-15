@@ -3,7 +3,7 @@
 <!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
-<rfc category="std" docName="draft-wkumari-dhc-capport-16.1" ipr="trust200902">
+<rfc category="std" docName="draft-wkumari-dhc-capport-16.2" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -91,7 +91,7 @@
       </address>
     </author>
 
-    <date day="31" month="August" year="2015"/>
+    <date day="15" month="September" year="2015"/>
 
     <abstract>
       <t>In many environments offering short-term or temporary Internet access
@@ -99,13 +99,13 @@
       captive portal mode. This highly restricts what the customer can do
       until the customer has authenticated.</t>
 
-      <t>This document describes a DHCP option (and a RA extension) to inform
-      clients that they are behind some sort of captive portal device, and
-      that they will need to authenticate to get Internet Access. It is not a
-      full solution to address all of the issues that clients may have with
-      captive portals; it is designed to be used in larger solutions. The
-      method of authenticating to, and interacting with the captive portal is
-      out of scope of this document.</t>
+      <t>This document describes a DHCP option (and a Router Advertisement
+      extension) to inform clients that they are behind some sort of captive
+      portal device, and that they will need to authenticate to get Internet
+      Access. It is not a full solution to address all of the issues that
+      clients may have with captive portals; it is designed to be used in
+      larger solutions. The method of authenticating to, and interacting with
+      the captive portal is out of scope of this document.</t>
 
       <t>[ Ed note (remove): This document is being developed in github:
       https://github.com/wkumari/draft-wkumari-dhc-capport . ]</t>
@@ -115,7 +115,7 @@
   <middle>
     <section title="Introduction">
       <t>In many environments, users need to connect to a captive portal
-      device and agree to an acceptable use policy (AUP) and / or provide
+      device and agree to an Acceptable Use Policy (AUP) and / or provide
       billing information before they can access the Internet. It is
       anticipated that the IETF will work on a more fully featured protocol at
       some point, to ease interaction with Captive Portals. Regardless of how
@@ -253,8 +253,8 @@
       and one for IPv6. It requires assignment of an option code (TBA1) to be
       assigned from "Bootp and DHCP options" registry
       (hhttp://www.iana.org/assignments/bootp-dhcp-parameters), as specified
-      in [RFC2939]. It also requires assignment of an option code (TBA2) from
-      the "DHCPv6 and DHCPv6 options" registry
+      in <xref target="RFC2939"/>. It also requires assignment of an option
+      code (TBA2) from the "DHCPv6 and DHCPv6 options" registry
       (http://www.iana.org/assignments/dhcpv6-parameters).</t>
 
       <t>IANA is also requested to assign an IPv6 RA Option Type code (TBA3)
@@ -321,6 +321,8 @@
       <?rfc include='reference.RFC.2119'
 ?>
 
+      <?rfc include='reference.RFC.2939'?>
+
       <?rfc include='reference.RFC.3315'?>
 
       <?rfc include='reference.RFC.3986'?>
@@ -337,6 +339,10 @@
 
     <section title="Changes / Author Notes.">
       <t>[RFC Editor: Please remove this section before publication ]</t>
+
+      <t>From 16.1 to 16.2:<list style="symbols">
+          <t>Integrated comments from Benoit's IESG Comment.</t>
+        </list></t>
 
       <t>From 16 to 16.1:<list style="symbols">
           <t>Nit from David Farmer.</t>
